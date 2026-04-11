@@ -11,9 +11,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-blue: #A2D2FF; /* الأزرق السماوي */
-            --soft-green: #B9F3E4;   /* الأخضر الفاتح */
-            --bg-beige: #FDFBF7;     /* البيج الأبيض */
+            --primary-blue: #A2D2FF; 
+            --soft-green: #B9F3E4;   
+            --bg-beige: #FDFBF7;     
             --text-dark: #333333;
             --card-white: #ffffff;
         }
@@ -21,7 +21,6 @@
         body {
             font-family: 'Tajawal', sans-serif;
             background-color: var(--bg-beige);
-            color: var(--text-dark);
             margin: 0;
             display: flex;
             justify-content: center;
@@ -29,34 +28,23 @@
             min-height: 100vh;
         }
 
+        /* حاوية اللوحة الأساسية */
         .container {
             background: var(--card-white);
             padding: 3rem;
             border-radius: 25px;
             box-shadow: 0 15px 40px rgba(162, 210, 255, 0.2); 
             width: 100%;
-            max-width: 550px;
+            max-width: 500px;
             border: 2px solid var(--primary-blue);
             text-align: center;
-        }
-
-        /* الإحصائيات في الأعلى */
-        .stats-bar {
-            background: var(--soft-green);
-            padding: 10px 20px;
-            border-radius: 15px;
-            display: inline-flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 20px;
-            border: 1px solid rgba(0,0,0,0.05);
+            position: relative;
         }
 
         .logo {
-            font-size: 4rem;
+            font-size: 4.5rem;
             font-weight: 900;
             letter-spacing: 8px;
-            text-transform: uppercase;
             background: linear-gradient(to right, var(--primary-blue), #57C5B6);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -66,8 +54,21 @@
 
         .welcome-text {
             color: #666;
-            margin-bottom: 2.5rem;
+            margin-bottom: 2rem;
             font-weight: bold;
+        }
+
+        /* عداد المستخدمين المدمج */
+        .stats-badge {
+            background: var(--soft-green);
+            padding: 8px 15px;
+            border-radius: 50px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
         }
 
         .input-group {
@@ -90,13 +91,13 @@
             background: #fafafa;
             color: #333;
             box-sizing: border-box;
-            font-size: 1rem;
+            transition: 0.3s;
         }
 
         input:focus {
             outline: none;
             border-color: var(--primary-blue);
-            background: #fff;
+            background: white;
         }
 
         .btn-publish {
@@ -111,14 +112,10 @@
             cursor: pointer;
             transition: 0.3s;
             margin-top: 1rem;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 12px;
         }
 
         .btn-publish:hover {
-            transform: translateY(-4px);
+            transform: translateY(-3px);
             box-shadow: 0 10px 20px rgba(162, 210, 255, 0.4);
         }
 
@@ -130,6 +127,7 @@
             border-top: 3px solid transparent;
             border-radius: 50%;
             animation: spin 1s linear infinite;
+            margin: 0 auto;
         }
 
         @keyframes spin { 100% { transform: rotate(360deg); } }
@@ -138,35 +136,44 @@
 </head>
 <body>
 
-<div class="container">
-    <div class="stats-bar">
-        <span style="font-size: 1.5rem;">👥</span>
-        <span id="userCount" style="font-weight: 900; font-size: 1.5rem; color: #333;">0</span>
-        <span style="font-size: 0.9rem;">مستخدم نشط</span>
-    </div>
-
+<div class="container" id="loginBox">
     <div class="logo">LAMA</div>
-    <p class="welcome-text">إدارة المحتوى التعليمي - طلال (USR7N)</p>
+    <p class="welcome-text">لوحة تحكم طلال (USR7N)</p>
+    <div class="input-group">
+        <label>كلمة مرور المسؤول</label>
+        <input type="password" id="adminPass" placeholder="أدخل كلمة المرور...">
+    </div>
+    <button class="btn-publish" onclick="checkPass()">دخول</button>
+</div>
+
+<div class="container" id="mainPanel" style="display:none;">
+    <div class="stats-badge">
+        <span>👥</span>
+        <span id="userCount">0</span>
+        <span>مستخدم نشط الآن</span>
+    </div>
+    <div class="logo" style="font-size: 3rem;">LAMA</div>
+    <p class="welcome-text">إدارة المحتوى التعليمي</p>
 
     <div class="input-group">
-        <label>١. إنشاء مجلد جديد</label>
-        <div style="display: flex; gap: 10px;">
+        <label>إضافة مجلد جديد</label>
+        <div style="display: flex; gap: 8px;">
             <input type="text" id="folderName" placeholder="مثال: الفواكه">
-            <button onclick="createFolder()" style="background: var(--soft-green); border: none; padding: 10px 20px; border-radius: 12px; cursor: pointer; font-weight: bold;">إضافة</button>
+            <button onclick="createFolder()" style="background: var(--soft-green); border: none; padding: 0 15px; border-radius: 10px; cursor: pointer; font-weight: bold;">+</button>
         </div>
     </div>
 
-    <hr style="border: 0; border-top: 1px solid #eee; margin: 25px 0;">
+    <hr style="border: 0; border-top: 1px solid #eee; margin: 20px 0;">
 
     <div class="input-group">
-        <label>٢. اختيار المجلد</label>
+        <label>اختيار المجلد</label>
         <select id="folderSelect">
             <option value="">جاري التحميل...</option>
         </select>
     </div>
 
     <div class="input-group">
-        <label>٣. اسم البطاقة</label>
+        <label>اسم البطاقة</label>
         <input type="text" id="cardTitle" placeholder="مثال: تفاحة">
     </div>
 
@@ -182,14 +189,15 @@
     </div>
 
     <button class="btn-publish" id="uploadBtn" onclick="uploadCard()">
-        <span id="btnText">نشر المحتوى للتطبيق</span>
+        <span id="btnText">إرسال للتطبيق 🚀</span>
         <div class="loader" id="loader"></div>
     </button>
 </div>
 
 <script>
+    // --- إعدادات Firebase ---
     const firebaseConfig = {
-        apiKey: "ضع_مفتاحك_هنا",
+        apiKey: "AIzaSy...", // ضع مفتاحك هنا
         authDomain: "aaa-app-usr.firebaseapp.com",
         projectId: "aaa-app-usr",
         storageBucket: "aaa-app-usr.appspot.com",
@@ -202,25 +210,40 @@
     const CLOUD_NAME = "dmj9rw7fx";
     const UPLOAD_PRESET = "tlal-1234";
 
-    // تحديث العداد
-    db.collection("analytics").doc("users_stats").onSnapshot(doc => {
-        if(doc.exists) document.getElementById("userCount").innerText = doc.data().total_opens || 0;
-    });
+    // دالة الدخول
+    function checkPass() {
+        const pass = document.getElementById('adminPass').value;
+        if (pass === "1234") { // كلمة المرور الخاصة بك
+            document.getElementById('loginBox').style.display = 'none';
+            document.getElementById('mainPanel').style.display = 'block';
+            startTracking();
+        } else {
+            alert("خطأ في كلمة المرور");
+        }
+    }
 
-    // تحميل المجلدات
-    db.collection("categories").onSnapshot(snapshot => {
-        const select = document.getElementById("folderSelect");
-        select.innerHTML = '<option value="">-- اختر مجلد --</option>';
-        snapshot.forEach(doc => {
-            select.innerHTML += `<option value="${doc.id}">${doc.data().name}</option>`;
+    function startTracking() {
+        // تحديث العداد
+        db.collection("analytics").doc("users_stats").onSnapshot(doc => {
+            if(doc.exists) document.getElementById("userCount").innerText = doc.data().total_opens || 0;
         });
-    });
+
+        // تحميل المجلدات
+        db.collection("categories").onSnapshot(snapshot => {
+            const select = document.getElementById("folderSelect");
+            select.innerHTML = '<option value="">-- اختر المجلد --</option>';
+            snapshot.forEach(doc => {
+                select.innerHTML += `<option value="${doc.id}">${doc.data().name}</option>`;
+            });
+        });
+    }
 
     async function createFolder() {
         const name = document.getElementById("folderName").value;
         if(!name) return;
         await db.collection("categories").add({ name: name, timestamp: firebase.firestore.FieldValue.serverTimestamp() });
         document.getElementById("folderName").value = "";
+        alert("تم إنشاء المجلد");
     }
 
     async function uploadToCloudinary(file) {
@@ -238,11 +261,12 @@
         const imgFile = document.getElementById("cardImage").files[0];
         const audFile = document.getElementById("cardAudio").files[0];
 
-        if(!folderId || !title || !imgFile || !audFile) return alert("أكمل البيانات يا بطل!");
+        if(!folderId || !title || !imgFile || !audFile) return alert("أكمل البيانات");
 
-        const btn = document.getElementById("uploadBtn");
-        btn.disabled = true;
-        document.getElementById("loader").style.display = "block";
+        const btnText = document.getElementById("btnText");
+        const loader = document.getElementById("loader");
+        btnText.style.display = "none";
+        loader.style.display = "block";
 
         try {
             const imgUrl = await uploadToCloudinary(imgFile);
@@ -260,7 +284,8 @@
             location.reload();
         } catch (e) {
             alert("خطأ: " + e.message);
-            btn.disabled = false;
+            btnText.style.display = "block";
+            loader.style.display = "none";
         }
     }
 </script>
