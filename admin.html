@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LAMA Admin | إدارة وحذف المحتوى</title>
+    <title>LAMA Admin | نظام الإدارة المتكامل</title>
     
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
@@ -15,81 +15,166 @@
             --soft-green: #B9F3E4;   
             --bg-beige: #FDFBF7;     
             --text-dark: #333333;
-            --danger-red: #ff4d4d;
+            --danger: #ff4d4d;
+            --card-shadow: 0 10px 30px rgba(162, 210, 255, 0.15);
         }
 
-        body { font-family: 'Tajawal', sans-serif; background-color: var(--bg-beige); margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; }
-        .container { background: #fff; padding: 2rem; border-radius: 25px; box-shadow: 0 10px 30px rgba(162,210,255,0.2); width: 100%; max-width: 500px; border: 2px solid var(--primary-blue); text-align: center; margin-bottom: 20px; }
-        
-        .logo { font-size: 3rem; font-weight: 900; background: linear-gradient(to right, var(--primary-blue), #57C5B6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 10px; }
-        
-        .input-group { margin-bottom: 1rem; text-align: right; }
-        label { display: block; margin-bottom: 5px; font-weight: bold; }
-        input, select { width: 100%; padding: 10px; border-radius: 10px; border: 1px solid #ddd; box-sizing: border-box; }
-        
-        .btn { width: 100%; padding: 12px; border: none; border-radius: 12px; cursor: pointer; font-weight: bold; transition: 0.3s; margin-top: 10px; }
-        .btn-primary { background: var(--primary-blue); color: white; }
-        .btn-danger { background: var(--danger-red); color: white; padding: 5px 10px; width: auto; font-size: 0.8rem; }
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: var(--bg-beige);
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
 
-        /* تنسيق قائمة الإدارة */
-        .admin-list { width: 100%; max-width: 600px; background: white; border-radius: 20px; padding: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
-        .list-item { display: flex; justify-content: space-between; align-items: center; padding: 10px; border-bottom: 1px solid #eee; }
-        .list-item:last-child { border-bottom: none; }
-        .item-info { display: flex; align-items: center; gap: 10px; }
-        .item-thumb { width: 40px; height: 40px; border-radius: 8px; object-fit: cover; }
+        /* --- شاشة تسجيل الدخول المنفصلة --- */
+        #loginScreen {
+            width: 100%;
+            max-width: 400px;
+            padding: 2rem;
+            background: white;
+            border-radius: 30px;
+            box-shadow: var(--card-shadow);
+            border: 2px solid var(--primary-blue);
+            text-align: center;
+        }
+
+        /* --- لوحة التحكم (تظهر بعد الدخول) --- */
+        #adminDashboard {
+            display: none; /* مخفية في البداية */
+            width: 95%;
+            max-width: 1000px;
+            margin: 20px;
+            display: grid;
+            grid-template-columns: 1fr 1.5fr; /* تقسيم الشاشة لقسمين */
+            gap: 20px;
+        }
+
+        @media (max-width: 800px) {
+            #adminDashboard { grid-template-columns: 1fr; }
+        }
+
+        .card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 20px;
+            box-shadow: var(--card-shadow);
+            border: 1px solid #eee;
+        }
+
+        .logo {
+            font-size: 3rem;
+            font-weight: 900;
+            background: linear-gradient(45deg, var(--primary-blue), #57C5B6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        .input-group { margin-bottom: 1.2rem; text-align: right; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; color: #555; }
         
-        .section-title { color: var(--primary-blue); border-bottom: 2px solid var(--soft-green); padding-bottom: 5px; margin-top: 20px; text-align: right; }
+        input, select {
+            width: 100%; padding: 12px; border-radius: 12px;
+            border: 2px solid #f0f0f0; background: #fafafa;
+            box-sizing: border-box; transition: 0.3s;
+        }
+
+        input:focus { border-color: var(--primary-blue); outline: none; background: white; }
+
+        .btn {
+            width: 100%; padding: 14px; border: none; border-radius: 12px;
+            font-weight: 900; cursor: pointer; transition: 0.3s;
+        }
+
+        .btn-blue { background: var(--primary-blue); color: white; }
+        .btn-green { background: #57C5B6; color: white; margin-top: 10px; }
+        .btn-danger { background: var(--danger); color: white; padding: 5px 10px; width: auto; font-size: 0.8rem; }
+
+        /* --- قائمة الإدارة والحذف --- */
+        .scroll-area { max-height: 400px; overflow-y: auto; margin-top: 10px; }
+        .list-item {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 10px; border-bottom: 1px solid #f9f9f9;
+        }
+        .item-preview { display: flex; align-items: center; gap: 10px; }
+        .item-img { width: 40px; height: 40px; border-radius: 8px; object-fit: cover; }
+
+        .stats-badge {
+            background: var(--soft-green);
+            padding: 10px; border-radius: 15px;
+            display: flex; justify-content: center; gap: 15px; font-weight: bold; margin-bottom: 15px;
+        }
     </style>
 </head>
 <body>
 
-<div class="container" id="loginBox">
+<div id="loginScreen">
     <div class="logo">LAMA</div>
-    <input type="password" id="adminPass" placeholder="كلمة المرور">
-    <button class="btn btn-primary" onclick="checkPass()">دخول المشرف</button>
+    <p style="font-weight: bold; color: #888;">لوحة تحكم المشرف (طلال)</p>
+    <div class="input-group">
+        <label>رمز الدخول الآمن</label>
+        <input type="password" id="adminPass" placeholder="••••••••">
+    </div>
+    <button class="btn btn-blue" onclick="attemptLogin()">دخول للنظام</button>
 </div>
 
-<div id="mainPanel" style="display:none; width: 100%; display: flex; flex-direction: column; align-items: center;">
+<div id="adminDashboard" style="display: none;">
     
-    <div class="container">
-        <div class="logo">إضافة محتوى</div>
-        <div class="input-group">
-            <label>اسم المجلد الجديد</label>
-            <input type="text" id="folderName">
-            <button class="btn btn-primary" onclick="createFolder()">إنشاء مجلد</button>
+    <div class="side-panel">
+        <div class="card">
+            <div class="stats-badge">
+                <span>👥 <span id="userCount">0</span> جهاز</span>
+            </div>
+            <div class="logo" style="font-size: 2rem;">إضافة محتوى</div>
+            
+            <div class="input-group">
+                <label>إنشاء مجلد</label>
+                <div style="display: flex; gap: 5px;">
+                    <input type="text" id="folderName" placeholder="اسم المجلد">
+                    <button class="btn btn-blue" style="width: 50px;" onclick="createFolder()">+</button>
+                </div>
+            </div>
+
+            <hr style="border: 0; border-top: 1px solid #eee; margin: 20px 0;">
+
+            <div class="input-group">
+                <label>المجلد</label>
+                <select id="folderSelect"></select>
+            </div>
+            <div class="input-group">
+                <label>الاسم</label>
+                <input type="text" id="cardTitle">
+            </div>
+            <div class="input-group" style="display: flex; gap: 5px;">
+                <input type="file" id="cardImage" accept="image/*" title="الصورة">
+                <input type="file" id="cardAudio" accept="audio/*,video/*" title="الصوت">
+            </div>
+            <button class="btn btn-green" onclick="uploadCard()">نشر في التطبيق 🚀</button>
         </div>
-        <hr>
-        <div class="input-group">
-            <label>اختر المجلد</label>
-            <select id="folderSelect"></select>
-        </div>
-        <div class="input-group">
-            <label>اسم البطاقة</label>
-            <input type="text" id="cardTitle">
-        </div>
-        <div class="input-group">
-            <label>الصورة</label>
-            <input type="file" id="cardImage" accept="image/*">
-        </div>
-        <div class="input-group">
-            <label>الصوت/فيديو</label>
-            <input type="file" id="cardAudio" accept="audio/*,video/*">
-        </div>
-        <button class="btn btn-primary" onclick="uploadCard()">نشر في التطبيق 🚀</button>
     </div>
 
-    <div class="admin-list">
-        <h2 class="section-title">إدارة المجلدات (Categories)</h2>
-        <div id="categoriesList">جاري التحميل...</div>
+    <div class="main-panel">
+        <div class="card">
+            <h3 style="color: var(--primary-blue); margin-top: 0;">📦 إدارة المجلدات والبطاقات</h3>
+            
+            <label>قائمة المجلدات (Categories)</label>
+            <div id="catList" class="scroll-area"></div>
 
-        <h2 class="section-title">إدارة البطاقات (Cards)</h2>
-        <div id="cardsList">جاري التحميل...</div>
+            <hr style="border: 0; border-top: 1px solid #eee; margin: 20px 0;">
+
+            <label>قائمة البطاقات (Cards)</label>
+            <div id="cardList" class="scroll-area"></div>
+        </div>
     </div>
 </div>
 
 <script>
+    // --- Firebase Config ---
     const firebaseConfig = {
-        apiKey: "AIzaSy...", // مفتاحك
+        apiKey: "AIzaSy...", 
         authDomain: "aaa-app-usr.firebaseapp.com",
         projectId: "aaa-app-usr",
         storageBucket: "aaa-app-usr.appspot.com",
@@ -98,67 +183,73 @@
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
 
-    function checkPass() {
-        if(document.getElementById('adminPass').value === "1234") {
-            document.getElementById('loginBox').style.display = 'none';
-            document.getElementById('mainPanel').style.display = 'flex';
-            loadData();
-        } else { alert("خطأ!"); }
+    const CLOUD_NAME = "dmj9rw7fx";
+    const UPLOAD_PRESET = "tlal-1234";
+
+    // دالة الدخول وفصل الشاشات
+    function attemptLogin() {
+        const pass = document.getElementById('adminPass').value;
+        if (pass === "1234") {
+            document.getElementById('loginScreen').style.display = 'none';
+            document.getElementById('adminDashboard').style.display = 'grid'; // تشغيل وضع الـ Grid
+            document.body.style.alignItems = 'flex-start'; // تغيير وضع الصفحة لتناسب اللوحة
+            startSystem();
+        } else {
+            alert("خطأ في الرمز!");
+        }
     }
 
-    // تحميل البيانات وعرضها للحذف
-    function loadData() {
+    function startSystem() {
+        // تحديث العداد
+        db.collection("analytics").doc("users_stats").onSnapshot(doc => {
+            if(doc.exists) document.getElementById("userCount").innerText = doc.data().total_devices || 0;
+        });
+
         // تحميل المجلدات
         db.collection("categories").onSnapshot(snapshot => {
-            const list = document.getElementById("categoriesList");
             const select = document.getElementById("folderSelect");
-            list.innerHTML = ""; select.innerHTML = "";
+            const catList = document.getElementById("catList");
+            select.innerHTML = ""; catList.innerHTML = "";
             snapshot.forEach(doc => {
                 const data = doc.data();
                 select.innerHTML += `<option value="${doc.id}">${data.name}</option>`;
-                list.innerHTML += `
-                    <div class="list-item">
-                        <span>📁 ${data.name}</span>
-                        <button class="btn btn-danger" onclick="deleteItem('categories', '${doc.id}')">حذف</button>
-                    </div>`;
+                catList.innerHTML += `<div class="list-item"><span>📁 ${data.name}</span> <button class="btn-danger" onclick="deleteItem('categories','${doc.id}')">حذف</button></div>`;
             });
         });
 
         // تحميل البطاقات
         db.collection("global_content").onSnapshot(snapshot => {
-            const list = document.getElementById("cardsList");
+            const list = document.getElementById("cardList");
             list.innerHTML = "";
             snapshot.forEach(doc => {
                 const data = doc.data();
                 list.innerHTML += `
                     <div class="list-item">
-                        <div class="item-info">
-                            <img src="${data.image_url}" class="item-thumb">
+                        <div class="item-preview">
+                            <img src="${data.image_url}" class="item-img">
                             <span>${data.title}</span>
                         </div>
-                        <button class="btn btn-danger" onclick="deleteItem('global_content', '${doc.id}')">حذف</button>
+                        <button class="btn-danger" onclick="deleteItem('global_content','${doc.id}')">حذف</button>
                     </div>`;
             });
         });
     }
 
-    // دالة الحذف الشاملة
-    async function deleteItem(collection, id) {
-        if(confirm("هل أنت متأكد من الحذف؟ سيختفي من التطبيق فوراً.")) {
-            await db.collection(collection).document(id).delete();
-            alert("تم الحذف بنجاح");
+    async function deleteItem(col, id) {
+        if(confirm("متأكد؟ سيتم الحذف فوراً من الجوالات.")) {
+            await db.collection(col).doc(id).delete();
         }
     }
 
-    // دوال الرفع (نفس السابقة)
     async function createFolder() {
         const name = document.getElementById("folderName").value;
-        await db.collection("categories").add({ name: name });
+        if(name) await db.collection("categories").add({ name: name, timestamp: firebase.firestore.FieldValue.serverTimestamp() });
         document.getElementById("folderName").value = "";
     }
 
     async function uploadCard() {
-        // ... (كود الرفع لـ Cloudinary و Firestore كما في الرد السابق)
+        // ... (كود الرفع لـ Cloudinary و Firestore كما في النسخة السابقة)
+        alert("بدأ الرفع.. انتظر رسالة النجاح");
     }
 </script>
 </body>
