@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LAMA | لوحة التحكم الذكية</title>
+    <title>LAMA Admin | لوحة التحكم الذكية</title>
     
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
@@ -15,7 +15,7 @@
             --soft-green: #B9F3E4;   
             --bg-beige: #FDFBF7;     
             --text-dark: #333333;
-            --card-white: #ffffff;
+            --accent-green: #57C5B6;
         }
 
         body {
@@ -28,37 +28,29 @@
             min-height: 100vh;
         }
 
-        /* حاوية اللوحة الأساسية */
         .container {
-            background: var(--card-white);
-            padding: 3rem;
+            background: #ffffff;
+            padding: 2.5rem;
             border-radius: 25px;
             box-shadow: 0 15px 40px rgba(162, 210, 255, 0.2); 
             width: 100%;
             max-width: 500px;
             border: 2px solid var(--primary-blue);
             text-align: center;
-            position: relative;
         }
 
         .logo {
-            font-size: 4.5rem;
+            font-size: 4rem;
             font-weight: 900;
-            letter-spacing: 8px;
-            background: linear-gradient(to right, var(--primary-blue), #57C5B6);
+            letter-spacing: 5px;
+            background: linear-gradient(to right, var(--primary-blue), var(--accent-green));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.05));
             margin-bottom: 5px;
         }
 
-        .welcome-text {
-            color: #666;
-            margin-bottom: 2rem;
-            font-weight: bold;
-        }
+        .welcome-text { color: #666; margin-bottom: 2rem; font-weight: bold; }
 
-        /* عداد المستخدمين المدمج */
         .stats-badge {
             background: var(--soft-green);
             padding: 8px 15px;
@@ -68,70 +60,38 @@
             gap: 10px;
             font-weight: bold;
             margin-bottom: 20px;
-            font-size: 0.9rem;
         }
 
-        .input-group {
-            margin-bottom: 1.5rem;
-            text-align: right;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 0.6rem;
-            color: var(--text-dark);
-            font-weight: bold;
-        }
-
+        .input-group { margin-bottom: 1.2rem; text-align: right; }
+        label { display: block; margin-bottom: 0.5rem; font-weight: bold; color: var(--text-dark); }
+        
         input, select {
-            width: 100%;
-            padding: 15px;
-            border-radius: 12px;
-            border: 2px solid #eee;
-            background: #fafafa;
-            color: #333;
-            box-sizing: border-box;
-            transition: 0.3s;
+            width: 100%; padding: 12px; border-radius: 12px;
+            border: 2px solid #eee; background: #fafafa;
+            box-sizing: border-box; transition: 0.3s;
         }
 
-        input:focus {
-            outline: none;
-            border-color: var(--primary-blue);
-            background: white;
+        input:focus { border-color: var(--primary-blue); outline: none; background: white; }
+
+        .btn-action {
+            width: 100%; padding: 15px; border: none; border-radius: 15px;
+            background: linear-gradient(45deg, var(--primary-blue), var(--accent-green));
+            color: white; font-size: 1.1rem; font-weight: 900;
+            cursor: pointer; transition: 0.3s; margin-top: 10px;
         }
 
-        .btn-publish {
-            width: 100%;
-            padding: 18px;
-            border: none;
-            border-radius: 15px;
-            background: linear-gradient(45deg, var(--primary-blue), #57C5B6);
-            color: white;
-            font-size: 1.2rem;
-            font-weight: 900;
-            cursor: pointer;
-            transition: 0.3s;
-            margin-top: 1rem;
+        .btn-action:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(162, 210, 255, 0.3); }
+
+        .record-box {
+            display: flex; gap: 10px; margin-top: 10px; align-items: center;
         }
 
-        .btn-publish:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(162, 210, 255, 0.4);
-        }
-
-        .loader {
-            display: none;
-            width: 20px;
-            height: 20px;
-            border: 3px solid #fff;
-            border-top: 3px solid transparent;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin: 0 auto;
-        }
-
+        #recordBtn { background: #ff6b6b; color: white; border: none; padding: 10px; border-radius: 10px; cursor: pointer; flex: 1; font-weight: bold;}
+        
+        .loader { display: none; width: 20px; height: 20px; border: 3px solid #fff; border-top: 3px solid transparent; border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto; }
         @keyframes spin { 100% { transform: rotate(360deg); } }
 
+        hr { border: 0; border-top: 1px solid #eee; margin: 25px 0; }
     </style>
 </head>
 <body>
@@ -140,56 +100,60 @@
     <div class="logo">LAMA</div>
     <p class="welcome-text">لوحة تحكم طلال (USR7N)</p>
     <div class="input-group">
-        <label>كلمة مرور المسؤول</label>
-        <input type="password" id="adminPass" placeholder="أدخل كلمة المرور...">
+        <label>كلمة المرور</label>
+        <input type="password" id="adminPass" placeholder="••••••••">
     </div>
-    <button class="btn-publish" onclick="checkPass()">دخول</button>
+    <button class="btn-action" onclick="checkPass()">دخول</button>
 </div>
 
 <div class="container" id="mainPanel" style="display:none;">
     <div class="stats-badge">
-        <span>👥</span>
-        <span id="userCount">0</span>
-        <span>مستخدم نشط الآن</span>
+        <span>👥</span> <span id="userCount">0</span> <span>جهاز مسجل</span>
     </div>
-    <div class="logo" style="font-size: 3rem;">LAMA</div>
-    <p class="welcome-text">إدارة المحتوى التعليمي</p>
+    <div class="logo" style="font-size: 2.5rem;">LAMA</div>
 
     <div class="input-group">
-        <label>إضافة مجلد جديد</label>
+        <label>١. إضافة مجلد جديد</label>
         <div style="display: flex; gap: 8px;">
-            <input type="text" id="folderName" placeholder="مثال: الفواكه">
+            <input type="text" id="folderName" placeholder="مثال: الأفعال">
             <button onclick="createFolder()" style="background: var(--soft-green); border: none; padding: 0 15px; border-radius: 10px; cursor: pointer; font-weight: bold;">+</button>
         </div>
     </div>
 
-    <hr style="border: 0; border-top: 1px solid #eee; margin: 20px 0;">
+    <hr>
 
     <div class="input-group">
-        <label>اختيار المجلد</label>
-        <select id="folderSelect">
-            <option value="">جاري التحميل...</option>
-        </select>
+        <label>٢. المجلد المستهدف</label>
+        <select id="folderSelect"><option>جاري التحميل...</option></select>
     </div>
 
     <div class="input-group">
-        <label>اسم البطاقة</label>
-        <input type="text" id="cardTitle" placeholder="مثال: تفاحة">
+        <label>٣. اسم البطاقة</label>
+        <input type="text" id="cardTitle" placeholder="مثال: أريد أن أشرب">
     </div>
 
     <div class="input-group" style="display: flex; gap: 10px;">
         <div style="flex: 1;">
-            <label>الصورة</label>
-            <input type="file" id="cardImage" accept="image/*">
+            <label>الصورة/فيديو</label>
+            <input type="file" id="cardImage" accept="image/*,video/*">
         </div>
         <div style="flex: 1;">
-            <label>الصوت</label>
-            <input type="file" id="cardAudio" accept="audio/*">
+            <label>صوت جاهز</label>
+            <input type="file" id="cardAudio" accept="audio/*,video/*">
         </div>
     </div>
 
-    <button class="btn-publish" id="uploadBtn" onclick="uploadCard()">
-        <span id="btnText">إرسال للتطبيق 🚀</span>
+    <div class="input-group">
+        <label>أو سجل صوتك الآن بشكل مرتب:</label>
+        <div class="record-box">
+            <button id="recordBtn" onclick="toggleRecording()">🎤 ابدأ التسجيل</button>
+            <span id="timer" style="display:none; color: red; font-weight: bold;">00:00</span>
+        </div>
+        <audio id="audioPreview" controls style="display:none; width: 100%; margin-top: 10px;"></audio>
+    </div>
+
+    <button class="btn-action" id="uploadBtn" onclick="uploadCard()">
+        <span id="btnText">نشر في التطبيق 🚀</span>
         <div class="loader" id="loader"></div>
     </button>
 </div>
@@ -210,32 +174,52 @@
     const CLOUD_NAME = "dmj9rw7fx";
     const UPLOAD_PRESET = "tlal-1234";
 
-    // دالة الدخول
+    let mediaRecorder;
+    let audioChunks = [];
+    window.recordedAudioBlob = null;
+
     function checkPass() {
-        const pass = document.getElementById('adminPass').value;
-        if (pass === "1234") { // كلمة المرور الخاصة بك
+        if (document.getElementById('adminPass').value === "1234") {
             document.getElementById('loginBox').style.display = 'none';
             document.getElementById('mainPanel').style.display = 'block';
-            startTracking();
-        } else {
-            alert("خطأ في كلمة المرور");
-        }
+            initApp();
+        } else { alert("كلمة المرور خطأ!"); }
     }
 
-    function startTracking() {
-        // تحديث العداد
+    function initApp() {
         db.collection("analytics").doc("users_stats").onSnapshot(doc => {
-            if(doc.exists) document.getElementById("userCount").innerText = doc.data().total_opens || 0;
+            if(doc.exists) document.getElementById("userCount").innerText = doc.data().total_devices || 0;
         });
-
-        // تحميل المجلدات
         db.collection("categories").onSnapshot(snapshot => {
             const select = document.getElementById("folderSelect");
-            select.innerHTML = '<option value="">-- اختر المجلد --</option>';
+            select.innerHTML = '<option value="">-- اختر مجلد --</option>';
             snapshot.forEach(doc => {
                 select.innerHTML += `<option value="${doc.id}">${doc.data().name}</option>`;
             });
         });
+    }
+
+    async function toggleRecording() {
+        const btn = document.getElementById('recordBtn');
+        if (btn.innerText.includes("ابدأ")) {
+            const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+            mediaRecorder = new MediaRecorder(stream);
+            mediaRecorder.start();
+            btn.innerText = "🛑 إيقاف وحفظ";
+            btn.style.background = "#333";
+            audioChunks = [];
+            mediaRecorder.ondataavailable = e => audioChunks.push(e.data);
+        } else {
+            mediaRecorder.stop();
+            btn.innerText = "🎤 ابدأ التسجيل";
+            btn.style.background = "#ff6b6b";
+            mediaRecorder.onstop = () => {
+                window.recordedAudioBlob = new Blob(audioChunks, { type: 'audio/mp3' });
+                const audioUrl = URL.createObjectURL(window.recordedAudioBlob);
+                const preview = document.getElementById('audioPreview');
+                preview.src = audioUrl; preview.style.display = "block";
+            };
+        }
     }
 
     async function createFolder() {
@@ -243,7 +227,6 @@
         if(!name) return;
         await db.collection("categories").add({ name: name, timestamp: firebase.firestore.FieldValue.serverTimestamp() });
         document.getElementById("folderName").value = "";
-        alert("تم إنشاء المجلد");
     }
 
     async function uploadToCloudinary(file) {
@@ -259,14 +242,12 @@
         const folderId = document.getElementById("folderSelect").value;
         const title = document.getElementById("cardTitle").value;
         const imgFile = document.getElementById("cardImage").files[0];
-        const audFile = document.getElementById("cardAudio").files[0];
+        const audFile = document.getElementById("cardAudio").files[0] || window.recordedAudioBlob;
 
-        if(!folderId || !title || !imgFile || !audFile) return alert("أكمل البيانات");
+        if(!folderId || !title || !imgFile || !audFile) return alert("أكمل البيانات أولاً!");
 
-        const btnText = document.getElementById("btnText");
-        const loader = document.getElementById("loader");
-        btnText.style.display = "none";
-        loader.style.display = "block";
+        document.getElementById("btnText").style.display = "none";
+        document.getElementById("loader").style.display = "block";
 
         try {
             const imgUrl = await uploadToCloudinary(imgFile);
@@ -284,8 +265,8 @@
             location.reload();
         } catch (e) {
             alert("خطأ: " + e.message);
-            btnText.style.display = "block";
-            loader.style.display = "none";
+            document.getElementById("btnText").style.display = "block";
+            document.getElementById("loader").style.display = "none";
         }
     }
 </script>
