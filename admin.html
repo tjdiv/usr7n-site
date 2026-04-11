@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة تحكم طلال - تطبيق التواصل</title>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js"></script>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f0f2f5; display: flex; justify-content: center; padding: 20px; }
+        .card { background: white; padding: 30px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 100%; max-width: 450px; }
+        h2 { color: #1a73e8; text-align: center; margin-bottom: 25px; }
+        label { display: block; margin-top: 15px; font-weight: bold; color: #555; }
+        input[type="text"], input[type="password"], input[type="file"] { width: 100%; padding: 12px; margin-top: 5px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; }
+        button { width: 100%; background-color: #34a853; color: white; padding: 15px; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 25px; transition: 0.3s; }
+        button:hover { background-color: #2d8e47; }
+        #status { margin-top: 15px; text-align: center; color: #666; font-size: 14px; }
+        progress { width: 100%; height: 20px; margin-top: 10px; display: none; }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <h2>إضافة بطاقة جديدة للمستخدمين</h2>
+    
+    <label>كلمة مرور الإدارة:</label>
+    <input type="password" id="adminPass" placeholder="أدخل كلمة المرور لحماية الرفع">
+    <hr style="margin: 20px 0; border: 0; border-top: 1px solid #eee;">
+
+    <label>اسم الصورة (مثال: حصان):</label>
+    <input type="text" id="itemName" placeholder="اكتب الاسم هنا...">
+
+    <label>اختر الصورة:</label>
+    <input type="file" id="imgFile" accept="image/*">
+
+    <label>اختر ملف الصوت (النطق):</label>
+    <input type="file" id="audioFile" accept="audio/*">
+
+    <progress id="uploadProgress" value="0" max="100"></progress>
+    <div id="status">جاهز للرفع</div>
+    
+    <button onclick="startUpload()">رفع وإرسال للتطبيقات</button>
+</div>
+
+<script>
+    // إعدادات Firebase الخاصة بمشروعك يا طلال
+    const firebaseConfig = {
+      apiKey: "AIzaSyByCUmUMfowIjuz94CnMLLstvcUlTjvi0c",
+      authDomain: "aaa-app-usr.firebaseapp.com",
+      projectId: "aaa-app-usr",
+      storageBucket: "aaa-app-usr.firebasestorage.app",
+      messagingSenderId: "73920829150",
+      appId: "1:73920829150:web:8b770c78afc13f97c1544f"
+    };
+
+    // بدء تشغيل Firebase
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+    const storage = firebase.storage();
+
+    async function startUpload() {
+        const pass = document.getElementById('adminPass').value;
+        const name = document.getElementById('itemName').value;
+        const imgFile = document.getElementById('imgFile').files[0];
+        const audioFile = document.getElementById('audioFile').files[0];
+        const status = document.getElementById('status');
+        const prog = document.getElementById('uploadProgress');
+
+        // حماية بسيطة بكلمة مرور (يمكنك تغيير 123456 لأي شيء تريده)
+        if (pass !== "123456") {
+            alert("عذراً، كلمة مرور الإدارة خاطئة!");
+            return;
+        }
+
+        if (!name || !imgFile || !audioFile) {
+            alert("يرجى تعبئة جميع الحقول واختيار الملفات");
+            return;
+        }
+
+        try {
+            status.innerText = "جاري الرفع... يرجى الانتظار";
+            prog.style.display = "block";
+
+            // 1. رفع الصورة إلى Storage
+            const imgRef = storage.ref(`images/${Date.now()}_${imgFile.name}`);
+            await imgRef.put(imgFile);
+            const imgUrl = await imgRef.getDownloadURL();
+
+            // 2. رفع ملف الصوت إلى Storage
+            const audioRef = storage.ref(`audios/${Date.now()}_${audioFile.name}`);
+            await audioRef.put(audioFile);
+            const audioUrl = await audioRef.getDownloadURL();
+
+            // 3. حفظ البيانات في Firestore لكي يراها التطبيق فوراً
+            await db.collection("global_content").add({
+                title: name,
+                image_url: imgUrl,
+                audio_url: audioUrl,
+                createdAt: firebase.firestore.FieldValue.serverTimestamp()
+            });
+
+            status.innerText = "✅ تم الرفع بنجاح! ستظهر عند المستخدمين الآن.";
+            alert("تم التحديث بنجاح");
+            location.reload();
+
+        } catch (error) {
+            console.error(error);
+            status.innerText = "❌ حدث خطأ أثناء الرفع: " + error.message;
+        }
+    }
+</script>
+
+</body>
+</html>
