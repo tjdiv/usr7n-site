@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LAMA Admin | نظام الإدارة المتكامل</title>
+    <title>LAMA Admin | لوحة التحكم المتكاملة</title>
     
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
@@ -22,100 +22,58 @@
         body {
             font-family: 'Tajawal', sans-serif;
             background-color: var(--bg-beige);
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
+            margin: 0; padding: 0;
+            display: flex; justify-content: center; align-items: center; min-height: 100vh;
         }
 
-        /* --- شاشة تسجيل الدخول المنفصلة --- */
+        /* شاشة تسجيل الدخول */
         #loginScreen {
-            width: 100%;
-            max-width: 400px;
-            padding: 2rem;
-            background: white;
-            border-radius: 30px;
-            box-shadow: var(--card-shadow);
-            border: 2px solid var(--primary-blue);
-            text-align: center;
+            width: 100%; max-width: 400px; padding: 2.5rem;
+            background: white; border-radius: 30px; box-shadow: var(--card-shadow);
+            border: 2px solid var(--primary-blue); text-align: center;
         }
 
-        /* --- لوحة التحكم (تظهر بعد الدخول) --- */
+        /* لوحة التحكم */
         #adminDashboard {
-            display: none; /* مخفية في البداية */
-            width: 95%;
-            max-width: 1000px;
-            margin: 20px;
-            display: grid;
-            grid-template-columns: 1fr 1.5fr; /* تقسيم الشاشة لقسمين */
-            gap: 20px;
+            display: none; width: 95%; max-width: 1100px; margin: 20px;
+            display: grid; grid-template-columns: 1fr 1.2fr; gap: 25px;
         }
 
-        @media (max-width: 800px) {
-            #adminDashboard { grid-template-columns: 1fr; }
-        }
+        @media (max-width: 900px) { #adminDashboard { grid-template-columns: 1fr; } }
 
-        .card {
-            background: white;
-            padding: 1.5rem;
-            border-radius: 20px;
-            box-shadow: var(--card-shadow);
-            border: 1px solid #eee;
-        }
-
-        .logo {
-            font-size: 3rem;
-            font-weight: 900;
-            background: linear-gradient(45deg, var(--primary-blue), #57C5B6);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 10px;
-        }
+        .card { background: white; padding: 2rem; border-radius: 25px; box-shadow: var(--card-shadow); border: 1px solid #eee; }
+        .logo { font-size: 2.5rem; font-weight: 900; background: linear-gradient(45deg, var(--primary-blue), #57C5B6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 15px; text-align: center; }
 
         .input-group { margin-bottom: 1.2rem; text-align: right; }
-        label { display: block; margin-bottom: 5px; font-weight: bold; color: #555; }
+        label { display: block; margin-bottom: 8px; font-weight: bold; color: #444; }
         
-        input, select {
-            width: 100%; padding: 12px; border-radius: 12px;
-            border: 2px solid #f0f0f0; background: #fafafa;
-            box-sizing: border-box; transition: 0.3s;
-        }
-
+        input, select { width: 100%; padding: 12px; border-radius: 12px; border: 2px solid #f0f0f0; background: #fafafa; box-sizing: border-box; transition: 0.3s; font-family: 'Tajawal'; }
         input:focus { border-color: var(--primary-blue); outline: none; background: white; }
 
-        .btn {
-            width: 100%; padding: 14px; border: none; border-radius: 12px;
-            font-weight: 900; cursor: pointer; transition: 0.3s;
-        }
-
+        .btn { width: 100%; padding: 14px; border: none; border-radius: 12px; font-weight: 900; cursor: pointer; transition: 0.3s; font-family: 'Tajawal'; }
         .btn-blue { background: var(--primary-blue); color: white; }
         .btn-green { background: #57C5B6; color: white; margin-top: 10px; }
-        .btn-danger { background: var(--danger); color: white; padding: 5px 10px; width: auto; font-size: 0.8rem; }
+        .btn-danger { background: var(--danger); color: white; padding: 6px 12px; width: auto; font-size: 0.8rem; border-radius: 8px; }
 
-        /* --- قائمة الإدارة والحذف --- */
-        .scroll-area { max-height: 400px; overflow-y: auto; margin-top: 10px; }
-        .list-item {
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 10px; border-bottom: 1px solid #f9f9f9;
-        }
-        .item-preview { display: flex; align-items: center; gap: 10px; }
-        .item-img { width: 40px; height: 40px; border-radius: 8px; object-fit: cover; }
+        .scroll-area { max-height: 450px; overflow-y: auto; margin-top: 10px; padding-left: 5px; }
+        .list-item { display: flex; justify-content: space-between; align-items: center; padding: 12px; border-bottom: 1px solid #f5f5f5; transition: 0.2s; }
+        .list-item:hover { background: #fdfdfd; }
+        .item-preview { display: flex; align-items: center; gap: 12px; }
+        .item-img { width: 45px; height: 45px; border-radius: 10px; object-fit: cover; border: 1px solid #eee; }
 
-        .stats-badge {
-            background: var(--soft-green);
-            padding: 10px; border-radius: 15px;
-            display: flex; justify-content: center; gap: 15px; font-weight: bold; margin-bottom: 15px;
-        }
+        .stats-badge { background: var(--soft-green); padding: 12px; border-radius: 15px; display: flex; justify-content: center; gap: 15px; font-weight: bold; margin-bottom: 20px; }
+        
+        hr { border: 0; border-top: 2px dashed #eee; margin: 25px 0; }
+        .loader { display:none; margin: 10px auto; width: 25px; height: 25px; border: 3px solid #f3f3f3; border-top: 3px solid var(--primary-blue); border-radius: 50%; animation: spin 1s linear infinite; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
 
 <div id="loginScreen">
     <div class="logo">LAMA</div>
-    <p style="font-weight: bold; color: #888;">لوحة تحكم المشرف (طلال)</p>
     <div class="input-group">
-        <label>رمز الدخول الآمن</label>
+        <label>رمز دخول المشرف</label>
         <input type="password" id="adminPass" placeholder="••••••••">
     </div>
     <button class="btn btn-blue" onclick="attemptLogin()">دخول للنظام</button>
@@ -126,53 +84,57 @@
     <div class="side-panel">
         <div class="card">
             <div class="stats-badge">
-                <span>👥 <span id="userCount">0</span> جهاز</span>
+                <span>👥 <span id="userCount">0</span> جهاز متصل</span>
             </div>
-            <div class="logo" style="font-size: 2rem;">إضافة محتوى</div>
             
+            <div class="logo" style="font-size: 1.8rem;">📦 إنشاء مجلد جديد</div>
             <div class="input-group">
-                <label>إنشاء مجلد</label>
-                <div style="display: flex; gap: 5px;">
-                    <input type="text" id="folderName" placeholder="اسم المجلد">
-                    <button class="btn btn-blue" style="width: 50px;" onclick="createFolder()">+</button>
-                </div>
+                <label>اسم المجلد</label>
+                <input type="text" id="folderName" placeholder="مثل: الفواكه، الحيوانات..">
             </div>
-
-            <hr style="border: 0; border-top: 1px solid #eee; margin: 20px 0;">
-
             <div class="input-group">
-                <label>المجلد</label>
+                <label>صورة غلاف المجلد</label>
+                <input type="file" id="folderImage" accept="image/*">
+            </div>
+            <button class="btn btn-blue" onclick="createFolderWithImage()">إنشاء المجلد بغلاف 🖼️</button>
+
+            <hr>
+
+            <div class="logo" style="font-size: 1.8rem;">🃏 إضافة بطاقة جديدة</div>
+            <div class="input-group">
+                <label>اختر المجلد</label>
                 <select id="folderSelect"></select>
             </div>
             <div class="input-group">
-                <label>الاسم</label>
-                <input type="text" id="cardTitle">
+                <label>اسم البطاقة</label>
+                <input type="text" id="cardTitle" placeholder="مثل: تفاحة حمراء">
             </div>
-            <div class="input-group" style="display: flex; gap: 5px;">
-                <input type="file" id="cardImage" accept="image/*" title="الصورة">
-                <input type="file" id="cardAudio" accept="audio/*,video/*" title="الصوت">
+            <div class="input-group" style="display: flex; gap: 10px;">
+                <div style="flex:1"><label>الصورة</label><input type="file" id="cardImage" accept="image/*"></div>
+                <div style="flex:1"><label>الصوت/فيديو</label><input type="file" id="cardAudio" accept="audio/*,video/*"></div>
             </div>
             <button class="btn btn-green" onclick="uploadCard()">نشر في التطبيق 🚀</button>
+            <div id="mainLoader" class="loader"></div>
         </div>
     </div>
 
     <div class="main-panel">
         <div class="card">
-            <h3 style="color: var(--primary-blue); margin-top: 0;">📦 إدارة المجلدات والبطاقات</h3>
+            <h3 style="color: var(--primary-blue); margin: 0 0 20px 0; text-align: right;">🛠️ إدارة المحتوى الحالي</h3>
             
-            <label>قائمة المجلدات (Categories)</label>
+            <label>المجلدات المتاحة</label>
             <div id="catList" class="scroll-area"></div>
 
-            <hr style="border: 0; border-top: 1px solid #eee; margin: 20px 0;">
+            <hr>
 
-            <label>قائمة البطاقات (Cards)</label>
+            <label>البطاقات المنشورة</label>
             <div id="cardList" class="scroll-area"></div>
         </div>
     </div>
 </div>
 
 <script>
-    // --- Firebase Config ---
+    // --- إعدادات Firebase (ضع إعداداتك هنا) ---
     const firebaseConfig = {
         apiKey: "AIzaSy...", 
         authDomain: "aaa-app-usr.firebaseapp.com",
@@ -186,39 +148,40 @@
     const CLOUD_NAME = "dmj9rw7fx";
     const UPLOAD_PRESET = "tlal-1234";
 
-    // دالة الدخول وفصل الشاشات
     function attemptLogin() {
-        const pass = document.getElementById('adminPass').value;
-        if (pass === "1234") {
+        if (document.getElementById('adminPass').value === "1234") {
             document.getElementById('loginScreen').style.display = 'none';
-            document.getElementById('adminDashboard').style.display = 'grid'; // تشغيل وضع الـ Grid
-            document.body.style.alignItems = 'flex-start'; // تغيير وضع الصفحة لتناسب اللوحة
+            document.getElementById('adminDashboard').style.display = 'grid';
             startSystem();
-        } else {
-            alert("خطأ في الرمز!");
-        }
+        } else { alert("الرمز غير صحيح!"); }
     }
 
     function startSystem() {
-        // تحديث العداد
         db.collection("analytics").doc("users_stats").onSnapshot(doc => {
             if(doc.exists) document.getElementById("userCount").innerText = doc.data().total_devices || 0;
         });
 
-        // تحميل المجلدات
-        db.collection("categories").onSnapshot(snapshot => {
+        // عرض المجلدات مع صورها
+        db.collection("categories").orderBy("timestamp", "desc").onSnapshot(snapshot => {
             const select = document.getElementById("folderSelect");
             const catList = document.getElementById("catList");
             select.innerHTML = ""; catList.innerHTML = "";
             snapshot.forEach(doc => {
                 const data = doc.data();
                 select.innerHTML += `<option value="${doc.id}">${data.name}</option>`;
-                catList.innerHTML += `<div class="list-item"><span>📁 ${data.name}</span> <button class="btn-danger" onclick="deleteItem('categories','${doc.id}')">حذف</button></div>`;
+                catList.innerHTML += `
+                    <div class="list-item">
+                        <div class="item-preview">
+                            <img src="${data.image_url || 'https://via.placeholder.com/50'}" class="item-img">
+                            <span style="font-weight:bold">${data.name}</span>
+                        </div>
+                        <button class="btn-danger" onclick="deleteItem('categories','${doc.id}')">حذف</button>
+                    </div>`;
             });
         });
 
-        // تحميل البطاقات
-        db.collection("global_content").onSnapshot(snapshot => {
+        // عرض البطاقات
+        db.collection("global_content").orderBy("timestamp", "desc").onSnapshot(snapshot => {
             const list = document.getElementById("cardList");
             list.innerHTML = "";
             snapshot.forEach(doc => {
@@ -235,21 +198,63 @@
         });
     }
 
-    async function deleteItem(col, id) {
-        if(confirm("متأكد؟ سيتم الحذف فوراً من الجوالات.")) {
-            await db.collection(col).doc(id).delete();
-        }
+    async function uploadToCloudinary(file) {
+        const formData = new FormData();
+        formData.append("file", file);
+        formData.append("upload_preset", UPLOAD_PRESET);
+        const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/auto/upload`, { method: "POST", body: formData });
+        const data = await res.json();
+        return data.secure_url;
     }
 
-    async function createFolder() {
+    // إنشاء مجلد مع غلاف
+    async function createFolderWithImage() {
         const name = document.getElementById("folderName").value;
-        if(name) await db.collection("categories").add({ name: name, timestamp: firebase.firestore.FieldValue.serverTimestamp() });
-        document.getElementById("folderName").value = "";
+        const file = document.getElementById("folderImage").files[0];
+        if(!name || !file) return alert("يرجى كتابة اسم المجلد واختيار صورة غلاف له");
+
+        document.getElementById("mainLoader").style.display = "block";
+        try {
+            const imgUrl = await uploadToCloudinary(file);
+            await db.collection("categories").add({
+                name: name,
+                image_url: imgUrl,
+                timestamp: firebase.firestore.FieldValue.serverTimestamp()
+            });
+            alert("تم إنشاء المجلد بنجاح 🎉");
+            document.getElementById("folderName").value = "";
+        } catch(e) { alert("خطأ: " + e.message); }
+        document.getElementById("mainLoader").style.display = "none";
     }
 
     async function uploadCard() {
-        // ... (كود الرفع لـ Cloudinary و Firestore كما في النسخة السابقة)
-        alert("بدأ الرفع.. انتظر رسالة النجاح");
+        const folderId = document.getElementById("folderSelect").value;
+        const title = document.getElementById("cardTitle").value;
+        const imgFile = document.getElementById("cardImage").files[0];
+        const audFile = document.getElementById("cardAudio").files[0];
+
+        if(!folderId || !title || !imgFile || !audFile) return alert("أكمل بيانات البطاقة!");
+
+        document.getElementById("mainLoader").style.display = "block";
+        try {
+            const imgUrl = await uploadToCloudinary(imgFile);
+            const audUrl = await uploadToCloudinary(audFile);
+            await db.collection("global_content").add({
+                category_id: folderId,
+                title: title,
+                image_url: imgUrl,
+                audio_url: audUrl,
+                timestamp: firebase.firestore.FieldValue.serverTimestamp()
+            });
+            alert("تم نشر البطاقة بنجاح 🚀");
+        } catch(e) { alert("خطأ في الرفع"); }
+        document.getElementById("mainLoader").style.display = "none";
+    }
+
+    async function deleteItem(col, id) {
+        if(confirm("هل أنت متأكد؟ سيحذف نهائياً من التطبيق.")) {
+            await db.collection(col).doc(id).delete();
+        }
     }
 </script>
 </body>
