@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سياسة الخصوصية - تطبيق الراصد Scout</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #1a237e; /* أزرق تكتيكي */
+            --accent-color: #2e7d32;  /* أخضر عسكري */
+            --bg-color: #f8f9fa;
+            --text-color: #263238;
+            --card-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            line-height: 1.8;
+        }
+
+        header {
+            background: linear-gradient(135deg, #0d47a1 0%, #1a237e 100%);
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+            clip-path: polygon(0 0, 100% 0, 100% 85%, 0% 100%);
+        }
+
+        .container {
+            max-width: 900px;
+            margin: -50px auto 50px;
+            padding: 20px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 35px;
+            margin-bottom: 25px;
+            box-shadow: var(--card-shadow);
+            border-right: 6px solid var(--primary-color);
+        }
+
+        h1 { margin: 0; font-size: 2.4rem; font-weight: 700; }
+        h2 { color: var(--primary-color); border-bottom: 2px solid #e0e0e0; padding-bottom: 10px; margin-top: 0; }
+        h3 { color: var(--accent-color); font-size: 1.2rem; margin-bottom: 10px; }
+
+        .date-label {
+            background: rgba(255,255,255,0.2);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            display: inline-block;
+            margin-top: 15px;
+        }
+
+        ul { padding-right: 20px; }
+        li { margin-bottom: 10px; }
+
+        .permission-box {
+            background: #f1f3f4;
+            padding: 15px;
+            border-radius: 8px;
+            border-right: 4px solid var(--accent-color);
+            margin: 15px 0;
+        }
+
+        .contact-section {
+            background: #1a237e;
+            color: white;
+            text-align: center;
+            padding: 30px;
+            border-radius: 15px;
+            margin-top: 40px;
+        }
+
+        .contact-section a {
+            color: #ffca28;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #78909c;
+            font-size: 0.85rem;
+        }
+
+        @media (max-width: 600px) {
+            h1 { font-size: 1.8rem; }
+            .container { margin-top: 20px; }
+            .card { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>تطبيق الراصد - Scout</h1>
+    <div class="date-label">تاريخ سريان المفعول: 21 أبريل 2026</div>
+</header>
+
+<div class="container">
+    
+    <div class="card">
+        <h2>مقدمة</h2>
+        <p>نحن في فريق تطوير تطبيق <b>"الراصد - Scout"</b> نحترم خصوصيتك ونلتزم بحماية بياناتك الشخصية. توضح هذه السياسة كيف نتعامل مع المعلومات عند استخدامك للتطبيق ووظائفه التكتيكية.</p>
+    </div>
+
+    <div class="card">
+        <h2>1. المعلومات والصلاحيات</h2>
+        <p>يطلب التطبيق الوصول إلى صلاحيات معينة لتقديم أفضل تجربة ملاحية وتكتيكية:</p>
+        
+        <h3>أ. الموقع الجغرافي (Location)</h3>
+        <div class="permission-box">
+            <b>الصلاحيات:</b> ACCESS_FINE_LOCATION & ACCESS_COARSE_LOCATION
+        </div>
+        <p>نستخدم بيانات موقعك لعرض الإحداثيات (MGRS)، ورسم المسارات وحساب المسافات. معالجة هذه البيانات تتم <b>محلياً</b> على جهازك ولا نقوم برفعها لخوادمنا.</p>
+
+        <h3>ب. التخزين (Storage)</h3>
+        <div class="permission-box">
+            <b>الصلاحيات:</b> READ & WRITE EXTERNAL STORAGE
+        </div>
+        <p>تستخدم لحفظ خرائط الأوفلاين (Offline Maps) وقواعد البيانات المحلية للأهداف والمواقع المحفوظة لضمان العمل بدون إنترنت.</p>
+
+        <h3>ج. الإعلانات (Advertising)</h3>
+        <p>نستخدم المعرف الإعلاني (AD_ID) لتقديم إعلانات عبر شبكة Google AdMob لتحسين جودة الخدمة المجانية.</p>
+    </div>
+
+    <div class="card">
+        <h2>2. خدمات الطرف الثالث</h2>
+        <p>يتكامل التطبيق مع خدمات جوجل لضمان الاستقرار:</p>
+        <ul>
+            <li><b>Google Play Services:</b> لخدمات الخرائط والتحديثات.</li>
+            <li><b>Firebase Analytics:</b> لجمع إحصائيات تقنية مجهولة المصدر لتحسين الأداء.</li>
+            <li><b>Google Play Billing:</b> لإدارة عمليات الشراء والميزات المدفوعة بأمان.</li>
+            <li><b>MapLibre / OSM:</b> لتزويد التطبيق ببيانات الخرائط المرئية.</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h2>3. أمن البيانات</h2>
+        <p>نستخدم تقنيات التشفير وقواعد بيانات (Room Database) مؤمنة داخل جهازك. جميع أهدافك التكتيكية ونقاطك المرجعية خاصة بك تماماً ولا يمكننا الوصول إليها.</p>
+    </div>
+
+    <div class="card">
+        <h2>4. الإشعارات</h2>
+        <p>قد نرسل تنبيهات تتعلق بحالة التطبيق أو رسائل تحذيرية تكتيكية. يمكنك التحكم بها عبر إعدادات النظام في أي وقت.</p>
+    </div>
+
+    <div class="card">
+        <h2>5. التغييرات</h2>
+        <p>قد نقوم بتحديث هذه السياسة لتعكس التغييرات في التطبيق. سيتم إخطارك بأي تعديل كبير عبر تحديث هذه الصفحة.</p>
+    </div>
+
+    <div class="contact-section">
+        <h2>اتصل بنا</h2>
+        <p>لديك استفسار؟ لا تتردد في التواصل معنا عبر البريد:</p>
+        <a href="mailto:usr7n@usr7n.com">usr7n@usr7n.com</a>
+    </div>
+
+    <footer>
+        جميع الحقوق محفوظة &copy; 2026 - فريق تطوير الراصد (Scout)
+    </footer>
+</div>
+
+</body>
+</html>
