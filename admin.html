@@ -98,7 +98,6 @@
             color: var(--primary-blue); font-size: 0.9rem; margin-bottom: 20px;
         }
 
-        /* --- المربع النابض الختامي --- */
         .footer-box {
             margin: 40px 0; padding: 15px 35px; background: white;
             border-radius: 20px; border: 1px solid var(--accent-pink);
@@ -157,8 +156,8 @@
                 <input type="text" id="cardTitle" placeholder="عنوان البطاقة">
             </div>
             <div class="input-group" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-                <div><label>الصورة</label><input type="file" id="cardImage" accept="image/*"></div>
-                <div><label>الصوت</label><input type="file" id="cardAudio" accept="audio/*,video/*"></div>
+                <div><label>الصورة (إجباري)</label><input type="file" id="cardImage" accept="image/*"></div>
+                <div><label>الصوت (اختياري)</label><input type="file" id="cardAudio" accept="audio/*,video/*"></div>
             </div>
             <button class="btn btn-green" onclick="uploadCard()">نشر للجميع 🚀</button>
             <div id="mainLoader" class="loader"></div>
@@ -183,7 +182,6 @@
 </div>
 
 <script>
-    // إعدادات Firebase
     const firebaseConfig = {
         apiKey: "AIzaSy...", 
         authDomain: "aaa-app-usr.firebaseapp.com",
@@ -275,16 +273,39 @@
         const title = document.getElementById("cardTitle").value;
         const imgFile = document.getElementById("cardImage").files[0];
         const audFile = document.getElementById("cardAudio").files[0];
-        if(!folderId || !title || !imgFile || !audFile) return alert("أكمل البيانات");
+
+        // لاحظ هنا تم حذف !audFile من الشرط ليكون اختيارياً
+        if(!folderId || !title || !imgFile) return alert("يرجى إدخال العنوان واختيار صورة على الأقل");
+        
         document.getElementById("mainLoader").style.display = "block";
         try {
+            // رفع الصورة (إجباري)
             const imgUrl = await uploadToCloudinary(imgFile);
-            const audUrl = await uploadToCloudinary(audFile);
+            
+            // رفع الصوت فقط إذا كان موجوداً
+            let audUrl = "";
+            if (audFile) {
+                audUrl = await uploadToCloudinary(audFile);
+            }
+
             await db.collection("global_content").add({
-                category_id: folderId, title: title, image_url: imgUrl, audio_url: audUrl,
+                category_id: folderId, 
+                title: title, 
+                image_url: imgUrl, 
+                audio_url: audUrl, // ستكون فارغة إذا لم يتم الرفع
                 timestamp: firebase.firestore.FieldValue.serverTimestamp()
             });
-        } catch(e) { alert("خطأ في النشر"); }
+            
+            // إعادة تعيين الحقول بعد النجاح
+            document.getElementById("cardTitle").value = "";
+            document.getElementById("cardImage").value = "";
+            document.getElementById("cardAudio").value = "";
+            alert("تم النشر بنجاح!");
+            
+        } catch(e) { 
+            console.error(e);
+            alert("خطأ في النشر"); 
+        }
         document.getElementById("mainLoader").style.display = "none";
     }
 
