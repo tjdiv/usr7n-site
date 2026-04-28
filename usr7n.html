@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بيـن | نظام المراقبة العالمي usr7n</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0a0b10;
+            --card: #161b22;
+            --accent: #d8c092;
+            --success: #2ecc71;
+            --error: #e74c3c;
+            --warning: #f1c40f;
+            --text: #e6edf3;
+            --text-dim: #8b949e;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Tajawal', sans-serif;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(216, 192, 146, 0.1);
+        }
+
+        .header h1 {
+            color: var(--accent);
+            font-size: 1.5rem;
+            letter-spacing: 2px;
+        }
+
+        .status-badge {
+            padding: 8px 16px;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(46, 204, 113, 0.1);
+            color: var(--success);
+            border: 1px solid var(--success);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: var(--card);
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid rgba(255,255,255,0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card h2 {
+            font-size: 1rem;
+            color: var(--text-dim);
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .metric {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--accent);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .unit { font-size: 1rem; color: var(--text-dim); margin-left: 5px; }
+
+        .log-container {
+            background: #000;
+            border-radius: 8px;
+            padding: 15px;
+            height: 400px;
+            overflow-y: auto;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            border: 1px solid rgba(216, 192, 146, 0.2);
+        }
+
+        .log-entry {
+            margin-bottom: 10px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #111;
+            line-height: 1.6;
+        }
+
+        .log-time { color: var(--text-dim); }
+        .log-type { color: var(--warning); font-weight: bold; }
+        .log-msg { color: var(--text); }
+        .log-error { color: var(--error); }
+
+        .pulse {
+            width: 10px;
+            height: 10px;
+            background: var(--success);
+            border-radius: 50%;
+            display: inline-block;
+            animation: pulse-anim 2s infinite;
+        }
+
+        @keyframes pulse-anim {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(46, 204, 113, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(46, 204, 113, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(46, 204, 113, 0); }
+        }
+
+        .refresh-btn {
+            background: var(--accent);
+            color: var(--bg);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            font-family: 'Tajawal', sans-serif;
+            transition: all 0.3s;
+        }
+
+        .refresh-btn:hover { transform: scale(1.05); filter: brightness(1.1); }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>نظام مراقبة بيـن | usr7n CONTROL</h1>
+        <div class="status-badge" id="system-health">
+            <span class="pulse"></span>
+            نظام التشغيل: مستقر
+        </div>
+    </div>
+
+    <div class="grid" id="main-grid">
+        <div class="card">
+            <h2>سرعة الاستجابة (Firebase Latency) ⚡</h2>
+            <div class="metric" id="latency-val">--<span class="unit">ms</span></div>
+        </div>
+        <div class="card">
+            <h2>إجمالي الطلبات اليوم 📦</h2>
+            <div class="metric" id="orders-count">--</div>
+        </div>
+        <div class="card">
+            <h2>المستخدمين المتضررين 👥</h2>
+            <div class="metric" id="users-error-count" style="color: var(--error);">0</div>
+        </div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 1fr 350px; gap: 20px; margin-bottom: 30px;">
+        <div class="card">
+            <h2 style="margin-bottom: 10px;">سجل أحداث النظام (Live Logs) 🖥️</h2>
+            <div class="log-container" id="log-list">
+                <div class="log-entry">جاري بدء نظام المراقبة...</div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <h2 style="margin-bottom: 10px;">المستخدمين ذوي المشاكل 🚨</h2>
+            <div id="affected-users-list" style="height: 400px; overflow-y: auto;">
+                <div style="text-align:center; padding:20px; color:var(--text-dim);">لا يوجد مستخدمين متضررين حالياً</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for User Details -->
+    <div id="user-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:1000; justify-content:center; align-items:center;">
+        <div class="card" style="width:90%; max-width:600px; max-height:80vh; overflow-y:auto; border: 2px solid var(--accent);">
+            <div style="display:flex; justify-content:space-between; margin-bottom:20px;">
+                <h2 id="modal-user-name">تفاصيل المستخدم</h2>
+                <button onclick="document.getElementById('user-modal').style.display='none'" style="background:none; border:none; color:var(--text); font-size:1.5rem; cursor:pointer;">✕</button>
+            </div>
+            <div id="modal-user-logs" class="log-container" style="height:auto; max-height:400px;"></div>
+        </div>
+    </div>
+
+    <div style="text-align: center;">
+        <button class="refresh-btn" onclick="location.reload()">تحديث النظام يدوياً</button>
+    </div>
+
+    <!-- Firebase Libraries -->
+    <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore-compat.js"></script>
+
+    <script>
+        try {
+            const firebaseConfig = {
+              apiKey: "AIzaSyBB4CfmM4r_Z8rkbGdz5AwrOqSv6rX6twg",
+              authDomain: "bayn-35bfc.firebaseapp.com",
+              projectId: "bayn-35bfc",
+              storageBucket: "bayn-35bfc.firebasestorage.app",
+              messagingSenderId: "807550594027",
+              appId: "1:807550594027:web:2df73db12b872b76ee47ae"
+            };
+
+            const app = firebase.initializeApp(firebaseConfig);
+            const db = firebase.firestore();
+
+            const latencyVal = document.getElementById('latency-val');
+            const ordersCount = document.getElementById('orders-count');
+            const usersErrorCount = document.getElementById('users-error-count');
+            const logList = document.getElementById('log-list');
+            const affectedUsersList = document.getElementById('affected-users-list');
+            const systemHealth = document.getElementById('system-health');
+
+            const usersData = {}; // To store user-specific logs
+
+            function addLog(msg, type = 'info', user = null) {
+                const entry = document.createElement('div');
+                entry.className = 'log-entry';
+                const time = new Date().toLocaleTimeString();
+                const userTag = user && user.name ? `<span style="color:var(--accent); font-size:0.7rem;">[${user.name}]</span>` : '';
+                entry.innerHTML = `<span class="log-time">[${time}]</span> ${userTag} <span class="log-type">[${type.toUpperCase()}]</span> <span class="log-msg ${type === 'error' ? 'log-error' : ''}">${msg}</span>`;
+                if (logList) logList.prepend(entry);
+            }
+
+        function updateAffectedUsers() {
+            affectedUsersList.innerHTML = '';
+            const uniqueUsers = Object.keys(usersData);
+            usersErrorCount.textContent = uniqueUsers.length;
+
+            if (uniqueUsers.length === 0) {
+                affectedUsersList.innerHTML = '<div style="text-align:center; padding:20px; color:var(--text-dim);">لا يوجد مستخدمين متضررين</div>';
+                return;
+            }
+
+            uniqueUsers.forEach(phone => {
+                const u = usersData[phone];
+                const card = document.createElement('div');
+                card.style.cssText = 'background:rgba(231,76,60,0.1); border:1px solid var(--error); padding:10px; border-radius:8px; margin-bottom:10px; cursor:pointer;';
+                card.innerHTML = `
+                    <div style="font-weight:bold; color:var(--text);">${u.name}</div>
+                    <div style="font-size:0.8rem; color:var(--text-dim);">${phone}</div>
+                    <div style="font-size:0.75rem; color:var(--error); margin-top:5px;">⚠️ ${u.logs.length} أخطاء مسجلة</div>
+                `;
+                card.onclick = () => showUserDetails(phone);
+                affectedUsersList.appendChild(card);
+            });
+        }
+
+        function showUserDetails(phone) {
+            const u = usersData[phone];
+            document.getElementById('modal-user-name').textContent = `تفاصيل: ${u.name} (${phone})`;
+            const container = document.getElementById('modal-user-logs');
+            container.innerHTML = u.logs.map(log => {
+                const date = log.timestamp ? log.timestamp.toDate().toLocaleString() : "جاري المزامنة...";
+                return `
+                    <div class="log-entry" style="border-color:#333;">
+                        <div style="color:var(--warning); font-weight:bold;">${log.type}</div>
+                        <div style="color:var(--text);">${log.message}</div>
+                        <div style="font-size:0.7rem; color:var(--text-dim);">${date}</div>
+                    </div>
+                `;
+            }).join('');
+            document.getElementById('user-modal').style.display = 'flex';
+        }
+
+        // 1. قياس سرعة الاستجابة
+        async function measureLatency() {
+            const start = Date.now();
+            try {
+                await db.collection("settings").doc("health_check").set({ last_check: Date.now() });
+                const lat = Date.now() - start;
+                latencyVal.innerHTML = `${lat}<span class="unit">ms</span>`;
+            } catch (e) {
+                latencyVal.innerHTML = `<span style="color:var(--error)">OFFLINE</span>`;
+            }
+        }
+
+        // 2. مراقبة الطلبات والأخطاء
+        function startMonitoring() {
+            const today = new Date();
+            today.setHours(0,0,0,0);
+            
+            addLog("جاري محاولة الاتصال بقاعدة البيانات...", "info");
+
+            db.collection("orders").where("createdAt", ">=", today)
+                .onSnapshot(snap => {
+                    ordersCount.textContent = snap.size;
+                    addLog(`تحديث: عدد الطلبات اليوم هو ${snap.size}`, 'info');
+                }, err => {
+                    addLog("فشل مراقبة الطلبات: " + err.message, 'error');
+                });
+
+            db.collection("system_logs").orderBy("timestamp", "desc").limit(50)
+                .onSnapshot(snap => {
+                    if (snap.empty) {
+                        addLog("لا توجد سجلات أخطاء مسجلة حالياً.", "info");
+                        return;
+                    }
+                    snap.docChanges().forEach(change => {
+                        if (change.type === "added") {
+                            const data = change.doc.data();
+                            const isError = (data.type && (data.type.includes('Error') || data.type.includes('Unhandled')));
+                            
+                            if (isError && data.userPhone && data.userPhone !== "N/A") {
+                                if (!usersData[data.userPhone]) {
+                                    usersData[data.userPhone] = { name: data.userName, logs: [] };
+                                }
+                                usersData[data.userPhone].logs.push(data);
+                                updateAffectedUsers();
+                            }
+
+                            const msg = `${data.page}: ${data.message || 'خطأ غير معروف'}`;
+                            addLog(msg, isError ? 'error' : 'warning', { name: data.userName });
+                        }
+                    });
+                }, err => {
+                    addLog("فشل مراقبة السجلات: " + err.message, 'error');
+                });
+        }
+
+        setInterval(measureLatency, 5000);
+        measureLatency();
+        startMonitoring();
+        addLog("تم تفعيل نظام المراقبة التفاعلي.");
+
+    } catch (err) {
+        console.error("Critical Monitor Error:", err);
+        const logList = document.getElementById('log-list');
+        if (logList) {
+            logList.innerHTML = `<div style="color:red; padding:20px;">خطأ فادح أثناء تشغيل النظام: ${err.message}<br>يرجى التأكد من اتصال الإنترنت وتحميل المكتبات.</div>`;
+        }
+    }
+    </script>
+</body>
+</html>
