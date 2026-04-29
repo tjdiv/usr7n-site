@@ -1,0 +1,1560 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="بيـن | مساحة بين كل شيء - فخامة في صمت">
+    <title>بيـن | BAYN</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600&family=Tajawal:wght@200;300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+</head>
+<body>
+
+    <!-- نافبار -->
+    <!-- نافذة تسجيل بيانات العميل الإجبارية -->
+    <div id="identity-overlay" class="modal-overlay active" style="z-index: 4000; opacity: 1; pointer-events: all; transition: none;">
+        <div class="modal-content login-box" style="padding-top: 20px;">
+            <div class="sidebar-logo" style="border:none; text-align:center;">
+                <img src="2.png" alt="BAYN" style="width: 120px;">
+            </div>
+            <h3 style="text-align:center; color:var(--navy-deep); margin-bottom: 10px;">أهلاً بك في بيـن</h3>
+            <p style="text-align:center; color:var(--brown-mid); margin-bottom: 20px; font-size:0.9rem;">لتجربة تسوق أفضل، يرجى تسجيل بياناتك (لمرة واحدة فقط).</p>
+            <div id="auth-step-google" style="padding: 0 30px 30px;">
+                <button id="btn-google-login" class="modal-btn" style="width:100%; justify-content:center; background-color: #fff; color: var(--navy-deep); border: 1px solid #ccc; display: flex; align-items: center; gap: 10px;">
+                    <svg width="20" height="20" viewBox="0 0 48 48">
+                        <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"></path>
+                        <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"></path>
+                        <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"></path>
+                        <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"></path>
+                    </svg>
+                    تسجيل الدخول باستخدام Google
+                </button>
+                <div style="text-align: center; margin-top: 15px;">
+                    <a href="#" id="btn-continue-phone" style="color: var(--brown-mid); text-decoration: underline; font-size: 0.9rem;">الاستمرار عبر رقم الهاتف فقط</a>
+                    <p style="font-size: 0.75rem; color: #888; margin-top: 5px;">ملاحظة: نقاط الحساب المجهول قد تضيع إذا قمت بمسح بيانات المتصفح.</p>
+                </div>
+            </div>
+            <div id="auth-step-phone" style="padding: 0 30px 30px; display: none;">
+                <p style="text-align:center; color:var(--brown-mid); margin-bottom: 15px; font-size:0.9rem;">أدخل بياناتك للمتابعة</p>
+                <input type="text" id="cust-name" placeholder="الاسم الكريم" class="auth-input" style="width:100%; padding:12px; margin-bottom:10px; border:1px solid #ccc; border-radius:8px;">
+                <input type="tel" id="cust-phone" placeholder="رقم الجوال (05xxxxxxxx)" class="auth-input" style="width:100%; padding:12px; margin-bottom:10px; border:1px solid #ccc; border-radius:8px;" maxlength="10">
+                <button id="btn-save-identity" class="modal-btn btn-delivery" style="width:100%; justify-content:center; margin-top: 10px;">إكمال التسجيل</button>
+            </div>
+            <div id="identity-error" style="color: red; text-align: center; margin-top: 10px; font-size: 0.9rem; padding-bottom: 15px;"></div>
+        </div>
+    </div>
+    
+    <header class="navbar" id="navbar">
+        <div class="nav-inner">
+            <nav class="nav-links" style="display: flex; align-items: center; gap: 30px;">
+                <a href="#home">الرئيسية</a>
+                <a href="#menu">المنيو</a>
+                <a href="#about">فلسفتنا</a>
+
+            </nav>
+            <a href="#home" class="nav-brand">
+                <svg class="brand-logo" viewBox="0 0 500 250" xmlns="http://www.w3.org/2000/svg" style="height: 48px; width: 96px; display: block;">
+                    <path d="M86.8 111.8C125.5 129.5 160.2 165.2 215.5 165.2C270.8 165.2 320.5 110.5 395.5 110.5C430.5 110.5 455.5 135.5 470.5 155.5C440.5 125.5 400.5 95.5 345.5 95.5C280.5 95.5 240.5 145.5 185.5 145.5C130.5 145.5 105.5 125.5 86.8 111.8Z" fill="#785438"/>
+                    <rect x="175" y="105" width="18" height="18" transform="rotate(45 175 105)" fill="#785438"/>
+                    <rect x="315" y="145" width="18" height="18" transform="rotate(45 315 145)" fill="#785438"/>
+                    <rect x="335" y="145" width="18" height="18" transform="rotate(45 335 145)" fill="#785438"/>
+                    <rect x="385" y="140" width="18" height="18" transform="rotate(45 385 140)" fill="#785438"/>
+                </svg>
+            </a>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <span class="hero-tag">s p a c e  b e t w e e n  e v e r y t h i n g</span>
+            <h1>مساحة بيـن<br>كل شيء</h1>
+            <div class="hero-divider"></div>
+            <a href="#menu" class="hero-cta">اكتشف القائمة</a>
+        </div>
+    </section>
+
+    <!-- المنيو -->
+    <section id="menu" class="menu-section">
+        <div class="menu-header">
+            <h2>المنيو</h2>
+            <div class="divider"></div>
+        </div>
+
+        <div class="menu-grid" id="main-menu-grid">
+            <!-- Dynamic Menu -->
+        </div>
+    </section>
+
+
+    <!-- قسم الفلسفة -->
+    <section id="about" class="about-section">
+        <div class="about-inner">
+            <div class="about-svg-logo">
+                <svg width="200" height="100" viewBox="0 0 500 250" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M86.8 111.8C125.5 129.5 160.2 165.2 215.5 165.2C270.8 165.2 320.5 110.5 395.5 110.5C430.5 110.5 455.5 135.5 470.5 155.5C440.5 125.5 400.5 95.5 345.5 95.5C280.5 95.5 240.5 145.5 185.5 145.5C130.5 145.5 105.5 125.5 86.8 111.8Z" fill="#D8C092"/>
+                  <rect x="175" y="105" width="18" height="18" transform="rotate(45 175 105)" fill="#D8C092"/>
+                  <rect x="315" y="145" width="18" height="18" transform="rotate(45 315 145)" fill="#D8C092"/>
+                  <rect x="335" y="145" width="18" height="18" transform="rotate(45 335 145)" fill="#D8C092"/>
+                  <rect x="385" y="140" width="18" height="18" transform="rotate(45 385 140)" fill="#D8C092"/>
+                </svg>
+            </div>
+            <div class="about-text">
+                <h2>فلسفة بيـن</h2>
+                <p>
+                    تتكئ على هدوء نبيل خالٍ من التكلف، تحتفي بالفخامة في صمت، تنبض بألوان ناعمة ذات عمق مطمئن يعكس الدفء والتوازن والرقي.
+                </p>
+                
+                <!-- أوقات العمل -->
+                <div class="working-hours-header">
+                    <h3>أوقات العمل</h3>
+                </div>
+                <div class="working-hours" dir="ltr">
+                    <div class="hours-block">
+                        <strong>Saturday &ndash; Wednesday</strong>
+                        <span>6 AM &nbsp;&ndash;&nbsp; 12 AM</span>
+                    </div>
+                    <div class="hours-block">
+                        <strong>Thursday</strong>
+                        <span>6 AM &nbsp;&ndash;&nbsp; 2 AM</span>
+                    </div>
+                    <div class="hours-block">
+                        <strong>Friday</strong>
+                        <span>1 PM &nbsp;&ndash;&nbsp; 2 AM</span>
+                    </div>
+                </div>
+                
+                <!-- أيقونات التواصل الاجتماعي -->
+                <div class="social-links">
+                    <a href="https://www.instagram.com/Bayn_sa" target="_blank" class="social-icon" aria-label="Instagram">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 3.25.15 4.77 1.69 4.92 4.92.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.15 3.23-1.66 4.77-4.92 4.92-1.27.06-1.64.07-4.85.07s-3.58-.01-4.85-.07c-3.26-.15-4.77-1.7-4.92-4.92-.06-1.27-.07-1.64-.07-4.85s.01-3.58.07-4.85C2.38 3.85 3.9 2.31 7.15 2.16c1.27-.06 1.65-.07 4.85-.07M12 0C8.74 0 8.33.01 7.05.07c-4.26.19-6.78 2.71-6.98 6.98C0 8.33 0 8.74 0 12s.01 3.67.07 4.95c.2 4.27 2.72 6.79 6.98 6.98C8.33 23.99 8.74 24 12 24s3.67-.01 4.95-.07c4.26-.2 6.78-2.72 6.98-6.98C24 15.67 24 15.26 24 12s-.01-3.67-.07-4.95c-.2-4.26-2.72-6.78-6.98-6.98C15.67.01 15.26 0 12 0zm0 5.84A6.16 6.16 0 1 0 18.16 12 6.16 6.16 0 0 0 12 5.84zm0 10.16A4 4 0 1 1 16 12a4 4 0 0 1-4 4zm7.85-114a1.44 1.44 0 1 1-2.88 0 1.44 1.44 0 0 1 2.88 0z"/></svg>
+                    </a>
+                    <a href="https://www.tiktok.com/@bayn.sa" target="_blank" class="social-icon" aria-label="TikTok">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/></svg>
+                    </a>
+                    <a href="https://maps.app.goo.gl/h9RPPCBb1MketcwC9?g_st=aw" target="_blank" class="social-icon" aria-label="Location">
+                        <img src="101.jpeg" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover; opacity: 0.8; transition: opacity 0.3s; filter: brightness(0.9) sepia(0.2);">
+                    </a>
+                </div>            </div>
+        </div>
+    </section>
+
+
+
+    <!-- شريط الإعدادات والولاء السفلي -->
+    <div class="floating-action-bar">
+        <a href="#" id="btn-open-settings" class="fab-profile" style="text-decoration: none;">
+            <div class="fab-avatar" id="fab-avatar-char">ع</div>
+            <div class="fab-info">
+                <span class="fab-name" id="fab-user-name">أهلاً، ضيف</span>
+            </div>
+        </a>
+        <div class="fab-actions">
+            <a href="#" id="btn-open-rewards" class="fab-btn">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                <span id="global-points-display">150 نقطة</span>
+            </a>
+            <a href="#" id="btn-open-orders" class="fab-btn">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                طلباتي
+            </a>
+            <a href="#" id="btn-open-cart" class="fab-btn cart-fab-btn">
+                <div class="cart-icon-wrapper">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+                    <span id="cart-badge" class="cart-badge">0</span>
+                </div>
+                السلة
+            </a>
+        </div>
+    </div>
+
+    <!-- نافذة المنتج المنبثقة (Modal) -->
+    <div id="product-modal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close" aria-label="إغلاق">&times;</button>
+            <div class="modal-header-image">
+                <img id="modal-img" src="" alt="">
+            </div>
+            <div class="modal-body">
+                <h3 id="modal-title">اسم المنتج</h3>
+                <p id="modal-price" class="modal-price">0 SR</p>
+                <p class="modal-desc">يحضر بكل شغف من أجود المكونات، ليقدم لك تجربة غنية وعميقة تليق بذائقتك.</p>
+                
+                <div class="modal-quantity">
+                    <button class="qty-btn" id="qty-minus">-</button>
+                    <span id="qty-value">1</span>
+                    <button class="qty-btn" id="qty-plus">+</button>
+                </div>
+
+                <div class="modal-order-options">
+                    <button class="modal-btn btn-pickup">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                        استلام
+                    </button>
+                    <button class="modal-btn btn-delivery">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 18H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h3.19M15 6h2a2 2 0 0 1 2 2l2.66 5.32A2 2 0 0 1 22 14.24V18a2 2 0 0 1-2 2h-2"/><circle cx="8" cy="18" r="3"/><circle cx="17" cy="18" r="3"/><path d="M2 11h11"/><path d="M15 11h7"/></svg>
+                        توصيل
+                    </button>
+                </div>
+                <button class="modal-btn-secondary" id="btn-add-more">إضافة منتجات أخرى</button>
+            </div>
+        </div>
+    </div>
+    <!-- شاشة الإعدادات -->
+    <div id="settings-overlay" class="app-overlay">
+        <div class="overlay-header">
+            <h3>الإعدادات</h3>
+            <button class="overlay-close btn-close-settings" aria-label="إغلاق">&times;</button>
+        </div>
+        <div class="overlay-content">
+            <!-- قسم المعلومات الشخصية -->
+            <div class="settings-group">
+                <h4>المعلومات الشخصية</h4>
+
+                <div class="settings-input-wrapper">
+                    <label>الاسم الكامل (غير قابل للتعديل)</label>
+                    <input type="text" id="settings-name-input" class="settings-input" readonly style="background-color: #f5f5f5; cursor: not-allowed; opacity: 0.7;">
+                </div>
+
+                <div class="settings-input-wrapper">
+                    <label>رقم الجوال (غير قابل للتعديل)</label>
+                    <input type="tel" id="settings-phone-input" class="settings-input" dir="ltr" readonly style="background-color: #f5f5f5; cursor: not-allowed; opacity: 0.7;">
+                </div>
+            </div>
+
+            <!-- قسم موقع التوصيل -->
+            <div class="settings-group" id="settings-delivery-section">
+                <h4>عنوان التوصيل</h4>
+                <div class="map-container">
+                    <div id="settings-map" style="width:100%; height:100%;"></div>
+                </div>
+                <p id="settings-location-text" style="font-size:0.85rem; color:var(--ink-mid); text-align:center; margin-bottom:20px; border-bottom:1px solid rgba(216,192,146,0.3); padding-bottom:10px;">
+                    حدد موقعك على الخريطة لضمان وصول الطلب بدقة
+                </p>
+                <button id="btn-save-location" class="btn-save-modern">
+                    تحديث الموقع
+                </button>
+                <div id="location-save-status" class="status-message"></div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- شاشة إتمام الطلب (الدفع) -->
+    <div id="checkout-overlay" class="app-overlay">
+        <div class="overlay-header">
+            <h3>إتمام الطلب</h3>
+            <button class="overlay-close btn-close-checkout" aria-label="إغلاق">&times;</button>
+        </div>
+        <div class="overlay-content checkout-content">
+            <div class="checkout-summary">
+                <h4 id="checkout-title">اسم المنتج</h4>
+                <div class="checkout-details">
+                    <span>الكمية: <span id="checkout-qty">1</span></span>
+                    <span>استلام عبر: <span id="checkout-type">توصيل</span></span>
+                </div>
+                <div class="checkout-total">الإجمالي: <span id="checkout-total-price">0 SR</span></div>
+            </div>
+            
+            <div class="checkout-addresses" id="checkout-address-section" style="display: none;">
+                <h4>حدد موقع التوصيل</h4>
+                <div id="delivery-map" style="width:100%; height:220px; border-radius:14px; overflow:hidden; border:2px solid rgba(216,192,146,0.4); margin: 12px 0;"></div>
+                <p id="delivery-location-text" style="font-size:0.9rem; color:var(--brown-mid); text-align:center;">اضغط على الخريطة لتحديد موقع التوصيل</p>
+            </div>
+
+            <!-- تم إخفاء طرق الدفع الإلكترونية بناءً على التوجيهات (الدفع عند الاستلام فقط) -->
+            <div class="checkout-payment" style="text-align:center; margin-top: 20px; background: rgba(216,192,146,0.1); padding: 15px; border-radius: 8px;">
+                <strong style="color: var(--navy-deep);">طريقة الدفع:</strong>
+                <p style="margin-top: 5px; font-size: 0.9rem; color: var(--brown-mid);">الدفع سيكون نقداً أو عبر الشبكة عند الاستلام</p>
+                <!-- TODO: Payment Gateway API Here (Moyasar/Tap) -->
+            </div>
+
+            <button id="btn-confirm-pay" class="modal-btn btn-delivery checkout-btn">
+                <span class="btn-text">تأكيد وإرسال الطلب</span>
+                <span class="btn-loader" style="display: none;">⏳ جاري الإرسال...</span>
+            </button>
+            <div id="payment-success" class="payment-success" style="display: none; text-align: center;">
+                <div class="success-icon">✅</div>
+                <h4 style="color:var(--navy-deep); margin: 10px 0;">تم استلام طلبك بنجاح</h4>
+                <p style="font-size: 0.9rem; color:var(--brown-mid);">سيتم التجهيز وتأكيد الدفع عند الاستلام</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- شاشة متجر المكافآت -->
+    <div id="rewards-overlay" class="app-overlay">
+        <div class="overlay-header">
+            <h3>متجر المكافآت</h3>
+            <button class="overlay-close btn-close-rewards" aria-label="إغلاق">&times;</button>
+        </div>
+        <div class="overlay-content rewards-content">
+            <div class="points-balance-card">
+                <h5>رصيدك الحالي</h5>
+                <div class="points-amount"><span id="rewards-points-amount">150</span> 🌟</div>
+            </div>
+
+            <div class="how-to-earn">
+                <h4>كيف تكسب النقاط؟</h4>
+                <div class="earn-steps">
+                    <div class="earn-step">
+                        <div class="earn-icon">☕</div>
+                        <div class="earn-text">
+                            <strong>اشترِ قهوتك</strong>
+                            <span>مع كل ريال تنفقه تحصل على نقطة.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="rewards-products" id="rewards-products-list">
+                <h4>منتجات قابلة للاستبدال</h4>
+                <!-- سيتم جلب المكافآت من القاعدة هنا -->
+            </div>
+        </div>
+    </div>
+
+    <!-- شاشة طلباتي -->
+    <div id="orders-overlay" class="app-overlay">
+        <div class="overlay-header">
+            <h3>طلباتي</h3>
+            <button class="overlay-close btn-close-orders" aria-label="إغلاق">&times;</button>
+        </div>
+        <div class="overlay-content orders-content" id="orders-list">
+            <!-- الطلبات تضاف هنا ديناميكياً عبر فايربيس -->
+        </div>
+    </div>
+
+    <!-- إشعار السلة المؤقت -->
+    <div id="cart-toast" class="cart-toast">
+        <div class="toast-icon">✅</div>
+        <div class="toast-text">تمت إضافة المنتج للسلة</div>
+    </div>
+
+    <!-- شاشة السلة -->
+    <div id="cart-overlay" class="app-overlay">
+        <div class="overlay-header">
+            <h3>سلة المشتريات</h3>
+            <button class="overlay-close btn-close-cart" aria-label="إغلاق">&times;</button>
+        </div>
+        <div class="overlay-content">
+            <div id="cart-items-list" class="cart-items-list">
+                <div class="empty-cart-msg">السلة فارغة حالياً</div>
+            </div>
+            
+            <div class="cart-summary">
+                <div class="summary-row total-row">
+                    <span>الإجمالي</span>
+                    <strong id="cart-total">0 SR</strong>
+                </div>
+                
+                <div class="cart-actions">
+                    <button class="modal-btn btn-pickup" id="cart-btn-pickup" disabled>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                        استلام
+                    </button>
+                    <button class="modal-btn btn-delivery" id="cart-btn-delivery" disabled>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 18H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h3.19M15 6h2a2 2 0 0 1 2 2l2.66 5.32A2 2 0 0 1 22 14.24V18a2 2 0 0 1-2 2h-2"/><circle cx="8" cy="18" r="3"/><circle cx="17" cy="18" r="3"/><path d="M2 11h11"/><path d="M15 11h7"/></svg>
+                        توصيل
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>    <!-- نافذة تأكيد مخصصة (Custom Dialog) -->
+    <div id="custom-dialog-overlay" class="custom-dialog-overlay">
+        <div class="custom-dialog">
+            <div class="dialog-icon">❔</div>
+            <h4 id="dialog-title">تأكيد العملية</h4>
+            <p id="dialog-message">هل أنت متأكد من القيام بهذا الإجراء؟</p>
+            <div class="dialog-actions">
+                <button id="dialog-confirm-btn" class="dialog-btn confirm">تأكيد</button>
+                <button id="dialog-cancel-btn" class="dialog-btn cancel">إلغاء</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- استدعاء مكتبات Firebase Compat -->
+    <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-auth-compat.js"></script>
+
+    <script>
+        const firebaseConfig = {
+          apiKey: "AIzaSyBB4CfmM4r_Z8rkbGdz5AwrOqSv6rX6twg",
+          authDomain: "bayn-35bfc.firebaseapp.com",
+          projectId: "bayn-35bfc",
+          storageBucket: "bayn-35bfc.firebasestorage.app",
+          messagingSenderId: "807550594027",
+          appId: "1:807550594027:web:2df73db12b872b76ee47ae"
+        };
+
+        // --- نظام المراقبة وتسجيل الأخطاء ---
+        const logErrorToFirebase = (errorData) => {
+            try {
+                const user = JSON.parse(localStorage.getItem('bayn_user')) || { name: "Guest", phone: "N/A" };
+                db.collection("system_logs").add({
+                    ...errorData,
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                    userAgent: navigator.userAgent,
+                    page: "index.html",
+                    userName: user.name,
+                    userPhone: user.phone
+                });
+            } catch (e) { console.error("Failed to log to Firebase", e); }
+        };
+
+        window.onerror = function(msg, url, line, col, error) {
+            logErrorToFirebase({ type: "Global Error", message: msg, url, line, col });
+            return false;
+        };
+        window.onunhandledrejection = function(event) {
+            logErrorToFirebase({ type: "Unhandled Promise", message: event.reason ? event.reason.toString() : "Unknown Promise Error" });
+        };
+
+        const app = firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+        db.enablePersistence({ synchronizeTabs: true }).catch(err => {
+            console.warn("Persistence failed:", err.code);
+        });
+
+        // تحميل المنيو فوراً — لا ننتظر المصادقة
+        let clientDataLoaded = false;
+        function startClientData() {
+            if (clientDataLoaded) return;
+            clientDataLoaded = true;
+            loadMainMenu();
+            loadRewards();
+
+            // Smart Refresh: مراقبة مستند واحد فقط
+            let lastMenuToken = null;
+            let lastRewardsToken = null;
+            db.collection("settings").doc("menu_control").onSnapshot(doc => {
+                if (!doc.exists) return;
+                const data = doc.data();
+                const menuToken = data.menuLastUpdate ? data.menuLastUpdate.toMillis() : null;
+                const rewardsToken = data.rewardsLastUpdate ? data.rewardsLastUpdate.toMillis() : null;
+
+                if (menuToken && lastMenuToken !== null && menuToken !== lastMenuToken) {
+                    loadMainMenu();
+                }
+                if (rewardsToken && lastRewardsToken !== null && rewardsToken !== lastRewardsToken) {
+                    loadRewards();
+                }
+
+                lastMenuToken = menuToken;
+                lastRewardsToken = rewardsToken;
+            }, err => { console.warn("menu_control listener:", err.code); });
+        }
+
+        // لا حاجة لتسجيل مجهول بعد الآن، القوائم ستظهر، ولكن الحجز يتطلب المصادقة
+        startClientData();
+
+        // Custom Confirm Dialog Logic
+        const showCustomConfirm = (title, message, icon = '❔') => {
+            return new Promise((resolve) => {
+                const overlay = document.getElementById('custom-dialog-overlay');
+                const titleEl = document.getElementById('dialog-title');
+                const messageEl = document.getElementById('dialog-message');
+                const confirmBtn = document.getElementById('dialog-confirm-btn');
+                const cancelBtn = document.getElementById('dialog-cancel-btn');
+                const iconEl = overlay.querySelector('.dialog-icon');
+
+                titleEl.textContent = title;
+                messageEl.textContent = message;
+                iconEl.textContent = icon;
+                overlay.classList.add('active');
+
+                const cleanup = (result) => {
+                    overlay.classList.remove('active');
+                    confirmBtn.removeEventListener('click', onConfirm);
+                    cancelBtn.removeEventListener('click', onCancel);
+                    resolve(result);
+                };
+
+                const onConfirm = () => cleanup(true);
+                const onCancel = () => cleanup(false);
+
+                confirmBtn.addEventListener('click', onConfirm);
+                cancelBtn.addEventListener('click', onCancel);
+            });
+        };
+
+        // User Identity Logic
+        const identityOverlay = document.getElementById('identity-overlay');
+        const btnSaveIdentity = document.getElementById('btn-save-identity');
+        const btnGoogleLogin = document.getElementById('btn-google-login');
+        const custPhoneInput = document.getElementById('cust-phone');
+        const identityError = document.getElementById('identity-error');
+        
+        let currentUser = null;       // Document data from 'users'
+        let currentAuthUser = null;   // Firebase Auth User
+        let isPhoneOnlyMode = false;  // Flag to know if user chose phone-only
+        // يُعيَّن فقط عندما يضغط المستخدم زر Google في هذه الجلسة
+        let googleLoginInitiated = false;
+
+        let authStateTimeout = null;
+
+        function closeIdentityOverlay() {
+            identityOverlay.classList.remove('active');
+            identityOverlay.style.opacity = '';
+            identityOverlay.style.pointerEvents = '';
+            identityOverlay.style.transition = '';
+        }
+
+        // --- فحص localStorage أولاً بشكل فوري وتزامني ---
+        try {
+            const saved = localStorage.getItem('bayn_user_phone');
+            if (saved) {
+                currentUser = JSON.parse(saved);
+                isPhoneOnlyMode = true;
+                // إغلاق النافذة فوراً للمستخدمين العائدين عبر الهاتف
+                closeIdentityOverlay();
+                updateGreeting();
+                // تسجيل دخول مجهول في الخلفية للصلاحيات (بدون تأثير على النافذة)
+                auth.signInAnonymously().then(() => {
+                    listenToMyOrders();
+                    listenToUserPoints();
+                }).catch(e => console.warn(e));
+            }
+        } catch (e) {
+            console.error("Local Storage Parse Error:", e);
+        }
+
+        // --- onAuthStateChanged: للمستخدمين Google فقط ---
+        auth.onAuthStateChanged((user) => {
+            if (authStateTimeout) clearTimeout(authStateTimeout);
+            authStateTimeout = setTimeout(async () => {
+                // تجاهل: Anonymous + جلسات Google القديمة التلقائية
+                if (!user || user.isAnonymous) return;
+                if (!googleLoginInitiated) return; // لا نغلق النافذة لجلسة قديمة محفوظة
+
+                currentAuthUser = user;
+                isPhoneOnlyMode = false;
+                try {
+                    const docSnap = await db.collection("users").doc(user.uid).get();
+                    if (docSnap.exists) {
+                        currentUser = { uid: user.uid, ...docSnap.data() };
+                        closeIdentityOverlay();
+                        updateGreeting();
+                        listenToMyOrders();
+                        listenToUserPoints();
+                    } else {
+                        // مستخدم جديد من Google: نطلب رقم الجوال
+                        document.getElementById('auth-step-google').style.display = 'none';
+                        document.getElementById('auth-step-phone').style.display = 'block';
+                        document.getElementById('cust-name').style.display = 'none';
+                        identityOverlay.classList.add('active');
+                    }
+                } catch (e) {
+                    console.error("Error fetching user doc:", e);
+                }
+            }, 500);
+        });
+
+        function updateGreeting() {
+            if (currentUser && currentUser.name) {
+                const firstName = currentUser.name.split(' ')[0];
+                const nameEl = document.getElementById('fab-user-name');
+                const avatarEl = document.getElementById('fab-avatar-char');
+                if (nameEl) nameEl.textContent = 'أهلاً، ' + firstName;
+                if (avatarEl) avatarEl.textContent = firstName.charAt(0).toUpperCase();
+            }
+        }
+
+        let unsubscribeOrders = null;
+        let unsubscribeUser = null;
+        let unsubscribeActiveOrder = null; // مستمع الطلب النشط فقط
+
+        // تنظيف جميع المستمعين عند مغادرة الصفحة
+        window.addEventListener('beforeunload', () => {
+            if (unsubscribeOrders) unsubscribeOrders();
+            if (unsubscribeUser) unsubscribeUser();
+            if (unsubscribeActiveOrder) unsubscribeActiveOrder();
+        });
+
+        function listenToUserPoints() {
+            if (!currentUser) return;
+            const docId = currentUser.uid || currentUser.phone; // استخدام uid لقوقل، و phone للمسار الثانوي
+            if (!docId) return;
+
+            if (unsubscribeUser) unsubscribeUser();
+            
+            unsubscribeUser = db.collection("users").doc(docId)
+                .onSnapshot((docSnap) => {
+                    if (docSnap.exists) {
+                        const pts = docSnap.data().points || 0;
+                        updatePointsDisplay(pts);
+                    } else {
+                        updatePointsDisplay(0);
+                    }
+                }, (error) => {
+                    console.error("Firebase User Points Error: ", error);
+                });
+        }
+
+        function checkIdentity() {
+            if (!currentUser) {
+                identityOverlay.classList.add('active');
+                return false;
+            }
+            return true;
+        }
+
+        // Google Login Button
+        btnGoogleLogin.addEventListener('click', async () => {
+            const provider = new firebase.auth.GoogleAuthProvider();
+            googleLoginInitiated = true;
+            try {
+                // LOCAL — تبقى الجلسة حتى بعد إغلاق المتصفح
+                await auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
+                await auth.signInWithPopup(provider);
+            } catch (e) {
+                googleLoginInitiated = false;
+                identityError.textContent = "فشل تسجيل الدخول: " + e.message;
+            }
+        });
+
+        // زر الاستمرار عبر رقم الهاتف فقط
+        document.getElementById('btn-continue-phone').addEventListener('click', (e) => {
+            e.preventDefault();
+            isPhoneOnlyMode = true;
+            document.getElementById('auth-step-google').style.display = 'none';
+            document.getElementById('auth-step-phone').style.display = 'block';
+            document.getElementById('cust-name').style.display = 'block'; // نحتاج الاسم هنا
+        });
+
+        // Save Phone Button (للقوقل الجديد + الهاتف فقط)
+        btnSaveIdentity.addEventListener('click', async () => {
+            const phone = document.getElementById('cust-phone').value.trim();
+            const nameInput = document.getElementById('cust-name');
+            const name = nameInput.style.display !== 'none' ? nameInput.value.trim() : "عميل";
+
+            // تحقق صارم من رقم الجوال
+            const phoneRegex = /^05\d{8}$/;
+            if (!phoneRegex.test(phone)) {
+                identityError.textContent = "يرجى إدخال رقم جوال سعودي صحيح يتكون من 10 أرقام ويبدأ بـ 05 (مثال: 0500000000)";
+                return;
+            }
+
+            if (isPhoneOnlyMode) {
+                if (!name) {
+                    identityError.textContent = "يرجى إدخال الاسم الكريم";
+                    return;
+                }
+                btnSaveIdentity.textContent = "جاري الحفظ...";
+                identityError.textContent = "";
+                try {
+                    // الخطوة 1: LOCAL — تبقى بيانات الزبون حتى بعد إغلاق المتصفح
+                    await auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
+
+                    // الخطوة 2: تسجيل الدخول المجهول والحصول على كائن المستخدم
+                    const credential = await auth.signInAnonymously();
+                    const anonUser = credential.user;
+
+                    // الخطوة 2: إجبار Firebase على تحديث التوكن في Firestore SDK
+                    await anonUser.getIdToken(true);
+
+                    // الخطوة 3: الآن فقط نكتب في Firestore (بعد ضمان اكتمال المصادقة)
+                    await db.collection("users").doc(phone).set({
+                        name: name,
+                        phone: phone,
+                        type: "phone",
+                        points: 0,
+                        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                    }, { merge: true });
+
+                    currentUser = { name: name, phone: phone };
+                    localStorage.setItem('bayn_user_phone', JSON.stringify(currentUser));
+
+                    closeIdentityOverlay();
+                    updateGreeting();
+                    listenToMyOrders();
+                    listenToUserPoints();
+                } catch (e) {
+                    console.error("Phone registration error:", e);
+                    identityError.textContent = "فشل التسجيل: " + e.message;
+                    btnSaveIdentity.textContent = "إكمال التسجيل";
+                }
+            } else {
+                // مسار قوقل
+                if (!currentAuthUser) return;
+                btnSaveIdentity.textContent = "جاري الحفظ...";
+                try {
+                    const userData = {
+                        name: currentAuthUser.displayName || name,
+                        email: currentAuthUser.email || "",
+                        phone: phone,
+                        points: 0,
+                        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                    };
+                    
+                    await db.collection("users").doc(currentAuthUser.uid).set(userData);
+                    currentUser = { uid: currentAuthUser.uid, ...userData };
+                    
+                    identityOverlay.classList.remove('active');
+                    identityOverlay.style.opacity = '';
+                    identityOverlay.style.pointerEvents = '';
+                    updateGreeting();
+                    listenToMyOrders();
+                    listenToUserPoints();
+                } catch (e) {
+                    identityError.textContent = "فشل الحفظ: " + e.message;
+                    btnSaveIdentity.textContent = "إكمال التسجيل";
+                }
+            }
+        });
+        // ==========================================
+        // مستمع سجل الطلبات السابقة
+        // ==========================================
+        function listenToMyOrders() {
+            if (!currentUser) return;
+            
+            if (unsubscribeOrders) unsubscribeOrders();
+            
+            let query = db.collection("orders");
+            if (currentUser.uid) {
+                query = query.where("userId", "==", currentUser.uid);
+            } else if (currentUser.phone) {
+                query = query.where("customerPhone", "==", currentUser.phone);
+            } else {
+                return;
+            }
+
+            unsubscribeOrders = query.onSnapshot((snapshot) => {
+                    const ordersList = document.getElementById('orders-list');
+                    ordersList.innerHTML = '';
+                    
+                    if (snapshot.empty) {
+                        ordersList.innerHTML = '<div style="text-align:center; margin-top:20px; color:var(--brown-mid);">لا توجد طلبات سابقة</div>';
+                        return;
+                    }
+                    
+                    const orders = [];
+                    snapshot.forEach(doc => {
+                        orders.push({ id: doc.id, ...doc.data() });
+                    });
+                    
+                    // Sort descending by date locally
+                    orders.sort((a, b) => {
+                        const t1 = (a.createdAt && typeof a.createdAt.toMillis === 'function') ? a.createdAt.toMillis() : 0;
+                        const t2 = (b.createdAt && typeof b.createdAt.toMillis === 'function') ? b.createdAt.toMillis() : 0;
+                        return t2 - t1; 
+                    });
+                    
+                    const statusMap = {
+                        'pending': { label: 'قيد الانتظار ⏳', class: '' },
+                        'preparing': { label: 'جاري التجهيز ☕', class: 'preparing' },
+                        'ready': { label: 'جاهز للاستلام ✨', class: 'ready' },
+                        'completed': { label: 'مكتمل ✅', class: 'completed' }
+                    };
+                    
+                    orders.forEach(order => {
+                        const st = statusMap[order.status] || { label: order.status, class: '' };
+                        
+                        let itemsHtml = order.items.map(item => `
+                            <div style="display:flex; justify-content:space-between; width:100%; margin-top:5px; font-size:0.9rem;">
+                                <span>${item.name} x${item.qty}</span>
+                                <span>${item.price * item.qty} SR</span>
+                            </div>
+                        `).join('');
+
+                        const newOrder = document.createElement('div');
+                        newOrder.className = `order-item ${st.class}`;
+                        newOrder.innerHTML = `
+                            <div class="order-header">
+                                <span class="order-date">${order.type}</span>
+                                <span class="order-status ${order.status === 'preparing' ? 'pulse-status' : ''}">${st.label}</span>
+                            </div>
+                            <div class="order-body" style="flex-direction:column; align-items:flex-start;">
+                                ${itemsHtml}
+                                <div style="width:100%; border-top:1px dashed #ccc; margin-top:10px; padding-top:10px; font-weight:bold; display:flex; justify-content:space-between;">
+                                    <span>الإجمالي:</span>
+                                    <span>${order.total} SR</span>
+                                </div>
+                            </div>
+                        `;
+                        ordersList.appendChild(newOrder);
+                    });
+                }, (error) => {
+                    console.error("Firebase Orders Error: ", error);
+                    const ordersList = document.getElementById('orders-list');
+                    if (ordersList) ordersList.innerHTML = '<div style="text-align:center; color:red;">فشل تحديث الطلبات. يرجى التحقق من الاتصال.</div>';
+                });
+        }
+
+        // ==========================================
+        // مستمع الطلب النشط فقط (توفير القراءات)
+        // يُغلق نفسه تلقائياً عند اكتمال الطلب أو إلغائه
+        // ==========================================
+        function listenToActiveOrder(orderId) {
+            if (unsubscribeActiveOrder) unsubscribeActiveOrder();
+
+            unsubscribeActiveOrder = db.collection("orders").doc(orderId)
+                .onSnapshot((docSnap) => {
+                    if (!docSnap.exists) return;
+                    const order = docSnap.data();
+                    const terminalStates = ['completed', 'cancelled'];
+
+                    // تحديث شارة حالة الطلب في زر الطلبات إن كان مفتوحاً
+                    const fabOrderDot = document.getElementById('fab-order-dot');
+                    if (fabOrderDot) {
+                        if (order.status === 'ready') {
+                            fabOrderDot.style.display = 'block';
+                            fabOrderDot.style.background = '#2ecc71';
+                        } else if (order.status === 'preparing') {
+                            fabOrderDot.style.display = 'block';
+                            fabOrderDot.style.background = 'var(--gold)';
+                        } else {
+                            fabOrderDot.style.display = 'none';
+                        }
+                    }
+
+                    // إغلاق المستمع فوراً إذا اكتمل أو ألغي الطلب
+                    if (terminalStates.includes(order.status)) {
+                        if (unsubscribeActiveOrder) {
+                            unsubscribeActiveOrder();
+                            unsubscribeActiveOrder = null;
+                        }
+                        if (fabOrderDot) fabOrderDot.style.display = 'none';
+                    }
+                }, (error) => {
+                    console.error("Active Order Listener Error:", error);
+                });
+        }
+
+        // Navbar scroll effect
+        const navbar = document.getElementById('navbar');
+        const brandLogo = document.querySelector('.brand-logo');
+        window.addEventListener('scroll', () => {
+            const isScrolled = window.scrollY > 60;
+            navbar.classList.toggle('scrolled', isScrolled);
+            brandLogo.src = isScrolled ? '3.png' : '2.png';
+        });
+
+        // Reveal on scroll
+        const cards = document.querySelectorAll('.menu-card, .about-inner, .hero-content');
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry, i) => {
+                if (entry.isIntersecting) {
+                    // Stagger delay based on sibling index
+                    const siblings = [...entry.target.parentElement.children];
+                    const idx = siblings.indexOf(entry.target);
+                    entry.target.style.transitionDelay = `${(idx % 3) * 0.12}s`;
+                    entry.target.classList.add('revealed');
+                    revealObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.12 });
+
+        cards.forEach(el => revealObserver.observe(el));
+
+        // Modal Logic
+        const modal = document.getElementById('product-modal');
+        const modalImg = document.getElementById('modal-img');
+        const modalTitle = document.getElementById('modal-title');
+        const modalPrice = document.getElementById('modal-price');
+        const closeBtn = document.querySelector('.modal-close');
+        const addMoreBtn = document.getElementById('btn-add-more');
+        const qtyValue = document.getElementById('qty-value');
+        const qtyMinus = document.getElementById('qty-minus');
+        const qtyPlus = document.getElementById('qty-plus');
+
+        let currentQty = 1;
+
+        // Open modal
+        function attachCardClickEvent(card) {
+            card.style.cursor = 'pointer'; 
+            card.addEventListener('click', () => {
+                const img = card.querySelector('.card-image img').src;
+                const name = card.querySelector('.card-name').textContent;
+                const price = card.querySelector('.card-price').textContent;
+                modalImg.src = img;
+                modalTitle.textContent = name;
+                modalPrice.textContent = price;
+                currentQty = 1;
+                qtyValue.textContent = currentQty;
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
+        }
+
+
+        // Fetch products handled by listenToMainMenu at the top
+        
+        // Close modal functions
+        const closeModal = () => {
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        };
+
+        closeBtn.addEventListener('click', closeModal);
+        // Cart Logic
+        let cart = [];
+        const cartBadge = document.getElementById('cart-badge');
+        const cartToast = document.getElementById('cart-toast');
+        const cartItemsList = document.getElementById('cart-items-list');
+        const cartTotalDisplay = document.getElementById('cart-total');
+        const cartBtnPickup = document.getElementById('cart-btn-pickup');
+        const cartBtnDelivery = document.getElementById('cart-btn-delivery');
+        const cartOverlay = document.getElementById('cart-overlay');
+        const btnOpenCart = document.getElementById('btn-open-cart');
+        const closeCart = document.querySelector('.btn-close-cart');
+        
+        let isDeliveryOpen = true; // الحالة العامة لخدمة التوصيل
+
+        btnOpenCart.addEventListener('click', (e) => { e.preventDefault(); openOverlay(cartOverlay); });
+        closeCart.addEventListener('click', () => closeOverlay(cartOverlay));
+
+        const updateCartUI = () => {
+            const totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
+            cartBadge.textContent = totalItems;
+            
+            if (cart.length === 0) {
+                cartItemsList.innerHTML = '<div class="empty-cart-msg">السلة فارغة حالياً</div>';
+                cartTotalDisplay.textContent = '0 SR';
+                cartBtnPickup.disabled = true;
+                cartBtnDelivery.disabled = true;
+                return;
+            }
+
+            cartBtnPickup.disabled = false;
+            cartBtnDelivery.disabled = !isDeliveryOpen; // التحقق من حالة التوصيل
+            
+            let totalAmount = 0;
+            cartItemsList.innerHTML = '';
+            
+            cart.forEach((item, index) => {
+                const itemTotal = parseFloat(item.price) * item.qty;
+                totalAmount += itemTotal;
+                
+                const itemEl = document.createElement('div');
+                itemEl.className = 'cart-item-row';
+                itemEl.innerHTML = `
+                    <div class="cart-item-info">
+                        <span class="cart-item-name">${item.name}</span>
+                        <span class="cart-item-price">${item.price}</span>
+                    </div>
+                    <div class="cart-item-qty">
+                        <button class="btn-qty-adj" onclick="updateCartItemQty(${index}, -1)">-</button>
+                        <span>${item.qty}</span>
+                        <button class="btn-qty-adj" onclick="updateCartItemQty(${index}, 1)">+</button>
+                    </div>
+                `;
+                cartItemsList.appendChild(itemEl);
+            });
+            
+            cartTotalDisplay.textContent = `${totalAmount} SR`;
+        };
+
+        window.updateCartItemQty = (index, change) => {
+            cart[index].qty += change;
+            if (cart[index].qty <= 0) {
+                cart.splice(index, 1);
+            }
+            updateCartUI();
+        };
+
+        const addToCart = () => {
+            if (!checkIdentity()) return; // Require identity before adding to cart
+
+            const name = modalTitle.textContent;
+            const price = modalPrice.textContent;
+            
+            const existingItem = cart.find(item => item.name === name);
+            if (existingItem) {
+                existingItem.qty += currentQty;
+            } else {
+                cart.push({ name, price, qty: currentQty });
+            }
+            
+            updateCartUI();
+            closeModal();
+            
+            // Show toast
+            cartToast.classList.add('show');
+            setTimeout(() => {
+                cartToast.classList.remove('show');
+            }, 3000);
+        };
+
+        addMoreBtn.addEventListener('click', addToCart);
+        
+        // Close on clicking outside
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) closeModal();
+        });
+
+        // Quantity logic
+        qtyMinus.addEventListener('click', () => {
+            if (currentQty > 1) {
+                currentQty--;
+                qtyValue.textContent = currentQty;
+            }
+        });
+
+        qtyPlus.addEventListener('click', () => {
+            currentQty++;
+            qtyValue.textContent = currentQty;
+        });
+
+        // Overlay logic
+        const settingsOverlay = document.getElementById('settings-overlay');
+        const checkoutOverlay = document.getElementById('checkout-overlay');
+        const ordersOverlay = document.getElementById('orders-overlay');
+        const rewardsOverlay = document.getElementById('rewards-overlay');
+        
+        const btnOpenSettings = document.getElementById('btn-open-settings');
+        const btnOpenOrders = document.getElementById('btn-open-orders');
+        const btnOpenRewards = document.getElementById('btn-open-rewards');
+        
+        const closeSettings = document.querySelector('.btn-close-settings');
+        const closeCheckout = document.querySelector('.btn-close-checkout');
+        const closeOrders = document.querySelector('.btn-close-orders');
+        const closeRewards = document.querySelector('.btn-close-rewards');
+        
+        const openOverlay = (overlay) => {
+            overlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        };
+        const closeOverlay = (overlay) => {
+            overlay.classList.remove('active');
+            if(!document.querySelectorAll('.modal-overlay.active, .app-overlay.active').length) {
+                document.body.style.overflow = '';
+            }
+        };
+
+        btnOpenSettings.addEventListener('click', (e) => {
+            e.preventDefault();
+            openOverlay(settingsOverlay);
+            // تعبئة الحقول ببيانات المستخدم الحالية
+            setTimeout(() => {
+                const nameInput = document.getElementById('settings-name-input');
+                const phoneInput = document.getElementById('settings-phone-input');
+                if (nameInput && currentUser) nameInput.value = currentUser.name || '';
+                if (phoneInput && currentUser) phoneInput.value = currentUser.phone || '';
+                // تهيئة الخريطة
+                if (typeof initSettingsMap === 'function') initSettingsMap();
+            }, 250);
+        });
+
+
+
+        btnOpenOrders.addEventListener('click', (e) => { e.preventDefault(); openOverlay(ordersOverlay); });
+        btnOpenRewards.addEventListener('click', (e) => { e.preventDefault(); loadRewards(); openOverlay(rewardsOverlay); });
+        
+        closeSettings.addEventListener('click', () => closeOverlay(settingsOverlay));
+        closeCheckout.addEventListener('click', () => closeOverlay(checkoutOverlay));
+        closeOrders.addEventListener('click', () => closeOverlay(ordersOverlay));
+        closeRewards.addEventListener('click', () => closeOverlay(rewardsOverlay));
+
+        // Rewards Logic
+        let currentWalletPoints = 0;
+        const globalPointsDisplay = document.getElementById('global-points-display');
+        const rewardsPointsAmount = document.getElementById('rewards-points-amount');
+        
+        const updatePointsDisplay = (newPoints) => {
+            currentWalletPoints = newPoints;
+            if(globalPointsDisplay) globalPointsDisplay.textContent = `${currentWalletPoints} نقطة`;
+            if(rewardsPointsAmount) rewardsPointsAmount.textContent = currentWalletPoints;
+            updateRewardsUI();
+        };
+
+        // Fetch reward products (getDocs لتوفير القراءات)
+        const rewardsList = document.getElementById('rewards-products-list');
+        async function loadRewards() {
+            try {
+                const snapshot = await db.collection("products").where("isReward", "==", true).get();
+                rewardsList.innerHTML = '<h4>منتجات قابلة للاستبدال</h4>';
+                if (snapshot.empty) {
+                    rewardsList.innerHTML += '<p style="text-align:center; color:var(--brown-mid);">لا توجد مكافآت حالياً</p>';
+                    return;
+                }
+                snapshot.forEach(doc => {
+                    const p = { id: doc.id, ...doc.data() };
+                    const cost = p.pointsPrice || 0;
+                    const card = document.createElement('div');
+                    card.className = 'reward-card';
+                    card.setAttribute('data-cost', cost);
+                    card.innerHTML = `
+                        <div class="reward-img"><img src="${p.imageUrl}" style="width:100%; border-radius:4px;"></div>
+                        <div class="reward-info" style="margin-right:10px;">
+                            <strong>${p.name}</strong>
+                            <span>${cost} نقطة</span>
+                        </div>
+                        <button class="modal-btn btn-pickup btn-redeem" data-product="${p.name}" data-cost="${cost}">استبدال</button>
+                    `;
+                    rewardsList.appendChild(card);
+                });
+                updateRewardsUI();
+            } catch (e) {
+                console.error("فشل تحميل المكافآت:", e);
+            }
+        }
+        loadRewards();
+
+        function updateRewardsUI() {
+            document.querySelectorAll('.reward-card').forEach(card => {
+                const cost = parseInt(card.getAttribute('data-cost'));
+                const btn = card.querySelector('button');
+                if(currentWalletPoints >= cost) {
+                    card.classList.remove('locked');
+                    card.classList.add('available');
+                    btn.disabled = false;
+                    btn.textContent = 'استبدال';
+                    btn.className = 'modal-btn btn-pickup btn-redeem';
+                    btn.onclick = () => handleRedeem(btn, card.querySelector('strong').textContent, cost);
+                } else {
+                    card.classList.remove('available');
+                    card.classList.add('locked');
+                    btn.disabled = true;
+                    btn.textContent = 'نقاطك غير كافية';
+                    btn.className = 'modal-btn btn-locked';
+                    btn.onclick = null;
+                }
+            });
+        }
+
+        async function handleRedeem(btn, prodName, cost) {
+            if(currentWalletPoints < cost) {
+                showCustomConfirm("عذراً", "نقاطك الحالية غير كافية لاستبدال هذا المنتج.", "❌");
+                return;
+            }
+            const confirmed = await showCustomConfirm(
+                "تأكيد الاستبدال", 
+                `هل أنت متأكد من استبدال ${cost} نقطة بـ ${prodName}؟`, 
+                "🎁"
+            );
+            if(!confirmed) return;
+            
+            btn.textContent = '⏳';
+            btn.disabled = true;
+            try {
+                // إرسال طلب المكافأة — خصم النقاط يتم من طرف الكاشير عند الإتمام
+                const orderData = {
+                    customerName: currentUser.name,
+                    customerPhone: currentUser.phone,
+                    items: [{ name: prodName, qty: 1, price: 0 }],
+                    total: 0,
+                    rewardCost: cost, // النقاط المطلوب خصمها عند الإتمام
+                    status: "pending",
+                    type: "استلام (مكافأة)",
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                };
+                if (currentUser.uid) orderData.userId = currentUser.uid;
+                
+                await db.collection("orders").add(orderData);
+                
+                btn.textContent = '✅ تم';
+                btn.style.background = 'var(--cream-light)';
+                btn.style.color = 'var(--navy-deep)';
+                
+                setTimeout(() => {
+                    closeOverlay(rewardsOverlay);
+                    openOverlay(ordersOverlay);
+                }, 1000);
+            } catch (err) {
+                alert("فشل الاستبدال: " + err.message);
+                btn.textContent = 'استبدال';
+                btn.disabled = false;
+            }
+        }
+
+        // Checkout Logic
+        const btnDelivery = document.querySelector('.modal-order-options .btn-delivery');
+        const btnPickup = document.querySelector('.modal-order-options .btn-pickup');
+        
+        // مستمع لحالة خدمة التوصيل
+        function listenToDeliveryStatus() {
+            db.collection("settings").doc("delivery").onSnapshot((doc) => {
+                isDeliveryOpen = doc.exists ? doc.data().isOpen : true;
+                const deliveryButtons = [btnDelivery, cartBtnDelivery];
+                const deliveryNotice = `التوصيل مغلق حالياً`;
+                
+                deliveryButtons.forEach(btn => {
+                    if (btn) {
+                        if (!isDeliveryOpen) {
+                            btn.disabled = true;
+                            btn.classList.add('delivery-closed');
+                            btn.innerHTML = `<span>🛵</span> ${deliveryNotice}`;
+                        } else {
+                            btn.classList.remove('delivery-closed');
+                            // فقط إذا لم تكن السلة فارغة (بالنسبة لزر السلة)
+                            if (btn === cartBtnDelivery && cart.length === 0) {
+                                btn.disabled = true;
+                            } else {
+                                btn.disabled = false;
+                            }
+                            btn.style.opacity = '';
+                            btn.style.cursor = '';
+                            btn.innerHTML = btn === btnDelivery ? '<span>🛵</span> توصيل' : '🛵 توصيل';
+                            btn.style.fontSize = '';
+                        }
+                    }
+                });
+
+                // إخفاء قسم التوصيل في الإعدادات إذا كانت الخدمة مغلقة
+                const settingsDelSec = document.getElementById('settings-delivery-section');
+                if (settingsDelSec) {
+                    settingsDelSec.style.display = isDeliveryOpen ? 'block' : 'none';
+                }
+            });
+        }
+        listenToDeliveryStatus();
+        
+        let currentOrderType = 'توصيل';
+        let currentOrderTotal = 0;
+        let checkoutItems = []; // Stores items for the current checkout session
+        let checkoutSource = 'modal'; // 'modal' or 'cart'
+
+        const startCheckout = (type, source = 'modal') => {
+            currentOrderType = type;
+            checkoutSource = source;
+            checkoutItems = [];
+            currentOrderTotal = 0;
+
+            if (source === 'modal') {
+                const priceVal = parseFloat(modalPrice.textContent);
+                currentOrderTotal = priceVal * currentQty;
+                checkoutItems.push({ name: modalTitle.textContent, qty: currentQty, price: priceVal, type });
+                document.getElementById('checkout-title').textContent = modalTitle.textContent;
+                document.getElementById('checkout-qty').textContent = currentQty;
+            } else if (source === 'cart') {
+                cart.forEach(item => {
+                    const itemTotal = parseFloat(item.price) * item.qty;
+                    currentOrderTotal += itemTotal;
+                    checkoutItems.push({ name: item.name, qty: item.qty, price: parseFloat(item.price), type });
+                });
+                document.getElementById('checkout-title').textContent = "طلب من السلة";
+                const totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
+                document.getElementById('checkout-qty').textContent = totalItems;
+            }
+            
+            document.getElementById('checkout-type').textContent = currentOrderType;
+            document.getElementById('checkout-total-price').textContent = `${currentOrderTotal} SR`;
+            
+            // Toggle address section
+            if (currentOrderType === 'توصيل') {
+                document.getElementById('checkout-address-section').style.display = 'block';
+            } else {
+                document.getElementById('checkout-address-section').style.display = 'none';
+            }
+            
+            // Reset checkout state
+            document.getElementById('btn-confirm-pay').style.display = 'flex';
+            document.getElementById('payment-success').style.display = 'none';
+            document.querySelector('.btn-text').style.display = 'block';
+            document.querySelector('.btn-loader').style.display = 'none';
+
+            if (source === 'modal') closeModal();
+            if (source === 'cart') closeOverlay(cartOverlay);
+            
+            openOverlay(checkoutOverlay);
+        };
+
+        btnDelivery.addEventListener('click', () => startCheckout('توصيل', 'modal'));
+        btnPickup.addEventListener('click', () => startCheckout('استلام', 'modal'));
+        
+        cartBtnDelivery.addEventListener('click', () => startCheckout('توصيل', 'cart'));
+        cartBtnPickup.addEventListener('click', () => startCheckout('استلام', 'cart'));
+
+        // Payment Simulation & Orders (Now to Firebase)
+        const btnConfirmPay = document.getElementById('btn-confirm-pay');
+        const ordersList = document.getElementById('orders-list');
+
+        btnConfirmPay.addEventListener('click', async () => {
+            if(!currentUser) {
+                checkIdentity();
+                return;
+            }
+
+            document.querySelector('.btn-text').style.display = 'none';
+            document.querySelector('.btn-loader').style.display = 'block';
+            
+            try {
+                // جلب الأسعار الحقيقية من قاعدة البيانات لمنع التلاعب
+                const productsSnap = await db.collection("products").get();
+                const priceMap = {};
+                productsSnap.forEach(doc => {
+                    const d = doc.data();
+                    priceMap[d.name] = d.price;
+                });
+
+                // حساب السعر الإجمالي من البيانات الموثقة
+                let verifiedTotal = 0;
+                const verifiedItems = checkoutItems.map(item => {
+                    const serverPrice = priceMap[item.name] || 0;
+                    verifiedTotal += serverPrice * item.qty;
+                    return { name: item.name, qty: item.qty, price: serverPrice };
+                });
+
+                const orderData = {
+                    customerName: currentUser.name,
+                    customerPhone: currentUser.phone,
+                    items: verifiedItems,
+                    total: verifiedTotal,
+                    status: "pending",
+                    type: currentOrderType,
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                };
+                if (currentUser.uid) orderData.userId = currentUser.uid;
+
+                // Attach delivery location if delivery order
+                if (currentOrderType === 'توصيل' && selectedDeliveryLocation) {
+                    orderData.deliveryLocation = {
+                        lat: selectedDeliveryLocation.lat,
+                        lng: selectedDeliveryLocation.lng,
+                        address: selectedDeliveryLocation.address || ''
+                    };
+                }
+
+                const newOrderRef = await db.collection("orders").add(orderData);
+                
+                // بدء الاستماع اللحظي لحالة الطلب الجديد فقط
+                listenToActiveOrder(newOrderRef.id);
+                // ملاحظة: إضافة النقاط تتم الآن من جانب الكاشير فقط
+                // عند تحويل حالة الطلب إلى 'completed' في bayn.js
+
+                btnConfirmPay.style.display = 'none';
+                document.getElementById('payment-success').style.display = 'block';
+                
+                // Clear cart if checkout came from cart
+                if (checkoutSource === 'cart') {
+                    cart = [];
+                    updateCartUI();
+                }
+
+                setTimeout(() => {
+                    closeOverlay(checkoutOverlay);
+                }, 3000);
+
+            } catch (err) {
+                alert("حدث خطأ أثناء إرسال الطلب، يرجى المحاولة مرة أخرى.");
+                document.querySelector('.btn-text').style.display = 'block';
+                document.querySelector('.btn-loader').style.display = 'none';
+            }
+        });
+
+        // ======= جلب المنيو - getDocs لتوفير القراءات =======
+        async function loadMainMenu() {
+            const menuGrid = document.getElementById('main-menu-grid');
+            if (!menuGrid) return;
+            try {
+                const snapshot = await db.collection("products").get();
+                menuGrid.innerHTML = '';
+                snapshot.forEach(doc => {
+                    const p = { id: doc.id, ...doc.data() };
+                    if (!p.isHidden && !p.isReward) {
+                        const article = document.createElement('article');
+                        article.className = 'menu-card';
+                        article.innerHTML = `
+                            <div class="card-logo-top"><img src="2.png" alt="BAYN"></div>
+                            <div class="card-image"><img src="${p.imageUrl}" alt="${p.name}"></div>
+                            <div class="card-footer">
+                                <div class="card-meta">
+                                    <span class="card-price">${p.price}SR</span>
+                                    <span class="card-name">${p.name}</span>
+                                </div>
+                                <p class="card-tagline">مساحة بيـن كل شيء</p>
+                            </div>
+                        `;
+                        attachCardClickEvent(article);
+                        menuGrid.appendChild(article);
+                        if (typeof revealObserver !== 'undefined') revealObserver.observe(article);
+                    }
+                });
+            } catch (e) {
+                console.error("فشل تحميل المنيو:", e);
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                checkIdentity();
+            }, 500);
+        });
+    </script>
+
+    <!-- Leaflet Maps -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        // ======= MAP LOGIC =======
+        let deliveryMap = null;
+        let deliveryMarker = null;
+        let settingsMap = null;
+        let settingsMarker = null;
+        let selectedDeliveryLocation = null;
+
+        const savedLocation = JSON.parse(localStorage.getItem('bayn_saved_location') || 'null');
+
+        // Initialize delivery map when checkout delivery section is shown
+        function initDeliveryMap() {
+            if (deliveryMap) {
+                deliveryMap.invalidateSize();
+                return;
+            }
+            const center = savedLocation ? [savedLocation.lat, savedLocation.lng] : [24.7136, 46.6753];
+            deliveryMap = L.map('delivery-map').setView(center, 13);
+            L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+                attribution: '&copy; <a href="https://carto.com/">CARTO</a>',
+                subdomains: 'abcd',
+                maxZoom: 19
+            }).addTo(deliveryMap);
+
+            if (savedLocation) {
+                deliveryMarker = L.marker([savedLocation.lat, savedLocation.lng]).addTo(deliveryMap);
+                selectedDeliveryLocation = savedLocation;
+                document.getElementById('delivery-location-text').textContent = `📍 ${savedLocation.address || 'موقع محدد'}`;
+            }
+
+            // زر تحديد الموقع الحالي (GPS)
+            const deliveryGPSBtn = document.createElement('button');
+            deliveryGPSBtn.textContent = '📍 تحديد موقعي تلقائياً';
+            deliveryGPSBtn.style.cssText = 'position:absolute;bottom:12px;right:12px;z-index:999;background:var(--navy-deep);color:var(--gold);border:none;padding:8px 14px;border-radius:8px;font-family:inherit;font-size:0.9rem;font-weight:700;cursor:pointer;box-shadow:0 3px 10px rgba(0,0,0,0.3);';
+            document.getElementById('delivery-map').appendChild(deliveryGPSBtn);
+            deliveryGPSBtn.addEventListener('click', () => {
+                deliveryGPSBtn.textContent = '⏳ جاري...';
+                navigator.geolocation.getCurrentPosition(async pos => {
+                    const lat = pos.coords.latitude, lng = pos.coords.longitude;
+                    deliveryMap.setView([lat, lng], 15);
+                    if (deliveryMarker) deliveryMap.removeLayer(deliveryMarker);
+                    deliveryMarker = L.marker([lat, lng]).addTo(deliveryMap);
+                    selectedDeliveryLocation = { lat, lng };
+                    document.getElementById('delivery-location-text').textContent = '⏳ جاري تحديد العنوان...';
+                    try {
+                        const res = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json&accept-language=ar`);
+                        const data = await res.json();
+                        selectedDeliveryLocation.address = data.display_name || `${lat.toFixed(4)}, ${lng.toFixed(4)}`;
+                        document.getElementById('delivery-location-text').textContent = `📍 ${selectedDeliveryLocation.address}`;
+                    } catch {
+                        document.getElementById('delivery-location-text').textContent = `📍 ${lat.toFixed(4)}, ${lng.toFixed(4)}`;
+                    }
+                    deliveryGPSBtn.textContent = '📍 تحديد موقعي تلقائياً';
+                }, () => {
+                    deliveryGPSBtn.textContent = '📍 تحديد موقعي تلقائياً';
+                    alert('تعذّر الوصول للموقع. تأكد من السماح بالوصول للموقع في المتصفح.');
+                }, { enableHighAccuracy: true });
+            });
+
+            deliveryMap.on('click', async (e) => {
+                const { lat, lng } = e.latlng;
+                if (deliveryMarker) deliveryMap.removeLayer(deliveryMarker);
+                deliveryMarker = L.marker([lat, lng]).addTo(deliveryMap);
+                selectedDeliveryLocation = { lat, lng };
+                document.getElementById('delivery-location-text').textContent = '⏳ جاري تحديد العنوان...';
+                try {
+                    const res = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json&accept-language=ar`);
+                    const data = await res.json();
+                    const address = data.display_name || `${lat.toFixed(4)}, ${lng.toFixed(4)}`;
+                    selectedDeliveryLocation.address = address;
+                    document.getElementById('delivery-location-text').textContent = `📍 ${address}`;
+                } catch {
+                    document.getElementById('delivery-location-text').textContent = `📍 ${lat.toFixed(4)}, ${lng.toFixed(4)}`;
+                }
+            });
+        }
+
+        // Watch for delivery section appearing
+        const origBtnDelivery = document.querySelector('.btn-delivery');
+        if (origBtnDelivery) {
+            origBtnDelivery.addEventListener('click', () => {
+                setTimeout(() => {
+                    const section = document.getElementById('checkout-address-section');
+                    if (section && section.style.display !== 'none') initDeliveryMap();
+                }, 200);
+            });
+        }
+
+        // Watch cart checkout delivery button
+        document.addEventListener('click', (e) => {
+            if (e.target.closest('.btn-delivery') || e.target.closest('[data-type="delivery"]')) {
+                setTimeout(() => {
+                    const section = document.getElementById('checkout-address-section');
+                    if (section && section.style.display !== 'none') initDeliveryMap();
+                }, 300);
+            }
+        });
+
+        // ======= SETTINGS MAP =======
+        function initSettingsMap() {
+            if (settingsMap) {
+                settingsMap.invalidateSize();
+                return;
+            }
+            const center = savedLocation ? [savedLocation.lat, savedLocation.lng] : [24.7136, 46.6753];
+            settingsMap = L.map('settings-map').setView(center, 13);
+            L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+                attribution: '&copy; <a href="https://carto.com/">CARTO</a>',
+                subdomains: 'abcd',
+                maxZoom: 19
+            }).addTo(settingsMap);
+
+            if (savedLocation) {
+                settingsMarker = L.marker([savedLocation.lat, savedLocation.lng]).addTo(settingsMap);
+                settingsMap._selectedLoc = savedLocation;
+                document.getElementById('settings-location-text').textContent = `📍 ${savedLocation.address || 'موقع محفوظ'}`;
+            }
+
+            // زر GPS للإعدادات
+            const settingsGPSBtn = document.createElement('button');
+            settingsGPSBtn.textContent = '📍 تحديد موقعي تلقائياً';
+            settingsGPSBtn.style.cssText = 'position:absolute;bottom:12px;right:12px;z-index:999;background:var(--navy-deep);color:var(--gold);border:none;padding:8px 14px;border-radius:8px;font-family:inherit;font-size:0.9rem;font-weight:700;cursor:pointer;box-shadow:0 3px 10px rgba(0,0,0,0.3);';
+            document.getElementById('settings-map').appendChild(settingsGPSBtn);
+            settingsGPSBtn.addEventListener('click', () => {
+                settingsGPSBtn.textContent = '⏳ جاري...';
+                navigator.geolocation.getCurrentPosition(async pos => {
+                    const lat = pos.coords.latitude, lng = pos.coords.longitude;
+                    settingsMap.setView([lat, lng], 15);
+                    if (settingsMarker) settingsMap.removeLayer(settingsMarker);
+                    settingsMarker = L.marker([lat, lng]).addTo(settingsMap);
+                    settingsMap._selectedLoc = { lat, lng };
+                    document.getElementById('settings-location-text').textContent = '⏳ جاري تحديد العنوان...';
+                    try {
+                        const res = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json&accept-language=ar`);
+                        const data = await res.json();
+                        settingsMap._selectedLoc.address = data.display_name || `${lat.toFixed(4)}, ${lng.toFixed(4)}`;
+                        document.getElementById('settings-location-text').textContent = `📍 ${settingsMap._selectedLoc.address}`;
+                    } catch {
+                        document.getElementById('settings-location-text').textContent = `📍 ${lat.toFixed(4)}, ${lng.toFixed(4)}`;
+                    }
+                    settingsGPSBtn.textContent = '📍 تحديد موقعي تلقائياً';
+                }, () => {
+                    settingsGPSBtn.textContent = '📍 تحديد موقعي تلقائياً';
+                    alert('تعذّر الوصول للموقع. تأكد من السماح بالوصول للموقع في المتصفح.');
+                }, { enableHighAccuracy: true });
+            });
+
+            settingsMap.on('click', async (e) => {
+                const { lat, lng } = e.latlng;
+                if (settingsMarker) settingsMap.removeLayer(settingsMarker);
+                settingsMarker = L.marker([lat, lng]).addTo(settingsMap);
+                settingsMap._selectedLoc = { lat, lng };
+                document.getElementById('settings-location-text').textContent = '⏳ جاري تحديد العنوان...';
+                try {
+                    const res = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json&accept-language=ar`);
+                    const data = await res.json();
+                    settingsMap._selectedLoc.address = data.display_name || `${lat.toFixed(4)}, ${lng.toFixed(4)}`;
+                    document.getElementById('settings-location-text').textContent = `📍 ${settingsMap._selectedLoc.address}`;
+                } catch {
+                    document.getElementById('settings-location-text').textContent = `📍 ${lat.toFixed(4)}, ${lng.toFixed(4)}`;
+                }
+            });
+        }
+
+        // Save location button
+        document.getElementById('btn-save-location').addEventListener('click', () => {
+            const loc = settingsMap && settingsMap._selectedLoc;
+            if (!loc) {
+                document.getElementById('location-save-status').style.color = 'red';
+                document.getElementById('location-save-status').textContent = 'يرجى الضغط على الخريطة أولاً لتحديد موقعك';
+                return;
+            }
+            localStorage.setItem('bayn_saved_location', JSON.stringify(loc));
+            selectedDeliveryLocation = loc;
+            document.getElementById('location-save-status').style.color = 'green';
+            document.getElementById('location-save-status').textContent = '✅ تم حفظ موقعك بنجاح!';
+            setTimeout(() => document.getElementById('location-save-status').textContent = '', 3000);
+        });
+    </script>
+</body>
+</html>
