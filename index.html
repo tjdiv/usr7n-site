@@ -3,128 +3,119 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>منصة usr7n | حلول برمجية متكاملة</title>
+    <title>usr7n | للحلول الرقمية</title>
+    <!-- استدعاء خطوط جوجل (Cairo) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&display=swap" rel="stylesheet">
+    <!-- استدعاء Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- استدعاء أيقونات FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Cairo', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#3b82f6',
+                        secondary: '#8b5cf6',
+                        dark: '#0f172a'
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800&display=swap');
-        
-        :root {
-            --primary: #2d3436;
-            --accent: #0984e3;
-            --light: #f9f9f9;
-            --text: #333;
+        /* تأثيرات إضافية */
+        .gradient-text {
+            background: linear-gradient(to left, #3b82f6, #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
-
-        body {
-            font-family: 'Tajawal', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: var(--light);
-            color: var(--text);
-            line-height: 1.6;
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
-
-        header {
-            background: white;
-            padding: 20px 10%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-        }
-
-        .logo {
-            font-size: 24px;
-            font-weight: 800;
-            color: var(--accent);
-        }
-
-        .hero {
-            padding: 80px 10%;
-            text-align: center;
-            background: linear-gradient(135deg, #0984e3, #6c5ce7);
-            color: white;
-        }
-
-        .hero h1 {
-            font-size: 48px;
-            margin-bottom: 20px;
-        }
-
-        .btn {
-            background: #ffeaa7;
-            color: var(--primary);
-            padding: 15px 30px;
-            border-radius: 5px;
-            text-decoration: none;
-            font-weight: bold;
-            display: inline-block;
-            margin-top: 20px;
-        }
-
-        section {
-            padding: 60px 10%;
-        }
-
-        .features {
-            display: flex;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
-
-        .card {
-            background: white;
-            padding: 30px;
-            border-radius: 10px;
-            flex: 1;
-            min-width: 250px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-        
-        footer {
-            text-align: center;
-            padding: 40px;
-            background: #fff;
-            margin-top: 40px;
-            border-top: 1px solid #ddd;
+        .blob {
+            position: absolute;
+            filter: blur(80px);
+            z-index: 0;
+            opacity: 0.4;
         }
     </style>
 </head>
-<body>
+<body class="bg-dark text-white font-sans antialiased relative overflow-x-hidden min-h-screen flex flex-col">
 
-    <header>
-        <div class="logo">usr7n</div>
-        <nav>
-            <a href="#" style="margin-left: 20px; text-decoration: none; color: var(--text);">الرئيسية</a>
-        </nav>
-    </header>
+    <!-- خلفية تفاعلية بصرية -->
+    <div class="blob bg-primary w-96 h-96 rounded-full top-0 right-0 -translate-y-1/2 translate-x-1/2"></div>
+    <div class="blob bg-secondary w-96 h-96 rounded-full bottom-0 left-0 translate-y-1/2 -translate-x-1/2"></div>
 
-    <div class="hero">
-        <h1>منصة usr7n</h1>
-        <p>شريكك التقني لتطوير البرمجيات والحلول الرقمية.</p>
-        <a href="https://wa.me/966550654622" class="btn">تواصل معنا: 0550654622</a>
-    </div>
+    <!-- المحتوى الرئيسي -->
+    <main class="flex-grow flex flex-col items-center justify-center relative z-10 px-4 sm:px-6 lg:px-8 py-20">
+        
+        <!-- الهيدر والوصف -->
+        <div class="text-center max-w-4xl mx-auto mb-16">
+            <h1 class="text-5xl md:text-7xl font-extrabold mb-6 tracking-tight">
+                نحول أفكارك إلى <span class="gradient-text">واقع رقمي</span>
+            </h1>
+            <p class="text-lg md:text-2xl text-gray-400 mb-8 leading-relaxed">
+                سواءً كنت تبحث عن تطبيق جوال متطور، موقع إلكتروني احترافي، أو أي نظام تقني يخطر على بالك.. نحن هنا لنبني لك المستقبل بأعلى معايير الجودة والإبداع.
+            </p>
+        </div>
 
-    <section>
-        <h2 style="text-align: center;">لماذا usr7n؟</h2>
-        <div class="features">
-            <div class="card">
-                <h3>تطوير احترافي</h3>
-                <p>حلول برمجية مخصصة وعالية الأداء باستخدام أحدث التقنيات.</p>
+        <!-- الخدمات (كروت) -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-6xl mb-16">
+            <!-- الكرت الأول -->
+            <div class="glass-card p-8 rounded-2xl text-center transform transition duration-300 hover:-translate-y-2 hover:shadow-2xl hover:shadow-primary/20">
+                <div class="w-16 h-16 mx-auto bg-gradient-to-br from-primary to-blue-400 rounded-full flex items-center justify-center mb-6 shadow-lg shadow-primary/30">
+                    <i class="fa-solid fa-mobile-screen-button text-2xl text-white"></i>
+                </div>
+                <h3 class="text-2xl font-bold mb-4">تطبيقات الجوال</h3>
+                <p class="text-gray-400">تصميم وبرمجة تطبيقات أصلية وهجينة بأداء سريع وتجربة مستخدم لا تُنسى.</p>
             </div>
-            <div class="card">
-                <h3>دعم فني متميز</h3>
-                <p>تواصل معنا عبر 0550654622 لخدمة عملاء سريعة وموثوقة.</p>
+            
+            <!-- الكرت الثاني -->
+            <div class="glass-card p-8 rounded-2xl text-center transform transition duration-300 hover:-translate-y-2 hover:shadow-2xl hover:shadow-secondary/20">
+                <div class="w-16 h-16 mx-auto bg-gradient-to-br from-secondary to-purple-400 rounded-full flex items-center justify-center mb-6 shadow-lg shadow-secondary/30">
+                    <i class="fa-solid fa-globe text-2xl text-white"></i>
+                </div>
+                <h3 class="text-2xl font-bold mb-4">مواقع الويب</h3>
+                <p class="text-gray-400">واجهات جذابة ولوحات تحكم متكاملة تضمن لعملك التواجد الرقمي الأقوى.</p>
             </div>
-            <div class="card">
-                <h3>ابتكار رقمي</h3>
-                <p>نحول أفكارك إلى مشاريع ناجحة على أرض الواقع.</p>
+
+            <!-- الكرت الثالث -->
+            <div class="glass-card p-8 rounded-2xl text-center transform transition duration-300 hover:-translate-y-2 hover:shadow-2xl hover:shadow-pink-500/20">
+                <div class="w-16 h-16 mx-auto bg-gradient-to-br from-pink-500 to-rose-400 rounded-full flex items-center justify-center mb-6 shadow-lg shadow-pink-500/30">
+                    <i class="fa-solid fa-lightbulb text-2xl text-white"></i>
+                </div>
+                <h3 class="text-2xl font-bold mb-4">أفكار مخصصة</h3>
+                <p class="text-gray-400">أي فكرة تخطر على بالك، نقوم بتحليلها وتحويلها إلى برمجيات وأنظمة متكاملة.</p>
             </div>
         </div>
-    </section>
-    
-    <footer>
-        <p>جميع الحقوق محفوظة لمنصة usr7n © 2026</p>
-        <p>للاستفسارات: 0550654622</p>
+
+        <!-- زر التواصل -->
+        <div class="text-center relative z-20">
+            <p class="text-gray-300 mb-4 text-lg">لمشاهدة سابقة أعمالنا ومناقشة مشروعك:</p>
+            <a href="https://wa.me/966509539447" target="_blank" rel="noopener noreferrer" 
+               class="inline-flex items-center gap-3 bg-[#25D366] hover:bg-[#1ebd5a] text-white text-xl font-bold py-4 px-8 rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg shadow-[#25D366]/30">
+                <i class="fa-brands fa-whatsapp text-2xl"></i>
+                <span>تواصل معنا عبر واتساب</span>
+            </a>
+            <p class="mt-4 text-gray-400 font-mono" dir="ltr">+966 50 953 9447</p>
+        </div>
+
+    </main>
+
+    <!-- الفوتر -->
+    <footer class="relative z-10 border-t border-white/10 mt-auto py-8 text-center">
+        <p class="text-gray-500 font-semibold tracking-wider">
+            جميع الحقوق محفوظة لـ <span class="text-gray-300 font-bold">usr7n</span> &copy; 2026
+        </p>
     </footer>
 
 </body>
