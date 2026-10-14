@@ -1,0 +1,2618 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover" />
+  <title>مجوهرات كاريزما | CHARISMA JEWELRY</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cormorant+Garamond:wght@500;600;700&family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-black: #000000;
+      --bg-surface: #0D0D0D;
+      --bg-card: #141414;
+      --bg-elevated: #1C1C1C;
+      --splash-bg: #D8D0C5;
+      --gold-primary: #C5A373;
+      --gold-light: #E5CCA0;
+      --gold-dark: #8B6B47;
+      --silver-primary: #D4DBE2;
+      --text-white: #FFFFFF;
+      --text-light: #EAE6DF;
+      --text-muted: #9E9890;
+      --border-subtle: rgba(255, 255, 255, 0.14);
+      --border-gold: rgba(197, 163, 115, 0.45);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      background-color: var(--bg-black);
+      color: var(--text-white);
+      font-family: 'Tajawal', sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-black);
+      color: var(--text-white);
+      min-height: 100dvh;
+      overflow-x: hidden;
+      padding-bottom: 5.5rem;
+    }
+
+    body.lock-scroll {
+      overflow: hidden;
+    }
+
+    svg.icon-svg {
+      width: 20px;
+      height: 20px;
+      stroke: currentColor;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      fill: none;
+      flex-shrink: 0;
+    }
+
+    /* ==========================================================================
+       1. AUTOMATIC SPLASH SCREEN
+       ========================================================================== */
+    #splash-screen {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background-color: var(--splash-bg);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      transition: opacity 0.85s cubic-bezier(0.77, 0, 0.175, 1),
+                  visibility 0.85s cubic-bezier(0.77, 0, 0.175, 1);
+    }
+
+    #splash-screen.splash-hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .splash-logo-box {
+      position: relative;
+      width: min(82vw, 390px);
+      aspect-ratio: 1 / 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: var(--splash-bg);
+    }
+
+    .splash-logo-mask {
+      width: 100%;
+      height: 100%;
+      background-color: var(--splash-bg);
+      overflow: hidden;
+    }
+
+    .splash-logo-mask img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+      animation: splashZoom 3.8s ease-out forwards;
+    }
+
+    @keyframes splashZoom {
+      0% { transform: scale(0.95); opacity: 0; }
+      20% { opacity: 1; }
+      100% { transform: scale(1.02); opacity: 1; }
+    }
+
+    .splash-diamond-glint {
+      position: absolute;
+      left: 53.47%;
+      top: 40.92%;
+      width: 64px;
+      height: 64px;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      z-index: 4;
+    }
+
+    .splash-diamond-glint::before {
+      content: '';
+      position: absolute;
+      inset: 12px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,255,255,0.95) 0%, rgba(248,228,188,0.5) 45%, transparent 72%);
+      animation: diamondGlow 2s infinite ease-in-out;
+    }
+
+    .splash-diamond-glint svg {
+      width: 100%;
+      height: 100%;
+      filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.95));
+      animation: diamondSpin 3.2s infinite ease-in-out;
+    }
+
+    @keyframes diamondGlow {
+      0%, 100% { transform: scale(0.75); opacity: 0.55; }
+      50% { transform: scale(1.3); opacity: 1; }
+    }
+
+    @keyframes diamondSpin {
+      0%, 100% { transform: scale(0.65) rotate(0deg); opacity: 0.7; }
+      50% { transform: scale(1.1) rotate(45deg); opacity: 1; }
+    }
+
+    .splash-loader-wrap {
+      margin-top: 0.75rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .splash-tagline {
+      font-family: 'Amiri', serif;
+      font-size: clamp(1.35rem, 4.5vw, 1.75rem);
+      color: #4A3823;
+      font-weight: 700;
+    }
+
+    .splash-progress-track {
+      width: min(65vw, 220px);
+      height: 3px;
+      background: rgba(110, 86, 58, 0.22);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .splash-progress-fill {
+      width: 0%;
+      height: 100%;
+      background: linear-gradient(90deg, #6E563A, #AD8D67, #E5CCA0, #8B6B47);
+      border-radius: 999px;
+      transition: width 3.4s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    /* ==========================================================================
+       2. VIP LOGIN GATE MODAL (تظهر فقط عند الضغط على قسم أو زر VIP)
+       ========================================================================== */
+    .vip-gate-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 4000;
+      background: rgba(0, 0, 0, 0.88);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.15rem;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.35s ease;
+    }
+
+    .vip-gate-backdrop.open {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .vip-gate-card {
+      width: 100%;
+      max-width: 420px;
+      background: linear-gradient(165deg, #161412 0%, #0A0A0A 100%);
+      border: 1px solid var(--border-gold);
+      border-radius: 24px;
+      padding: 1.85rem 1.45rem;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.85), 0 0 35px rgba(197, 163, 115, 0.14);
+      text-align: center;
+      position: relative;
+    }
+
+    .vip-gate-close {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      color: var(--text-white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    .vip-gate-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.3rem 0.9rem;
+      border-radius: 999px;
+      background: rgba(197, 163, 115, 0.15);
+      border: 1px solid var(--border-gold);
+      color: var(--gold-light);
+      font-size: 0.78rem;
+      font-weight: 700;
+      margin-bottom: 0.85rem;
+    }
+
+    .vip-gate-title {
+      font-family: 'Amiri', serif;
+      font-size: 1.7rem;
+      color: var(--text-white);
+      margin-bottom: 0.35rem;
+    }
+
+    .vip-gate-sub {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 1.35rem;
+    }
+
+    .vip-form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+      text-align: right;
+    }
+
+    .vip-input-label {
+      font-size: 0.78rem;
+      color: var(--gold-light);
+      font-weight: 700;
+      margin-bottom: 0.2rem;
+      display: block;
+    }
+
+    .vip-input {
+      width: 100%;
+      background: #141414;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 12px;
+      padding: 0.78rem 0.95rem;
+      color: var(--text-white);
+      font-family: 'Tajawal', sans-serif;
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .vip-input:focus {
+      border-color: var(--gold-primary);
+    }
+
+    .vip-error-msg {
+      color: #F87171;
+      font-size: 0.8rem;
+      font-weight: 700;
+      min-height: 1.2rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .btn-vip-submit {
+      width: 100%;
+      background: linear-gradient(135deg, #8B6B47 0%, #C5A373 50%, #E5CCA0 100%);
+      color: #140D06;
+      border: none;
+      border-radius: 999px;
+      padding: 0.85rem 1.2rem;
+      font-family: 'Tajawal', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 8px 24px rgba(197, 163, 115, 0.3);
+    }
+
+    .btn-vip-submit:hover {
+      transform: translateY(-1px);
+    }
+
+    .vip-divider {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin: 1.15rem 0;
+      color: var(--text-muted);
+      font-size: 0.78rem;
+    }
+
+    .vip-divider::before,
+    .vip-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: rgba(255, 255, 255, 0.12);
+    }
+
+    .btn-guest-enter {
+      width: 100%;
+      background: transparent;
+      color: var(--text-white);
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      border-radius: 999px;
+      padding: 0.75rem 1.2rem;
+      font-family: 'Tajawal', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .btn-guest-enter:hover {
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    /* ==========================================================================
+       3. TOP BAR WITH 3-LINE HAMBURGER MENU (٣ خطوط للفئات)
+       ========================================================================== */
+    .top-navbar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(0, 0, 0, 0.88);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 0.75rem 1rem;
+    }
+
+    .top-navbar-inner {
+      max-width: 980px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+    }
+
+    .hamburger-btn {
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      color: var(--text-white);
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .hamburger-btn:hover {
+      border-color: var(--gold-primary);
+      background: rgba(197, 163, 115, 0.12);
+    }
+
+    .hamburger-line {
+      width: 20px;
+      height: 2px;
+      background-color: var(--text-white);
+      border-radius: 2px;
+      transition: all 0.25s ease;
+    }
+
+    .brand-center {
+      text-decoration: none;
+      color: var(--text-white);
+      text-align: center;
+      cursor: pointer;
+    }
+
+    .brand-center-en {
+      display: block;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      color: var(--gold-light);
+      line-height: 1.1;
+    }
+
+    .brand-center-ar {
+      display: block;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .nav-left-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+    }
+
+    .vip-status-btn {
+      background: rgba(197, 163, 115, 0.14);
+      border: 1px solid var(--border-gold);
+      color: var(--gold-light);
+      padding: 0.42rem 0.78rem;
+      border-radius: 999px;
+      font-family: 'Tajawal', sans-serif;
+      font-size: 0.76rem;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .vip-status-btn.vip-active {
+      background: linear-gradient(135deg, #8B6B47, #C5A373);
+      color: #0D0904;
+      border-color: #E5CCA0;
+    }
+
+    .cart-icon-btn {
+      position: relative;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: var(--text-white);
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    .cart-badge-pill {
+      position: absolute;
+      top: -4px;
+      left: -4px;
+      background: var(--gold-primary);
+      color: #000;
+      font-size: 0.68rem;
+      font-weight: 800;
+      min-width: 18px;
+      height: 18px;
+      border-radius: 999px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 4px;
+    }
+
+    /* ==========================================================================
+       4. SLIDE-OUT 3-LINE CATEGORY DRAWER (فضة / ذهب -> خواتم، أساور، قلادة)
+       ========================================================================== */
+    .menu-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 2500;
+      background: rgba(0, 0, 0, 0.72);
+      backdrop-filter: blur(6px);
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .menu-backdrop.open {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .side-category-drawer {
+      position: fixed;
+      top: 0;
+      right: 0;
+      height: 100dvh;
+      width: min(86vw, 340px);
+      z-index: 2600;
+      background: #0B0B0B;
+      border-left: 1px solid var(--border-gold);
+      display: flex;
+      flex-direction: column;
+      transform: translateX(105%);
+      transition: transform 0.35s cubic-bezier(0.77, 0, 0.175, 1);
+      box-shadow: -16px 0 45px rgba(0, 0, 0, 0.8);
+    }
+
+    .side-category-drawer.open {
+      transform: translateX(0);
+    }
+
+    .drawer-header {
+      padding: 1.2rem 1.15rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .drawer-title {
+      font-family: 'Amiri', serif;
+      font-size: 1.35rem;
+      color: var(--gold-light);
+    }
+
+    .drawer-close-btn {
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      color: var(--text-white);
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    .drawer-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+    }
+
+    .drawer-home-btn {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: var(--text-white);
+      padding: 0.85rem 1rem;
+      border-radius: 14px;
+      font-family: 'Tajawal', sans-serif;
+      font-size: 0.96rem;
+      font-weight: 700;
+      text-align: right;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+    }
+
+    .cat-accordion {
+      background: #131313;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 16px;
+      overflow: hidden;
+      transition: border-color 0.25s;
+    }
+
+    .cat-accordion.open {
+      border-color: var(--border-gold);
+    }
+
+    .cat-accordion-header {
+      width: 100%;
+      background: transparent;
+      border: none;
+      color: var(--text-white);
+      padding: 0.95rem 1.05rem;
+      font-family: 'Amiri', serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+    }
+
+    .cat-accordion-header span.metal-dot {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      margin-left: 0.55rem;
+    }
+
+    .cat-accordion-arrow {
+      transition: transform 0.25s ease;
+      color: var(--gold-light);
+    }
+
+    .cat-accordion.open .cat-accordion-arrow {
+      transform: rotate(180deg);
+    }
+
+    .cat-accordion-list {
+      list-style: none;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 0.45rem 0.65rem 0.65rem;
+      display: none;
+      flex-direction: column;
+      gap: 0.3rem;
+      background: #0E0E0E;
+    }
+
+    .cat-accordion.open .cat-accordion-list {
+      display: flex;
+    }
+
+    .subcat-item-btn {
+      width: 100%;
+      background: transparent;
+      border: none;
+      color: #D8D3CA;
+      padding: 0.68rem 0.85rem;
+      border-radius: 10px;
+      font-family: 'Tajawal', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      text-align: right;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .subcat-item-btn:hover,
+    .subcat-item-btn.active {
+      background: rgba(197, 163, 115, 0.16);
+      color: var(--gold-light);
+    }
+
+    .drawer-vip-box {
+      margin-top: auto;
+      padding: 1rem;
+      background: linear-gradient(135deg, rgba(197, 163, 115, 0.16), rgba(139, 107, 71, 0.08));
+      border: 1px solid var(--border-gold);
+      border-radius: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+    }
+
+    /* ==========================================================================
+       5. EDITORIAL HOME BANNERS
+       ========================================================================== */
+    .main-container {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0.65rem 0.65rem 1.5rem;
+    }
+
+    .view-mode-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      margin-bottom: 0.85rem;
+      padding: 0.55rem 0.75rem;
+      background: #111111;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 14px;
+    }
+
+    .breadcrumb-text {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--gold-light);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .back-home-btn {
+      background: #000000;
+      color: #FFFFFF;
+      border: 1px solid rgba(255, 255, 255, 0.75);
+      border-radius: 999px;
+      padding: 0.36rem 0.9rem;
+      font-family: 'Tajawal', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .editorial-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 1.1rem;
+    }
+
+    .editorial-card {
+      position: relative;
+      width: 100%;
+      height: clamp(390px, 68vw, 560px);
+      overflow: hidden;
+      background: #181818;
+      cursor: pointer;
+    }
+
+    .editorial-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+      transition: transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .editorial-card:hover img {
+      transform: scale(1.03);
+    }
+
+    .editorial-card-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to top,
+        rgba(0, 0, 0, 0.38) 0%,
+        rgba(0, 0, 0, 0.08) 45%,
+        rgba(0, 0, 0, 0.02) 100%
+      );
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: flex-start;
+      padding: 2rem 1.4rem 1.65rem;
+      text-align: right;
+    }
+
+    .editorial-card.light-tone .editorial-title {
+      color: #0D0D0D;
+      text-shadow: 0 1px 10px rgba(255, 255, 255, 0.35);
+    }
+
+    .editorial-card.light-tone .editorial-subtitle {
+      color: #181818;
+      text-shadow: 0 1px 8px rgba(255, 255, 255, 0.35);
+    }
+
+    .editorial-card.dark-tone .editorial-title {
+      color: #FFFFFF;
+      text-shadow: 0 2px 14px rgba(0, 0, 0, 0.75);
+    }
+
+    .editorial-card.dark-tone .editorial-subtitle {
+      color: #F1ECE4;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.75);
+    }
+
+    .editorial-title {
+      font-family: 'Tajawal', sans-serif;
+      font-size: clamp(1.85rem, 6vw, 2.45rem);
+      font-weight: 700;
+      line-height: 1.15;
+      margin-bottom: 0.35rem;
+    }
+
+    .editorial-subtitle {
+      font-size: clamp(0.95rem, 3.3vw, 1.18rem);
+      font-weight: 500;
+      margin-bottom: 1.1rem;
+      line-height: 1.45;
+    }
+
+    .btn-editorial-shop {
+      background-color: #000000;
+      color: #FFFFFF;
+      border: 1.3px solid #FFFFFF;
+      border-radius: 999px;
+      padding: 0.68rem 1.9rem;
+      font-family: 'Tajawal', sans-serif;
+      font-size: 0.98rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.42);
+      transition: transform 0.2s ease, background-color 0.2s ease;
+    }
+
+    .btn-editorial-shop:hover {
+      transform: scale(1.03);
+      background-color: #141414;
+    }
+
+    /* ==========================================================================
+       6. PRODUCTS CATALOG VIEW
+       ========================================================================== */
+    .catalog-filter-pills {
+      display: flex;
+      gap: 0.45rem;
+      overflow-x: auto;
+      padding-bottom: 0.5rem;
+      margin-bottom: 1rem;
+      scrollbar-width: none;
+    }
+    .catalog-filter-pills::-webkit-scrollbar {
+      display: none;
+    }
+
+    .filter-pill-btn {
+      background: #141414;
+      color: #CCCCCC;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 999px;
+      padding: 0.48rem 1.05rem;
+      font-family: 'Tajawal', sans-serif;
+      font-size: 0.84rem;
+      font-weight: 700;
+      white-space: nowrap;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .filter-pill-btn.active {
+      background: #FFFFFF;
+      color: #000000;
+      border-color: #FFFFFF;
+    }
+
+    .filter-pill-btn.vip-pill {
+      border-color: var(--gold-primary);
+      color: var(--gold-light);
+    }
+
+    .filter-pill-btn.vip-pill.active {
+      background: linear-gradient(135deg, #8B6B47, #C5A373);
+      color: #000000;
+      border-color: #E5CCA0;
+    }
+
+    .section-group-block {
+      margin-bottom: 2.2rem;
+    }
+
+    .section-group-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.9rem;
+      padding-bottom: 0.55rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .section-group-title {
+      font-family: 'Amiri', serif;
+      font-size: 1.5rem;
+      color: var(--text-white);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .section-group-count {
+      font-size: 0.78rem;
+      color: var(--gold-light);
+      background: rgba(197, 163, 115, 0.14);
+      border: 1px solid var(--border-gold);
+      padding: 0.2rem 0.7rem;
+      border-radius: 999px;
+      font-weight: 700;
+    }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.85rem;
+    }
+
+    .product-card {
+      background: var(--bg-card);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+      transition: transform 0.25s ease, border-color 0.25s ease;
+    }
+
+    .product-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--border-gold);
+    }
+
+    .product-img-wrap {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 1 / 1.08;
+      background: #1A1A1A;
+      overflow: hidden;
+    }
+
+    .product-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.45s ease;
+    }
+
+    .product-card:hover .product-img-wrap img {
+      transform: scale(1.05);
+    }
+
+    .product-badge-top {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      background: rgba(0, 0, 0, 0.78);
+      backdrop-filter: blur(6px);
+      color: var(--gold-light);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 0.2rem 0.55rem;
+      border-radius: 999px;
+      font-size: 0.68rem;
+      font-weight: 700;
+    }
+
+    .product-info {
+      padding: 0.8rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      flex: 1;
+    }
+
+    .product-name {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--text-white);
+      line-height: 1.35;
+    }
+
+    .product-meta {
+      font-size: 0.74rem;
+      color: var(--text-muted);
+    }
+
+    .product-bottom {
+      margin-top: auto;
+      padding-top: 0.5rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.4rem;
+    }
+
+    .product-price {
+      font-size: 0.98rem;
+      font-weight: 800;
+      color: var(--gold-light);
+    }
+
+    .btn-add-bag {
+      background: #000000;
+      color: #FFFFFF;
+      border: 1px solid rgba(255, 255, 255, 0.75);
+      border-radius: 999px;
+      padding: 0.35rem 0.75rem;
+      font-family: 'Tajawal', sans-serif;
+      font-size: 0.74rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-add-bag:hover {
+      background: #FFFFFF;
+      color: #000000;
+    }
+
+    /* ==========================================================================
+       7. SINGLE PRODUCT DETAIL PAGE (صفحة تفاصيل المنتج واختيار المقاس والوصف)
+       ========================================================================== */
+    .product-detail-card {
+      background: #111111;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 22px;
+      overflow: hidden;
+      margin-bottom: 1.75rem;
+    }
+
+    .detail-hero-img-box {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 1 / 1.02;
+      max-height: 490px;
+      background: #191919;
+      overflow: hidden;
+    }
+
+    .detail-hero-img-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .detail-karat-pill {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      background: rgba(0, 0, 0, 0.82);
+      backdrop-filter: blur(8px);
+      color: var(--gold-light);
+      border: 1px solid var(--border-gold);
+      padding: 0.32rem 0.85rem;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
+
+    .detail-body {
+      padding: 1.35rem 1.15rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.15rem;
+    }
+
+    .detail-header-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 0.75rem;
+    }
+
+    .detail-title {
+      font-family: 'Amiri', serif;
+      font-size: clamp(1.4rem, 4.5vw, 1.75rem);
+      color: var(--text-white);
+      line-height: 1.3;
+    }
+
+    .detail-price {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--gold-light);
+      white-space: nowrap;
+    }
+
+    .detail-specs-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.55rem;
+    }
+
+    .detail-spec-item {
+      background: #181818;
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      border-radius: 12px;
+      padding: 0.6rem 0.5rem;
+      text-align: center;
+    }
+
+    .detail-spec-label {
+      display: block;
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      margin-bottom: 0.15rem;
+    }
+
+    .detail-spec-val {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--text-white);
+    }
+
+    .detail-section-label {
+      font-size: 0.86rem;
+      font-weight: 700;
+      color: var(--gold-light);
+      margin-bottom: 0.45rem;
+      display: block;
+    }
+
+    .detail-description-box {
+      background: #161616;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 14px;
+      padding: 0.95rem 1rem;
+      font-size: 0.9rem;
+      color: #DDD8D0;
+      line-height: 1.75;
+    }
+
+    .size-options-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .size-option-btn {
+      min-width: 58px;
+      padding: 0.55rem 0.9rem;
+      border-radius: 12px;
+      background: #171717;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      color: var(--text-white);
+      font-family: 'Tajawal', sans-serif;
+      font-size: 0.86rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .size-option-btn.active {
+      background: linear-gradient(135deg, #8B6B47, #C5A373);
+      color: #0D0904;
+      border-color: #E5CCA0;
+      box-shadow: 0 4px 15px rgba(197, 163, 115, 0.28);
+    }
+
+    .qty-and-gift-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .qty-control {
+      display: inline-flex;
+      align-items: center;
+      background: #171717;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .qty-btn {
+      width: 38px;
+      height: 38px;
+      background: transparent;
+      border: none;
+      color: var(--text-white);
+      font-size: 1.1rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .qty-val {
+      min-width: 36px;
+      text-align: center;
+      font-weight: 800;
+      font-size: 0.95rem;
+    }
+
+    .gift-toggle-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-size: 0.82rem;
+      color: #D8D3CA;
+      cursor: pointer;
+      background: #171717;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      padding: 0.52rem 0.85rem;
+      border-radius: 12px;
+    }
+
+    .gift-toggle-label input {
+      accent-color: var(--gold-primary);
+      width: 16px;
+      height: 16px;
+    }
+
+    .detail-actions-row {
+      display: grid;
+      grid-template-columns: 1.3fr 1fr;
+      gap: 0.65rem;
+      margin-top: 0.3rem;
+    }
+
+    .btn-buy-now {
+      background: #000000;
+      color: #FFFFFF;
+      border: 1.3px solid #FFFFFF;
+      border-radius: 999px;
+      padding: 0.85rem 1rem;
+      font-family: 'Tajawal', sans-serif;
+      font-size: 0.92rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-buy-now:hover {
+      background: #FFFFFF;
+      color: #000000;
+    }
+
+    /* ==========================================================================
+       8. LUXURY FOOTER SECTION (نص اكتشفي مجوهراتنا الرائعة + حقوق usr7n.com)
+       ========================================================================== */
+    .site-footer {
+      max-width: 720px;
+      margin: 1.5rem auto 0;
+      padding: 2.2rem 1.25rem 2.5rem;
+      background: linear-gradient(180deg, #0D0D0D 0%, #050505 100%);
+      border-top: 1px solid rgba(197, 163, 115, 0.3);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      text-align: center;
+    }
+
+    .footer-about-title {
+      font-family: 'Amiri', serif;
+      font-size: clamp(1.45rem, 4.5vw, 1.8rem);
+      color: var(--gold-light);
+      margin-bottom: 0.85rem;
+      font-weight: 700;
+    }
+
+    .footer-about-text {
+      font-size: 0.92rem;
+      color: #D6D0C6;
+      line-height: 1.85;
+      max-width: 620px;
+      margin: 0 auto 1.65rem;
+    }
+
+    .footer-divider {
+      width: 80px;
+      height: 1px;
+      background: var(--border-gold);
+      margin: 0 auto 1.2rem;
+    }
+
+    .footer-credits {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .footer-credits a {
+      color: var(--gold-light);
+      text-decoration: none;
+      font-weight: 800;
+      letter-spacing: 0.03em;
+      border-bottom: 1px dashed rgba(229, 204, 160, 0.5);
+      padding-bottom: 1px;
+      transition: color 0.2s;
+    }
+
+    .footer-credits a:hover {
+      color: #FFFFFF;
+    }
+
+    /* ==========================================================================
+       9. FLOATING BOTTOM NAVIGATION DOCK
+       ========================================================================== */
+    .floating-bottom-dock {
+      position: fixed;
+      bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 950;
+      width: min(94vw, 440px);
+      background: rgba(14, 14, 14, 0.92);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      border-radius: 999px;
+      padding: 0.35rem 0.45rem;
+      box-shadow: 0 14px 36px rgba(0, 0, 0, 0.75);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.2rem;
+    }
+
+    .dock-item {
+      flex: 1;
+      background: transparent;
+      border: none;
+      color: #BDB8B0;
+      padding: 0.5rem 0.3rem;
+      border-radius: 999px;
+      font-family: 'Tajawal', sans-serif;
+      font-size: 0.74rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.3rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .dock-item.active {
+      background: #FFFFFF;
+      color: #000000;
+    }
+
+    /* ==========================================================================
+       10. SHOPPING CART DRAWER & TOAST
+       ========================================================================== */
+    .cart-drawer {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100dvh;
+      width: min(100vw, 380px);
+      z-index: 2700;
+      background: #0E0E0E;
+      border-right: 1px solid var(--border-gold);
+      display: flex;
+      flex-direction: column;
+      transform: translateX(-105%);
+      transition: transform 0.35s cubic-bezier(0.77, 0, 0.175, 1);
+    }
+
+    .cart-drawer.open {
+      transform: translateX(0);
+    }
+
+    .cart-items-list {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+    }
+
+    .cart-row {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      background: #171717;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 0.6rem;
+      border-radius: 12px;
+    }
+
+    .cart-row img {
+      width: 54px;
+      height: 54px;
+      border-radius: 8px;
+      object-fit: cover;
+    }
+
+    .cart-footer {
+      padding: 1.1rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+      background: #141414;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    #toast-container {
+      position: fixed;
+      bottom: 78px;
+      left: 16px;
+      right: 16px;
+      z-index: 5000;
+      pointer-events: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.45rem;
+    }
+
+    .toast-msg {
+      background: #141414;
+      color: #FFFFFF;
+      border: 1px solid var(--gold-primary);
+      padding: 0.65rem 1.2rem;
+      border-radius: 999px;
+      font-size: 0.84rem;
+      font-weight: 700;
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.65);
+    }
+  </style>
+</head>
+<body class="lock-scroll">
+
+  <!-- ==========================================================================
+       1. AUTOMATIC SPLASH SCREEN
+       ========================================================================== -->
+  <section id="splash-screen" aria-label="شاشة البداية">
+    <div class="splash-logo-box">
+      <div class="splash-logo-mask">
+        <img src="logo_seamless.png" alt="CHARISMA JEWELRY" />
+      </div>
+      <div class="splash-diamond-glint">
+        <svg viewBox="0 0 100 100" fill="none">
+          <path d="M50 0 C51.5 40 60 48.5 100 50 C60 51.5 51.5 60 50 100 C48.5 60 40 51.5 0 50 C40 48.5 48.5 40 50 0 Z" fill="#FFFFFF" />
+        </svg>
+      </div>
+    </div>
+    <div class="splash-loader-wrap">
+      <p class="splash-tagline">مجوهرات كاريزما</p>
+      <div class="splash-progress-track">
+        <div class="splash-progress-fill" id="splash-progress-fill"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       2. VIP LOGIN GATE (تظهر فقط عند اختيار قسم أو زر الـ VIP)
+       ========================================================================== -->
+  <div class="vip-gate-backdrop" id="vip-gate-modal" onclick="if(event.target===this) closeVipGateAsGuest()">
+    <div class="vip-gate-card">
+      <button type="button" class="vip-gate-close" onclick="closeVipGateAsGuest()" aria-label="إغلاق">
+        <svg class="icon-svg" viewBox="0 0 24 24">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+
+      <span class="vip-gate-badge">
+        <svg class="icon-svg" viewBox="0 0 24 24" style="width:15px;height:15px;">
+          <polygon points="12 2 15 9 22 12 15 15 12 22 9 15 2 12 9 9 12 2"></polygon>
+        </svg>
+        <span>بوابة كبار الشخصيات VIP</span>
+      </span>
+
+      <h2 class="vip-gate-title">جناح الـ VIP الخاص</h2>
+      <p class="vip-gate-sub">أدخل اسم المستخدم وكلمة المرور لفتح قسم منتجات الـ VIP الحصرية</p>
+
+      <form onsubmit="handleVipLogin(event)">
+        <div class="vip-form-group">
+          <div>
+            <label class="vip-input-label" for="vip-username">اسم المستخدم</label>
+            <input type="text" id="vip-username" class="vip-input" placeholder="أدخل اسم المستخدم" autocomplete="off" />
+          </div>
+          <div>
+            <label class="vip-input-label" for="vip-password">كلمة المرور / الكود الخاص</label>
+            <input type="password" id="vip-password" class="vip-input" placeholder="••••" autocomplete="off" />
+          </div>
+        </div>
+
+        <div class="vip-error-msg" id="vip-error-msg"></div>
+
+        <button type="submit" class="btn-vip-submit">دخول جناح الـ VIP الخاص</button>
+      </form>
+
+      <div class="vip-divider">أو</div>
+
+      <button type="button" class="btn-guest-enter" onclick="closeVipGateAsGuest()">
+        العودة للمتجر العام
+      </button>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       3. STICKY TOP HEADER WITH 3-LINE MENU (٣ خطوط للفئات)
+       ========================================================================== -->
+  <header class="top-navbar">
+    <div class="top-navbar-inner">
+      <!-- 3 Lines Button (٣ خطوط) -->
+      <button type="button" class="hamburger-btn" onclick="toggleCategoryDrawer(true)" aria-label="قائمة الفئات">
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+      </button>
+
+      <!-- Brand Title -->
+      <a class="brand-center" onclick="showEditorialHome()">
+        <span class="brand-center-en">C H Λ R I S M Λ</span>
+        <span class="brand-center-ar">مجوهرات كاريزما</span>
+      </a>
+
+      <!-- Left Actions: VIP Gate + Cart -->
+      <div class="nav-left-actions">
+        <button type="button" class="vip-status-btn" id="vip-header-btn" onclick="handleVipHeaderClick()">
+          <svg class="icon-svg" viewBox="0 0 24 24" style="width:15px;height:15px;">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+          </svg>
+          <span id="vip-header-label">VIP</span>
+        </button>
+
+        <button type="button" class="cart-icon-btn" onclick="toggleCartDrawer(true)" aria-label="الحقيبة">
+          <svg class="icon-svg" viewBox="0 0 24 24">
+            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <path d="M16 10a4 4 0 0 1-8 0"></path>
+          </svg>
+          <span class="cart-badge-pill" id="cart-badge-count">0</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==========================================================================
+       4. 3-LINE SLIDE-OUT CATEGORY MENU (فضة: خواتم، أساور، قلادة | ذهب: خواتم، أساور، قلادة)
+       ========================================================================== -->
+  <div class="menu-backdrop" id="menu-backdrop" onclick="toggleCategoryDrawer(false)"></div>
+  <aside class="side-category-drawer" id="category-drawer" aria-label="قائمة الفئات">
+    <div class="drawer-header">
+      <h3 class="drawer-title">الفئات والأقسام</h3>
+      <button type="button" class="drawer-close-btn" onclick="toggleCategoryDrawer(false)" aria-label="إغلاق">
+        <svg class="icon-svg" viewBox="0 0 24 24">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+
+    <div class="drawer-body">
+      <button type="button" class="drawer-home-btn" onclick="showEditorialHome(); toggleCategoryDrawer(false);">
+        <span>الواجهة الرئيسية (المجموعات)</span>
+        <svg class="icon-svg" viewBox="0 0 24 24" style="width:17px;height:17px;">
+          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+        </svg>
+      </button>
+
+      <!-- 1. فئة فضة وتنسدل تحتها: خواتم، أساور، قلادة -->
+      <div class="cat-accordion open" id="acc-silver">
+        <button type="button" class="cat-accordion-header" onclick="toggleAccordion('acc-silver')">
+          <span>
+            <span class="metal-dot" style="background:#D4DBE2;"></span>
+            فضة :
+          </span>
+          <svg class="icon-svg cat-accordion-arrow" viewBox="0 0 24 24">
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </button>
+        <ul class="cat-accordion-list">
+          <li>
+            <button type="button" class="subcat-item-btn" onclick="openCategoryCatalog('silver', 'rings')">
+              <span>خواتم</span>
+              <span style="font-size:0.75rem;color:var(--text-muted);">5 قطع</span>
+            </button>
+          </li>
+          <li>
+            <button type="button" class="subcat-item-btn" onclick="openCategoryCatalog('silver', 'bracelets')">
+              <span>أساور</span>
+              <span style="font-size:0.75rem;color:var(--text-muted);">5 قطع</span>
+            </button>
+          </li>
+          <li>
+            <button type="button" class="subcat-item-btn" onclick="openCategoryCatalog('silver', 'necklaces')">
+              <span>قلادة</span>
+              <span style="font-size:0.75rem;color:var(--text-muted);">5 قطع</span>
+            </button>
+          </li>
+          <li>
+            <button type="button" class="subcat-item-btn" onclick="openCategoryCatalog('silver', 'all')" style="color:var(--silver-primary);">
+              <span>عرض كل مجموعات الفضة</span>
+            </button>
+          </li>
+        </ul>
+      </div>
+
+      <!-- 2. فئة ذهب وينسدل تحتها نفس الشيء: خواتم، أساور، قلادة -->
+      <div class="cat-accordion open" id="acc-gold">
+        <button type="button" class="cat-accordion-header" onclick="toggleAccordion('acc-gold')">
+          <span>
+            <span class="metal-dot" style="background:#C5A373;"></span>
+            ذهب :
+          </span>
+          <svg class="icon-svg cat-accordion-arrow" viewBox="0 0 24 24">
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </button>
+        <ul class="cat-accordion-list">
+          <li>
+            <button type="button" class="subcat-item-btn" onclick="openCategoryCatalog('gold', 'rings')">
+              <span>خواتم</span>
+              <span style="font-size:0.75rem;color:var(--text-muted);">8 قطع</span>
+            </button>
+          </li>
+          <li>
+            <button type="button" class="subcat-item-btn" onclick="openCategoryCatalog('gold', 'bracelets')">
+              <span>أساور</span>
+              <span style="font-size:0.75rem;color:var(--text-muted);">8 قطع</span>
+            </button>
+          </li>
+          <li>
+            <button type="button" class="subcat-item-btn" onclick="openCategoryCatalog('gold', 'necklaces')">
+              <span>قلادة</span>
+              <span style="font-size:0.75rem;color:var(--text-muted);">11 قطعة</span>
+            </button>
+          </li>
+          <li>
+            <button type="button" class="subcat-item-btn" onclick="openCategoryCatalog('gold', 'all')" style="color:var(--gold-light);">
+              <span>عرض كل مجموعات الذهب</span>
+            </button>
+          </li>
+        </ul>
+      </div>
+
+      <!-- VIP Exclusive Box inside Drawer -->
+      <div class="drawer-vip-box">
+        <div style="display:flex;align-items:center;justify-content:space-between;">
+          <strong style="color:var(--gold-light);font-size:0.92rem;">قسم الـ VIP الخاص</strong>
+          <span id="drawer-vip-status" style="font-size:0.72rem;color:var(--text-muted);">مقفل بالكود</span>
+        </div>
+        <p style="font-size:0.78rem;color:#CCC;line-height:1.5;">منتجات حصرية لأعضاء VIP فقط</p>
+        <button type="button" class="btn-vip-submit" style="padding:0.6rem;font-size:0.84rem;" onclick="toggleCategoryDrawer(false); accessVipSection();">
+          <span id="drawer-vip-btn-text">دخول جناح الـ VIP</span>
+        </button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ==========================================================================
+       5. MAIN CONTENT AREA (EDITORIAL HOME + CATALOG + PRODUCT DETAIL PAGE)
+       ========================================================================== -->
+  <main class="main-container">
+
+    <!-- A. EDITORIAL HOME VIEW (نفس تصميم الصورة المرفقة بالضبط) -->
+    <section id="editorial-home-view" class="editorial-stack">
+      <!-- 1. قسم الذهب -->
+      <article class="editorial-card light-tone" onclick="openCategoryCatalog('gold', 'all')">
+        <img src="assets/banners/hero_gold.jpg" alt="ذهب" />
+        <div class="editorial-card-overlay">
+          <h2 class="editorial-title">ذهب</h2>
+          <p class="editorial-subtitle">سرّ التألق مع مجموعات الذهب</p>
+          <button type="button" class="btn-editorial-shop">تسوّقوا المجموعات</button>
+        </div>
+      </article>
+
+      <!-- 2. قسم الفضة -->
+      <article class="editorial-card dark-tone" onclick="openCategoryCatalog('silver', 'all')">
+        <img src="assets/banners/hero_silver.jpg" alt="فضة" />
+        <div class="editorial-card-overlay">
+          <h2 class="editorial-title">فضة</h2>
+          <p class="editorial-subtitle">أناقة متفرّدة مع مجموعات الفضة</p>
+          <button type="button" class="btn-editorial-shop">تسوّقوا المجموعات</button>
+        </div>
+      </article>
+
+      <!-- 3. قسم الـ VIP الخاص (لا تفتح البوابة إلا عند الضغط عليه) -->
+      <article class="editorial-card light-tone" onclick="accessVipSection()">
+        <img src="assets/banners/hero_vip.jpg" alt="مجموعات VIP" />
+        <div class="editorial-card-overlay">
+          <h2 class="editorial-title">جناح VIP</h2>
+          <p class="editorial-subtitle">المجوهرات الفاخرة لإطلالة تشعّ بالبريق</p>
+          <button type="button" class="btn-editorial-shop">تسوّقوا المجموعات</button>
+        </div>
+      </article>
+
+      <!-- 4. قسم القلادات والسلاسل -->
+      <article class="editorial-card dark-tone" onclick="openCategoryCatalog('gold', 'necklaces')">
+        <img src="assets/products/necklace_8.jpg" alt="قلادة" />
+        <div class="editorial-card-overlay">
+          <h2 class="editorial-title">قلادة</h2>
+          <p class="editorial-subtitle">تصاميم سلاسل وقلادات لكل إطلالة</p>
+          <button type="button" class="btn-editorial-shop">تسوّقوا المجموعات</button>
+        </div>
+      </article>
+
+      <!-- 5. قسم الخواتم -->
+      <article class="editorial-card dark-tone" onclick="openCategoryCatalog('gold', 'rings')">
+        <img src="assets/products/ring_1.jpg" alt="خواتم" />
+        <div class="editorial-card-overlay">
+          <h2 class="editorial-title">خواتم</h2>
+          <p class="editorial-subtitle">تشكيلة الخواتم بتفاصيلها المتقنة</p>
+          <button type="button" class="btn-editorial-shop">تسوّقوا المجموعات</button>
+        </div>
+      </article>
+
+      <!-- 6. قسم الأساور -->
+      <article class="editorial-card dark-tone" onclick="openCategoryCatalog('gold', 'bracelets')">
+        <img src="assets/products/bracelet_6.jpg" alt="أساور" />
+        <div class="editorial-card-overlay">
+          <h2 class="editorial-title">أساور</h2>
+          <p class="editorial-subtitle">أساور ناعمة تكمّل حضورك</p>
+          <button type="button" class="btn-editorial-shop">تسوّقوا المجموعات</button>
+        </div>
+      </article>
+    </section>
+
+    <!-- B. PRODUCTS CATALOG VIEW -->
+    <section id="catalog-products-view" style="display:none;">
+      <div class="view-mode-bar">
+        <div class="breadcrumb-text" id="catalog-breadcrumb">ذهب • الكل</div>
+        <button type="button" class="back-home-btn" onclick="showEditorialHome()">
+          <span>العودة للأقسام</span>
+        </button>
+      </div>
+
+      <div class="catalog-filter-pills" id="catalog-sub-pills"></div>
+      <div id="catalog-products-container"></div>
+    </section>
+
+    <!-- C. SINGLE PRODUCT DETAIL PAGE (تفتح عند الضغط على صورة أو بطاقة أي منتج) -->
+    <section id="product-detail-view" style="display:none;">
+      <div class="view-mode-bar">
+        <div class="breadcrumb-text" id="detail-breadcrumb">تفاصيل القطعة</div>
+        <button type="button" class="back-home-btn" onclick="backToCatalogFromDetail()">
+          <span>العودة للمنتجات</span>
+        </button>
+      </div>
+
+      <div id="product-detail-container"></div>
+    </section>
+
+  </main>
+
+  <!-- ==========================================================================
+       6. FOOTER SECTION (النص التعريفي + حقوق تصميم وتطوير usr7n.com)
+       ========================================================================== -->
+  <footer class="site-footer">
+    <h2 class="footer-about-title">اكتشفي مجوهراتنا الرائعة</h2>
+    <p class="footer-about-text">
+      تتعهد CHARISMA بصناعة المجوهرات بشكلٍ يتجاوز كلّ التوقعات، حيث أنها تقدم مجموعة واسعة من المجوهرات في المملكة العربية السعودية لتناسب جميع الأذواق والميزانيات، بدءًا من السلاسل والقلادات المذهلة إلى الخواتم والأقراط والأساور وأنصاف الأطقم والأطقم الكاملة لمناسباتٍ لا تُنسى.
+    </p>
+    <div class="footer-divider"></div>
+    <div class="footer-credits">
+      <span>جميع الحقوق محفوظة &copy; مجوهرات كاريزما CHARISMA</span>
+      <span>حقوق تصميم وتطوير <a href="https://usr7n.com" target="_blank" rel="noopener noreferrer">usr7n.com</a></span>
+    </div>
+  </footer>
+
+  <!-- ==========================================================================
+       7. FLOATING BOTTOM NAVIGATION DOCK
+       ========================================================================== -->
+  <nav class="floating-bottom-dock" aria-label="التنقل السريع">
+    <button type="button" class="dock-item active" id="dock-home" onclick="showEditorialHome()">
+      <span>الرئيسية</span>
+    </button>
+    <button type="button" class="dock-item" id="dock-gold" onclick="openCategoryCatalog('gold', 'all')">
+      <span>ذهب</span>
+    </button>
+    <button type="button" class="dock-item" id="dock-silver" onclick="openCategoryCatalog('silver', 'all')">
+      <span>فضة</span>
+    </button>
+    <button type="button" class="dock-item" id="dock-vip" onclick="accessVipSection()">
+      <span>VIP</span>
+    </button>
+  </nav>
+
+  <!-- ==========================================================================
+       8. SHOPPING CART DRAWER
+       ========================================================================== -->
+  <div class="menu-backdrop" id="cart-backdrop" onclick="toggleCartDrawer(false)"></div>
+  <aside class="cart-drawer" id="cart-drawer" aria-label="حقيبة التسوق">
+    <div class="drawer-header">
+      <h3 class="drawer-title">حقيبة التسوق</h3>
+      <button type="button" class="drawer-close-btn" onclick="toggleCartDrawer(false)" aria-label="إغلاق">
+        <svg class="icon-svg" viewBox="0 0 24 24">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+
+    <div class="cart-items-list" id="cart-items-list"></div>
+
+    <div class="cart-footer">
+      <div style="display:flex;justify-content:space-between;align-items:center;font-weight:800;font-size:1.05rem;">
+        <span>الإجمالي:</span>
+        <span id="cart-total-sar" style="color:var(--gold-light);">0 ر.س</span>
+      </div>
+      <button type="button" class="btn-vip-submit" onclick="checkoutOrder()">إتمام الطلب</button>
+    </div>
+  </aside>
+
+  <div id="toast-container"></div>
+
+  <!-- ==========================================================================
+       9. STOREFRONT JAVASCRIPT
+       ========================================================================== -->
+  <script>
+    /* --- VIP Authentication State (User: usr7n | Pass: 1234) --- */
+    let isVipAuthenticated = false;
+    let currentMetal = 'gold';      // 'gold' | 'silver' | 'vip'
+    let currentSubcategory = 'all'; // 'all' | 'rings' | 'bracelets' | 'necklaces'
+    let selectedProductSize = '';
+    let selectedProductQty = 1;
+    let cart = [];
+
+    /* --- Individual Products Database --- */
+    const PRODUCTS = [
+      /* ==================== 1. ذهب -> خواتم (8 منتجات منفصلة) ==================== */
+      {
+        id: 'g-ring-1', metal: 'gold', sub: 'rings', subLabel: 'خواتم ذهب',
+        title: 'خاتم ذهب إشراقة الشمس', karat: '18K', weight: '2.4 جم', price: 980,
+        image: 'assets/products/ring_1.jpg',
+        desc: 'خاتم ذهب ناعم بتصميم إشراقة الشمس المتألقة، مصنوع بدقة عالية ليمنح يدك حضوراً أنيقاً ولمعاناً لافتاً في الإطلالات اليومية والمناسبات.'
+      },
+      {
+        id: 'g-ring-2', metal: 'gold', sub: 'rings', subLabel: 'خواتم ذهب',
+        title: 'خاتم ذهب زهرة البرسيم', karat: '18K', weight: '2.1 جم', price: 890,
+        image: 'assets/products/ring_2.jpg',
+        desc: 'خاتم ذهب بتصميم زهرة البرسيم الرباعية الرقيقة، يجمع بين البساطة والفخامة بلمسة مصقولة تناسب الذوق العصري الرفيع.'
+      },
+      {
+        id: 'g-ring-3', metal: 'gold', sub: 'rings', subLabel: 'خواتم ذهب',
+        title: 'خاتم ذهب صف النجوم', karat: '18K', weight: '2.6 جم', price: 1050,
+        image: 'assets/products/ring_3.jpg',
+        desc: 'خاتم ذهب مصمم بصف متناغم من الزخارف النجمية المضيئة، مثالي للارتداء منفرداً أو تنسيقه مع خواتم أخرى.'
+      },
+      {
+        id: 'g-ring-4', metal: 'gold', sub: 'rings', subLabel: 'خواتم ذهب',
+        title: 'خاتم ذهب الهلال الملكي', karat: '21K', weight: '2.8 جم', price: 1190,
+        image: 'assets/products/ring_4.jpg',
+        desc: 'خاتم ذهب عيار 21 بتصميم الهلال العربي الأصيل، صياغة متقنة تبرز جمال التفاصيل وتمنحك لمسة متفرّدة.'
+      },
+      {
+        id: 'g-ring-5', metal: 'gold', sub: 'rings', subLabel: 'خواتم ذهب',
+        title: 'خاتم ذهب السوليتير الناعم', karat: '18K', weight: '1.9 جم', price: 820,
+        image: 'assets/products/ring_5.jpg',
+        desc: 'خاتم ذهب كلاسيكي ناعم يتوسطه فص مركزي أنيق، خفيف ومريح للارتداء اليومي المستمر.'
+      },
+      {
+        id: 'g-ring-6', metal: 'gold', sub: 'rings', subLabel: 'خواتم ذهب',
+        title: 'خاتم ذهب الفراشة المشرقة', karat: '18K', weight: '2.3 جم', price: 950,
+        image: 'assets/products/ring_6.jpg',
+        desc: 'خاتم ذهب أنثوي بتصميم الفراشة الرقيقة بأجنحة متقنة الصياغة، يضفي لمسة ناعمة ومميزة على إطلالتك.'
+      },
+      {
+        id: 'g-ring-7', metal: 'gold', sub: 'rings', subLabel: 'خواتم ذهب',
+        title: 'خاتم ذهب الصدف والنجمة', karat: '21K', weight: '3.1 جم', price: 1280,
+        image: 'assets/products/ring_7.jpg',
+        desc: 'خاتم ذهب فاخر بقرص بيضاوي مطعم بالصدف الأبيض الطبيعي تتوسطه نجمة كاريزما الذهبية.'
+      },
+      {
+        id: 'g-ring-8', metal: 'gold', sub: 'rings', subLabel: 'خواتم ذهب',
+        title: 'خاتم ذهب الثلاث نجمات', karat: '18K', weight: '2.2 جم', price: 910,
+        image: 'assets/products/ring_8.jpg',
+        desc: 'خاتم ذهب رقيق مزين بثلاث نجمات متجاورة بتفاصيل دقيقة تمنح بريقاً هادئاً وجذاباً.'
+      },
+
+      /* ==================== 2. ذهب -> أساور (8 منتجات منفصلة) ==================== */
+      {
+        id: 'g-brc-1', metal: 'gold', sub: 'bracelets', subLabel: 'أساور ذهب',
+        title: 'سوار ذهب إشراقة الشمس', karat: '18K', weight: '3.4 جم', price: 1380,
+        image: 'assets/products/bracelet_1.jpg',
+        desc: 'سوار ذهب بسلسلة متينة تتوسطها حلية إشراقة الشمس الفاخرة، مزود بحلقات تحكم لتعديل المقاس بسهولة.'
+      },
+      {
+        id: 'g-brc-2', metal: 'gold', sub: 'bracelets', subLabel: 'أساور ذهب',
+        title: 'سوار ذهب النقاط المضيئة', karat: '18K', weight: '3.1 جم', price: 1260,
+        image: 'assets/products/bracelet_2.jpg',
+        desc: 'سوار ذهب ناعم موزع عليه خمس نقاط متلألئة بتناغم أنيق يناسب المعصم ويمنحه إشراقة هادئة.'
+      },
+      {
+        id: 'g-brc-3', metal: 'gold', sub: 'bracelets', subLabel: 'أساور ذهب',
+        title: 'سوار ذهب زهور البرسيم', karat: '18K', weight: '3.8 جم', price: 1520,
+        image: 'assets/products/bracelet_3.jpg',
+        desc: 'سوار ذهب فاخر مزين بزهور البرسيم المتتابعة على طول السلسلة، قطعة مثالية للإهداء والمناسبات.'
+      },
+      {
+        id: 'g-brc-4', metal: 'gold', sub: 'bracelets', subLabel: 'أساور ذهب',
+        title: 'سوار ذهب الهلال الناعم', karat: '21K', weight: '3.5 جم', price: 1460,
+        image: 'assets/products/bracelet_4.jpg',
+        desc: 'سوار ذهب عيار 21 يتوسطه هلال أنيق مصقول بعناية، يجمع بين الأصالة والنعومة.'
+      },
+      {
+        id: 'g-brc-5', metal: 'gold', sub: 'bracelets', subLabel: 'أساور ذهب',
+        title: 'سوار ذهب النقطة الواحدة', karat: '18K', weight: '2.7 جم', price: 1120,
+        image: 'assets/products/bracelet_5.jpg',
+        desc: 'سوار ذهب يومي بسيط بنقطة مركزية لامعة وإطار دائري متقن، عملي ومثالي للتنسيق مع الساعة.'
+      },
+      {
+        id: 'g-brc-6', metal: 'gold', sub: 'bracelets', subLabel: 'أساور ذهب',
+        title: 'سوار ذهب الطبقتين بدمعة', karat: '21K', weight: '4.6 جم', price: 1890,
+        image: 'assets/products/bracelet_6.jpg',
+        desc: 'سوار ذهب مزدوج بطبقتين متناغمتين تتدلى منهما قطرة ماسية الشكل تضفي حركة جذابة على المعصم.'
+      },
+      {
+        id: 'g-brc-7', metal: 'gold', sub: 'bracelets', subLabel: 'أساور ذهب',
+        title: 'سوار ذهب النجمات المتلألئة', karat: '18K', weight: '3.6 جم', price: 1440,
+        image: 'assets/products/bracelet_7.jpg',
+        desc: 'سوار ذهب مرصع بنجمات كاريزما المميزة على مسافات متساوية ليمنح معصمك بريقاً من كل زاوية.'
+      },
+      {
+        id: 'g-brc-8', metal: 'gold', sub: 'bracelets', subLabel: 'أساور ذهب',
+        title: 'سوار ذهب لوح الصدف والنجمة', karat: '21K', weight: '4.2 جم', price: 1750,
+        image: 'assets/products/bracelet_8.jpg',
+        desc: 'سوار ذهب بسلسلة حلقات مترابطة يتوسطها إطار مستطيل مطعم بالصدف الطبيعي ونجمة ذهبية.'
+      },
+
+      /* ==================== 3. ذهب -> قلادة (11 منتجاً منفصلاً) ==================== */
+      {
+        id: 'g-neck-1', metal: 'gold', sub: 'necklaces', subLabel: 'قلادة ذهب',
+        title: 'قلادة ذهب إشراقة الشمس', karat: '18K', weight: '4.2 جم', price: 1680,
+        image: 'assets/products/necklace_1.jpg',
+        desc: 'قلادة ذهب بتصميم إشراقة الشمس الأيقوني من كاريزما، تنسدل بنعومة لتبرز جمال العنق في كل مناسبة.'
+      },
+      {
+        id: 'g-neck-2', metal: 'gold', sub: 'necklaces', subLabel: 'قلادة ذهب',
+        title: 'قلادة ذهب الهلال المضيء', karat: '18K', weight: '3.9 جم', price: 1560,
+        image: 'assets/products/necklace_2.jpg',
+        desc: 'قلادة ذهب ناعمة بدلاية الهلال القمري المصقول، خيار رائع للإطلالات اليومية الراقية والهدايا المميزة.'
+      },
+      {
+        id: 'g-neck-3', metal: 'gold', sub: 'necklaces', subLabel: 'قلادة ذهب',
+        title: 'قلادة ذهب زهرة الربيع', karat: '18K', weight: '3.7 جم', price: 1490,
+        image: 'assets/products/necklace_3.jpg',
+        desc: 'قلادة ذهب رقيقة تتوسطها زهرة رباعية البتلات بتشطيب لامع يعكس الضوء بجاذبية.'
+      },
+      {
+        id: 'g-neck-4', metal: 'gold', sub: 'necklaces', subLabel: 'قلادة ذهب',
+        title: 'قلادة ذهب الدمعة الكلاسيكية', karat: '18K', weight: '3.8 جم', price: 1520,
+        image: 'assets/products/necklace_4.jpg',
+        desc: 'قلادة ذهب كلاسيكية بدلاية على شكل دمعة محاطة بهالة دقيقة تزيدها فخامة وتألقاً.'
+      },
+      {
+        id: 'g-neck-5', metal: 'gold', sub: 'necklaces', subLabel: 'قلادة ذهب',
+        title: 'قلادة ذهب مدار النجوم', karat: '18K', weight: '4.4 جم', price: 1760,
+        image: 'assets/products/necklace_5.jpg',
+        desc: 'قلادة ذهب مستوحاة من مدار النجوم، تجمع عدة نجمات متدرجة الحجم في قوس أنيق حول العنق.'
+      },
+      {
+        id: 'g-neck-6', metal: 'gold', sub: 'necklaces', subLabel: 'قلادة ذهب',
+        title: 'قلادة ذهب الهالة الدائرية', karat: '18K', weight: '4.0 جم', price: 1610,
+        image: 'assets/products/necklace_6.jpg',
+        desc: 'قلادة ذهب بدلاية دائرية متقنة محاطة بإطار مضفر يمنحها طابعاً كلاسيكياً خالداً.'
+      },
+      {
+        id: 'g-neck-7', metal: 'gold', sub: 'necklaces', subLabel: 'قلادة ذهب',
+        title: 'قلادة ذهب الفراشة الناعمة', karat: '18K', weight: '4.1 جم', price: 1650,
+        image: 'assets/products/necklace_7.jpg',
+        desc: 'قلادة ذهب بدلاية الفراشة المفرغة بتفاصيل دقيقة، تمنح إطلالتك لمسة من الأنوثة والجمال.'
+      },
+      {
+        id: 'g-neck-8', metal: 'gold', sub: 'necklaces', subLabel: 'قلادة ذهب',
+        title: 'قلادة ذهب النجمة المنسدلة', karat: '21K', weight: '5.5 جم', price: 2240,
+        image: 'assets/products/necklace_8.jpg',
+        desc: 'قلادة ذهب عيار 21 بتصميم حرف Y المنسدل، تجمع بين نجمة كاريزما في الأعلى وقطرة متدلية ساحرة.'
+      },
+      {
+        id: 'g-neck-9', metal: 'gold', sub: 'necklaces', subLabel: 'قلادة ذهب',
+        title: 'قلادة ذهب القلب المصقول', karat: '21K', weight: '4.8 جم', price: 1960,
+        image: 'assets/products/necklace_9.jpg',
+        desc: 'قلادة ذهب عيار 21 بدلاية القلب البارز المصقول كالمرآة، قطعة تعبّر عن الذوق الرفيع.'
+      },
+      {
+        id: 'g-neck-10', metal: 'gold', sub: 'necklaces', subLabel: 'قلادة ذهب',
+        title: 'قلادة ذهب نجمة كاريزما', karat: '21K', weight: '4.9 جم', price: 1990,
+        image: 'assets/products/necklace_10.jpg',
+        desc: 'الإصدار الخاص من قلادة نجمة كاريزما الذهبية بأشعتها المتناظرة وسلسلتها اللامعة.'
+      },
+      {
+        id: 'g-neck-11', metal: 'gold', sub: 'necklaces', subLabel: 'قلادة ذهب',
+        title: 'قلادة ذهب طبقتين سوليتير وقلب', karat: '18K', weight: '5.2 جم', price: 2100,
+        image: 'assets/products/necklace_11.jpg',
+        desc: 'قلادة ذهب مزدوجة من طبقتين متكاملتين، تجمع بين الدائرة الكلاسيكية في الطبقة الأولى والقلب المفرغ في الثانية.'
+      },
+
+      /* ==================== 4. فضة -> خواتم (5 منتجات) ==================== */
+      {
+        id: 's-ring-1', metal: 'silver', sub: 'rings', subLabel: 'خواتم فضة',
+        title: 'خاتم فضة بحجر الفيروز', karat: '925', weight: '3.2 جم', price: 290,
+        image: 'assets/products/silver_ring_hero.jpg',
+        desc: 'خاتم فضة إسترليني عيار 925 مرصع بحجر الفيروز الطبيعي ذي اللون السماوي الجذاب.'
+      },
+      {
+        id: 's-ring-2', metal: 'silver', sub: 'rings', subLabel: 'خواتم فضة',
+        title: 'طقم خواتم فضة إسترليني', karat: '925', weight: '5.4 جم', price: 460,
+        image: 'assets/products/silver_ring_vip.jpg',
+        desc: 'تشكيلة خواتم فضة إسترليني عيار 925 مطلية بالروديوم الفاخر للمعان يدوم طويلاً.'
+      },
+      {
+        id: 's-ring-3', metal: 'silver', sub: 'rings', subLabel: 'خواتم فضة',
+        title: 'خاتم فضة السوليتير الكلاسيكي', karat: '925', weight: '2.5 جم', price: 240,
+        image: 'assets/products/silver_ring_1.jpg',
+        desc: 'خاتم فضة ناعم عيار 925 بتصميم السوليتير الأنيق، مثالي للإطلالات اليومية.'
+      },
+      {
+        id: 's-ring-4', metal: 'silver', sub: 'rings', subLabel: 'خواتم فضة',
+        title: 'خاتم فضة الفراشة المشرقة', karat: '925', weight: '2.8 جم', price: 260,
+        image: 'assets/products/silver_ring_2.jpg',
+        desc: 'خاتم فضة عيار 925 بتصميم الفراشة المصقولة بعناية فائقة.'
+      },
+      {
+        id: 's-ring-5', metal: 'silver', sub: 'rings', subLabel: 'خواتم فضة',
+        title: 'خاتم فضة الصدف والنجمة', karat: '925', weight: '3.4 جم', price: 310,
+        image: 'assets/products/silver_ring_3.jpg',
+        desc: 'خاتم فضة إسترليني عيار 925 يتوسطه قرص الصدف الطبيعي مع نجمة بارزة.'
+      },
+
+      /* ==================== 5. فضة -> أساور (5 منتجات) ==================== */
+      {
+        id: 's-brc-1', metal: 'silver', sub: 'bracelets', subLabel: 'أساور فضة',
+        title: 'سوار فضة مزدوج بالفيروز', karat: '925', weight: '4.8 جم', price: 380,
+        image: 'assets/products/silver_brc_hero.jpg',
+        desc: 'سوار فضة إسترليني عيار 925 بطبقتين مزينتين بأحجار الفيروز الساحرة.'
+      },
+      {
+        id: 's-brc-2', metal: 'silver', sub: 'bracelets', subLabel: 'أساور فضة',
+        title: 'سوار فضة تنس مع نجمة', karat: '925', weight: '6.1 جم', price: 490,
+        image: 'assets/products/silver_brc_vip.jpg',
+        desc: 'سوار فضة مزدوج يجمع بين خط التنس اللامع وسلسلة النجمات الناعمة.'
+      },
+      {
+        id: 's-brc-3', metal: 'silver', sub: 'bracelets', subLabel: 'أساور فضة',
+        title: 'سوار فضة النقطة الواحدة', karat: '925', weight: '3.2 جم', price: 270,
+        image: 'assets/products/silver_brc_1.jpg',
+        desc: 'سوار فضة عيار 925 بتصميم هادئ وأنيق يناسب جميع الأوقات.'
+      },
+      {
+        id: 's-brc-4', metal: 'silver', sub: 'bracelets', subLabel: 'أساور فضة',
+        title: 'سوار فضة الطبقتين بدمعة', karat: '925', weight: '4.5 جم', price: 360,
+        image: 'assets/products/silver_brc_2.jpg',
+        desc: 'سوار فضة عيار 925 من سلسلتين متداخلتين مع حلية الدمعة المتدلية.'
+      },
+      {
+        id: 's-brc-5', metal: 'silver', sub: 'bracelets', subLabel: 'أساور فضة',
+        title: 'سوار فضة النجمات المتلألئة', karat: '925', weight: '3.9 جم', price: 330,
+        image: 'assets/products/silver_brc_3.jpg',
+        desc: 'سوار فضة عيار 925 مزين بنجمات متتابعة تضفي بريقاً مميزاً على المعصم.'
+      },
+
+      /* ==================== 6. فضة -> قلادة (5 منتجات) ==================== */
+      {
+        id: 's-neck-1', metal: 'silver', sub: 'necklaces', subLabel: 'قلادة فضة',
+        title: 'قلادة فضة طبقات بالفيروز', karat: '925', weight: '6.5 جم', price: 520,
+        image: 'assets/products/silver_neck_hero.jpg',
+        desc: 'قلادة فضة إسترليني عيار 925 متعددة الطبقات مطعمة بحجر الفيروز وحلقات عصرية.'
+      },
+      {
+        id: 's-neck-2', metal: 'silver', sub: 'necklaces', subLabel: 'قلادة فضة',
+        title: 'عقد فضة ملكي منسدل', karat: '925', weight: '8.2 جم', price: 680,
+        image: 'assets/products/silver_neck_vip.jpg',
+        desc: 'عقد فضة إسترليني فاخر بتصميم منسدل للمناسبات والسهرات المميزة.'
+      },
+      {
+        id: 's-neck-3', metal: 'silver', sub: 'necklaces', subLabel: 'قلادة فضة',
+        title: 'قلادة فضة الهالة الدائرية', karat: '925', weight: '4.2 جم', price: 350,
+        image: 'assets/products/silver_neck_1.jpg',
+        desc: 'قلادة فضة عيار 925 بدلاية دائرية كلاسيكية وسلسلة ناعمة.'
+      },
+      {
+        id: 's-neck-4', metal: 'silver', sub: 'necklaces', subLabel: 'قلادة فضة',
+        title: 'قلادة فضة الفراشة الناعمة', karat: '925', weight: '4.4 جم', price: 370,
+        image: 'assets/products/silver_neck_2.jpg',
+        desc: 'قلادة فضة عيار 925 بدلاية الفراشة المتقنة لإطلالة أنثوية رقيقة.'
+      },
+      {
+        id: 's-neck-5', metal: 'silver', sub: 'necklaces', subLabel: 'قلادة فضة',
+        title: 'قلادة فضة النجمة المنسدلة', karat: '925', weight: '5.1 جم', price: 430,
+        image: 'assets/products/silver_neck_3.jpg',
+        desc: 'قلادة فضة عيار 925 بتصميم النجمة والقطرة المنسدلة.'
+      },
+
+      /* ==================== 7. منتجات الـ VIP المفصولة والحصرية (9 قطع) ==================== */
+      {
+        id: 'vip-1', metal: 'vip', sub: 'necklaces', subLabel: 'VIP حصري',
+        title: 'عقد VIP أغصان الزيتون المنسدل', karat: '21K VIP', weight: '18.4 جم', price: 7850,
+        image: 'assets/products/vip_necklace_1.jpg',
+        desc: 'عقد ملكي حصري لجناح VIP بتصميم أغصان الزيتون المتفرعة مع قطرة منسدلة، صياغة فاخرة لمناسبات لا تُنسى.'
+      },
+      {
+        id: 'vip-2', metal: 'vip', sub: 'necklaces', subLabel: 'VIP حصري',
+        title: 'قلادة VIP القطع الزمردي الملكي', karat: '21K VIP', weight: '11.2 جم', price: 4890,
+        image: 'assets/products/vip_necklace_2.jpg',
+        desc: 'قلادة VIP فاخرة بقطع زمردي مستطيل محاط بإطار ماسي التصميم على سلسلة ذهب عيار 21.'
+      },
+      {
+        id: 'vip-3', metal: 'vip', sub: 'necklaces', subLabel: 'VIP حصري',
+        title: 'عقد VIP الزهور الملكي بدمعة', karat: '21K VIP', weight: '22.6 جم', price: 9650,
+        image: 'assets/products/vip_necklace_3.jpg',
+        desc: 'عقد سهرات ملكي كامل مؤلف من وحدات زهرية متشابكة تنتهي بدمعة مركزية فائقة الفخامة.'
+      },
+      {
+        id: 'vip-4', metal: 'vip', sub: 'necklaces', subLabel: 'VIP حصري',
+        title: 'قلادة VIP الهالة الملكية المزدوجة', karat: '21K VIP', weight: '10.5 جم', price: 4520,
+        image: 'assets/products/vip_necklace_4.jpg',
+        desc: 'قلادة VIP بهالة دائرية مزدوجة وحامل علوي مرصع، تجمع بين الرصانة والفخامة الملكية.'
+      },
+      {
+        id: 'vip-5', metal: 'vip', sub: 'necklaces', subLabel: 'VIP حصري',
+        title: 'عقد VIP الفراشة المنسدل الطويل', karat: '21K VIP', weight: '13.8 جم', price: 5900,
+        image: 'assets/products/vip_necklace_5.jpg',
+        desc: 'عقد VIP بتصميم الفراشة الملكية مع سلسلة طويلة منسدلة تنتهي بقطرة متلألئة.'
+      },
+      {
+        id: 'vip-6', metal: 'vip', sub: 'necklaces', subLabel: 'VIP حصري',
+        title: 'طوق VIP الذهب الملكي بدمعة', karat: '21K VIP', weight: '19.5 جم', price: 8400,
+        image: 'assets/products/vip_necklace_6.jpg',
+        desc: 'طوق ذهب صلب مصقول بانحناءة هندسية فاخرة حول العنق تتدلى من منتصفه دمعة ملكية.'
+      },
+      {
+        id: 'vip-7', metal: 'vip', sub: 'necklaces', subLabel: 'VIP حصري',
+        title: 'قلادة VIP الطبقتين الملكية', karat: '21K VIP', weight: '12.4 جم', price: 5350,
+        image: 'assets/products/vip_necklace_7.jpg',
+        desc: 'قلادة VIP مزدوجة الطبقات بتناسق مدروس يمنح عنقك إطلالة متكاملة دون الحاجة لتنسيق قطع إضافية.'
+      },
+      {
+        id: 'vip-8', metal: 'vip', sub: 'necklaces', subLabel: 'VIP حصري',
+        title: 'عقد VIP التنس الملكي الفاخر', karat: '21K VIP', weight: '26.0 جم', price: 11200,
+        image: 'assets/products/vip_necklace_8.jpg',
+        desc: 'أفخم عقود جناح VIP، مصمم بصف كامل من القطع المستطيلة المتراصة مع قلادة مركزية.'
+      },
+      {
+        id: 'vip-9', metal: 'vip', sub: 'necklaces', subLabel: 'VIP حصري',
+        title: 'عقد VIP زهور البرسيم المتناغمة', karat: '21K VIP', weight: '15.2 جم', price: 6480,
+        image: 'assets/products/vip_necklace_9.jpg',
+        desc: 'عقد VIP فاخر تتوزع على سلسلته وحدات زهرة البرسيم بحجم متدرج يتوسطها العنصر الأكبر.'
+      }
+    ];
+
+    /* --- Initialization & Splash Screen (لا تفتح بوابة الـ VIP تلقائياً، تفتح الصفحة الرئيسية مباشرة) --- */
+    window.addEventListener('DOMContentLoaded', () => {
+      const fill = document.getElementById('splash-progress-fill');
+      const splash = document.getElementById('splash-screen');
+
+      requestAnimationFrame(() => {
+        if (fill) fill.style.width = '100%';
+      });
+
+      setTimeout(() => {
+        if (splash) splash.classList.add('splash-hidden');
+        document.body.classList.remove('lock-scroll');
+      }, 3600);
+
+      renderCart();
+    });
+
+    /* --- VIP Gate Logic (تفتح فقط عند اختيار قسم أو زر VIP) --- */
+    function openVipGateModal() {
+      document.getElementById('vip-error-msg').textContent = '';
+      document.getElementById('vip-gate-modal').classList.add('open');
+      document.body.classList.add('lock-scroll');
+    }
+
+    function closeVipGateAsGuest() {
+      document.getElementById('vip-gate-modal').classList.remove('open');
+      document.body.classList.remove('lock-scroll');
+    }
+
+    function handleVipLogin(e) {
+      e.preventDefault();
+      const user = document.getElementById('vip-username').value.trim();
+      const pass = document.getElementById('vip-password').value.trim();
+      const errEl = document.getElementById('vip-error-msg');
+
+      if (user === 'usr7n' && pass === '1234') {
+        isVipAuthenticated = true;
+        errEl.textContent = '';
+        document.getElementById('vip-gate-modal').classList.remove('open');
+        document.body.classList.remove('lock-scroll');
+        updateVipStatusUI();
+        openCategoryCatalog('vip', 'all');
+        showToast('مرحباً usr7n • تم فتح جناح منتجات الـ VIP الخاصة');
+      } else {
+        errEl.textContent = 'بيانات الدخول غير صحيحة، يرجى التأكد من اسم المستخدم وكلمة المرور';
+      }
+    }
+
+    function handleVipHeaderClick() {
+      if (isVipAuthenticated) {
+        openCategoryCatalog('vip', 'all');
+      } else {
+        openVipGateModal();
+      }
+    }
+
+    function accessVipSection() {
+      if (isVipAuthenticated) {
+        openCategoryCatalog('vip', 'all');
+      } else {
+        openVipGateModal();
+      }
+    }
+
+    function updateVipStatusUI() {
+      const headerBtn = document.getElementById('vip-header-btn');
+      const headerLabel = document.getElementById('vip-header-label');
+      const drawerStatus = document.getElementById('drawer-vip-status');
+      const drawerBtnText = document.getElementById('drawer-vip-btn-text');
+
+      if (isVipAuthenticated) {
+        headerBtn.classList.add('vip-active');
+        headerLabel.textContent = 'VIP • usr7n';
+        drawerStatus.textContent = 'مفعّل (usr7n)';
+        drawerStatus.style.color = '#E5CCA0';
+        drawerBtnText.textContent = 'تصفح منتجات الـ VIP الحصرية';
+      } else {
+        headerBtn.classList.remove('vip-active');
+        headerLabel.textContent = 'VIP';
+        drawerStatus.textContent = 'مقفل بالكود';
+        drawerBtnText.textContent = 'دخول جناح الـ VIP';
+      }
+    }
+
+    /* --- 3-Line Category Drawer & Accordions --- */
+    function toggleCategoryDrawer(open) {
+      document.getElementById('category-drawer').classList.toggle('open', open);
+      document.getElementById('menu-backdrop').classList.toggle('open', open);
+    }
+
+    function toggleAccordion(accId) {
+      const el = document.getElementById(accId);
+      if (el) el.classList.toggle('open');
+    }
+
+    /* --- Navigation Between Views (Home / Catalog / Product Detail Page) --- */
+    function showEditorialHome() {
+      document.getElementById('editorial-home-view').style.display = 'flex';
+      document.getElementById('catalog-products-view').style.display = 'none';
+      document.getElementById('product-detail-view').style.display = 'none';
+      setActiveDock('dock-home');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function openCategoryCatalog(metal, sub) {
+      if (metal === 'vip' && !isVipAuthenticated) {
+        openVipGateModal();
+        return;
+      }
+
+      currentMetal = metal;
+      currentSubcategory = sub || 'all';
+
+      toggleCategoryDrawer(false);
+      document.getElementById('editorial-home-view').style.display = 'none';
+      document.getElementById('product-detail-view').style.display = 'none';
+      document.getElementById('catalog-products-view').style.display = 'block';
+
+      if (metal === 'gold') setActiveDock('dock-gold');
+      else if (metal === 'silver') setActiveDock('dock-silver');
+      else if (metal === 'vip') setActiveDock('dock-vip');
+
+      renderCatalogView();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function backToCatalogFromDetail() {
+      document.getElementById('product-detail-view').style.display = 'none';
+      document.getElementById('editorial-home-view').style.display = 'none';
+      document.getElementById('catalog-products-view').style.display = 'block';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function setActiveDock(activeId) {
+      ['dock-home', 'dock-gold', 'dock-silver', 'dock-vip'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.classList.toggle('active', id === activeId);
+      });
+    }
+
+    function renderCatalogView() {
+      const breadcrumbEl = document.getElementById('catalog-breadcrumb');
+      const pillsEl = document.getElementById('catalog-sub-pills');
+      const containerEl = document.getElementById('catalog-products-container');
+
+      const metalNames = {
+        gold: 'مجموعات الذهب',
+        silver: 'مجموعات الفضة',
+        vip: 'جناح الـ VIP الخاص (usr7n)'
+      };
+      const subNames = {
+        all: 'الكل',
+        rings: 'خواتم',
+        bracelets: 'أساور',
+        necklaces: 'قلادة'
+      };
+
+      breadcrumbEl.textContent = `${metalNames[currentMetal]} • ${subNames[currentSubcategory]}`;
+
+      if (currentMetal === 'vip') {
+        pillsEl.innerHTML = `
+          <button type="button" class="filter-pill-btn vip-pill active">عروض ومجموعات VIP الحصرية (9 قطع)</button>
+          <button type="button" class="filter-pill-btn" onclick="openCategoryCatalog('gold', 'all')">الانتقال للذهب</button>
+          <button type="button" class="filter-pill-btn" onclick="openCategoryCatalog('silver', 'all')">الانتقال للفضة</button>
+        `;
+      } else {
+        pillsEl.innerHTML = `
+          <button type="button" class="filter-pill-btn ${currentSubcategory === 'all' ? 'active' : ''}" onclick="openCategoryCatalog('${currentMetal}', 'all')">الكل</button>
+          <button type="button" class="filter-pill-btn ${currentSubcategory === 'rings' ? 'active' : ''}" onclick="openCategoryCatalog('${currentMetal}', 'rings')">خواتم</button>
+          <button type="button" class="filter-pill-btn ${currentSubcategory === 'bracelets' ? 'active' : ''}" onclick="openCategoryCatalog('${currentMetal}', 'bracelets')">أساور</button>
+          <button type="button" class="filter-pill-btn ${currentSubcategory === 'necklaces' ? 'active' : ''}" onclick="openCategoryCatalog('${currentMetal}', 'necklaces')">قلادة</button>
+        `;
+      }
+
+      const subOrder = currentMetal === 'vip'
+        ? [{ id: 'necklaces', title: 'مقتنيات الـ VIP الحصرية' }]
+        : [
+            { id: 'rings', title: 'خواتم' },
+            { id: 'bracelets', title: 'أساور' },
+            { id: 'necklaces', title: 'قلادة' }
+          ];
+
+      const groupsToRender = currentSubcategory === 'all'
+        ? subOrder
+        : subOrder.filter(g => g.id === currentSubcategory);
+
+      let html = '';
+
+      groupsToRender.forEach(group => {
+        const items = PRODUCTS.filter(p => p.metal === currentMetal && p.sub === group.id);
+        if (items.length > 0) {
+          html += `
+            <div class="section-group-block">
+              <div class="section-group-header">
+                <h3 class="section-group-title">${group.title}</h3>
+                <span class="section-group-count">${items.length} منتجات</span>
+              </div>
+              <div class="products-grid">
+                ${items.map(item => `
+                  <article class="product-card" onclick="openProductDetailPage('${item.id}')">
+                    <div class="product-img-wrap">
+                      <span class="product-badge-top">${item.karat}</span>
+                      <img src="${item.image}" alt="${item.title}" loading="lazy" />
+                    </div>
+                    <div class="product-info">
+                      <h4 class="product-name">${item.title}</h4>
+                      <span class="product-meta">الوزن: ${item.weight}</span>
+                      <div class="product-bottom">
+                        <span class="product-price">${item.price.toLocaleString('en-US')} ر.س</span>
+                        <button type="button" class="btn-add-bag" onclick="event.stopPropagation(); openProductDetailPage('${item.id}')">التفاصيل والمقاس</button>
+                      </div>
+                    </div>
+                  </article>
+                `).join('')}
+              </div>
+            </div>
+          `;
+        }
+      });
+
+      containerEl.innerHTML = html;
+    }
+
+    /* --- Single Product Detail Page (صفحة المنتج المستقلة مع اختيار المقاس والوصف) --- */
+    function getSizesForProduct(prod) {
+      if (prod.sub === 'rings') {
+        return {
+          label: 'اختاري مقاس الخاتم:',
+          options: ['مقاس 5', 'مقاس 6', 'مقاس 7', 'مقاس 8', 'مقاس 9']
+        };
+      }
+      if (prod.sub === 'bracelets') {
+        return {
+          label: 'اختاري مقاس السوار:',
+          options: ['16 سم', '17 سم', '18 سم', '19 سم']
+        };
+      }
+      return {
+        label: 'اختاري طول السلسال / القلادة:',
+        options: ['40 سم', '42 سم', '45 سم', '50 سم']
+      };
+    }
+
+    function openProductDetailPage(productId) {
+      const prod = PRODUCTS.find(p => p.id === productId);
+      if (!prod) return;
+
+      currentMetal = prod.metal;
+      const sizeConfig = getSizesForProduct(prod);
+      selectedProductSize = sizeConfig.options[1] || sizeConfig.options[0];
+      selectedProductQty = 1;
+
+      document.getElementById('editorial-home-view').style.display = 'none';
+      document.getElementById('catalog-products-view').style.display = 'none';
+      document.getElementById('product-detail-view').style.display = 'block';
+
+      document.getElementById('detail-breadcrumb').textContent = `${prod.subLabel} • ${prod.title}`;
+
+      const metalTypeLabel = prod.metal === 'silver' ? 'فضة إسترليني 925' : 'ذهب أصلي مضمون';
+      const relatedItems = PRODUCTS.filter(p => p.metal === prod.metal && p.sub === prod.sub && p.id !== prod.id).slice(0, 4);
+
+      const container = document.getElementById('product-detail-container');
+      container.innerHTML = `
+        <div class="product-detail-card">
+          <div class="detail-hero-img-box">
+            <span class="detail-karat-pill">عيار ${prod.karat}</span>
+            <img src="${prod.image}" alt="${prod.title}" />
+          </div>
+
+          <div class="detail-body">
+            <div class="detail-header-row">
+              <h2 class="detail-title">${prod.title}</h2>
+              <span class="detail-price">${prod.price.toLocaleString('en-US')} ر.س</span>
+            </div>
+
+            <div class="detail-specs-grid">
+              <div class="detail-spec-item">
+                <span class="detail-spec-label">العيار</span>
+                <span class="detail-spec-val">${prod.karat}</span>
+              </div>
+              <div class="detail-spec-item">
+                <span class="detail-spec-label">الوزن التقريبي</span>
+                <span class="detail-spec-val">${prod.weight}</span>
+              </div>
+              <div class="detail-spec-item">
+                <span class="detail-spec-label">المعدن</span>
+                <span class="detail-spec-val">${metalTypeLabel}</span>
+              </div>
+            </div>
+
+            <div>
+              <span class="detail-section-label">${sizeConfig.label}</span>
+              <div class="size-options-wrap" id="detail-size-options">
+                ${sizeConfig.options.map(sz => `
+                  <button type="button" class="size-option-btn ${sz === selectedProductSize ? 'active' : ''}"
+                          onclick="selectDetailSize('${sz}', this)">${sz}</button>
+                `).join('')}
+              </div>
+            </div>
+
+            <div>
+              <span class="detail-section-label">وصف القطعة:</span>
+              <div class="detail-description-box">
+                ${prod.desc}
+              </div>
+            </div>
+
+            <div class="qty-and-gift-row">
+              <div>
+                <span class="detail-section-label" style="margin-bottom:0.3rem;">الكمية:</span>
+                <div class="qty-control">
+                  <button type="button" class="qty-btn" onclick="changeDetailQty(-1)">-</button>
+                  <span class="qty-val" id="detail-qty-val">1</span>
+                  <button type="button" class="qty-btn" onclick="changeDetailQty(1)">+</button>
+                </div>
+              </div>
+
+              <label class="gift-toggle-label">
+                <input type="checkbox" id="detail-gift-wrap" checked />
+                <span>تغليف علبة كاريزما الفاخرة للإهداء</span>
+              </label>
+            </div>
+
+            <div class="detail-actions-row">
+              <button type="button" class="btn-vip-submit" onclick="addDetailProductToCart('${prod.id}', false)">
+                إضافة إلى الحقيبة
+              </button>
+              <button type="button" class="btn-buy-now" onclick="addDetailProductToCart('${prod.id}', true)">
+                شراء الآن
+              </button>
+            </div>
+          </div>
+        </div>
+
+        ${relatedItems.length > 0 ? `
+          <div class="section-group-block">
+            <div class="section-group-header">
+              <h3 class="section-group-title" style="font-size:1.25rem;">قطع مشابهة من نفس القسم</h3>
+            </div>
+            <div class="products-grid">
+              ${relatedItems.map(item => `
+                <article class="product-card" onclick="openProductDetailPage('${item.id}')">
+                  <div class="product-img-wrap">
+                    <span class="product-badge-top">${item.karat}</span>
+                    <img src="${item.image}" alt="${item.title}" loading="lazy" />
+                  </div>
+                  <div class="product-info">
+                    <h4 class="product-name">${item.title}</h4>
+                    <span class="product-meta">الوزن: ${item.weight}</span>
+                    <div class="product-bottom">
+                      <span class="product-price">${item.price.toLocaleString('en-US')} ر.س</span>
+                      <span class="btn-add-bag">عرض</span>
+                    </div>
+                  </div>
+                </article>
+              `).join('')}
+            </div>
+          </div>
+        ` : ''}
+      `;
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function selectDetailSize(sizeVal, btnEl) {
+      selectedProductSize = sizeVal;
+      document.querySelectorAll('#detail-size-options .size-option-btn').forEach(b => b.classList.remove('active'));
+      if (btnEl) btnEl.classList.add('active');
+    }
+
+    function changeDetailQty(delta) {
+      selectedProductQty = Math.max(1, selectedProductQty + delta);
+      const el = document.getElementById('detail-qty-val');
+      if (el) el.textContent = selectedProductQty;
+    }
+
+    function addDetailProductToCart(productId, openCartImmediately) {
+      const prod = PRODUCTS.find(p => p.id === productId);
+      if (!prod) return;
+      const giftWrap = document.getElementById('detail-gift-wrap')?.checked;
+
+      for (let i = 0; i < selectedProductQty; i++) {
+        cart.push({
+          ...prod,
+          chosenSize: selectedProductSize,
+          giftWrap: !!giftWrap
+        });
+      }
+
+      renderCart();
+      if (openCartImmediately) {
+        toggleCartDrawer(true);
+      } else {
+        showToast(`تمت إضافة "${prod.title}" (${selectedProductSize}) إلى الحقيبة`);
+      }
+    }
+
+    /* --- Shopping Cart --- */
+    function addToCart(productId) {
+      const prod = PRODUCTS.find(p => p.id === productId);
+      if (!prod) return;
+      const defaultSize = getSizesForProduct(prod).options[1];
+      cart.push({ ...prod, chosenSize: defaultSize, giftWrap: true });
+      renderCart();
+      showToast(`تمت إضافة "${prod.title}" إلى الحقيبة`);
+    }
+
+    function removeFromCart(index) {
+      cart.splice(index, 1);
+      renderCart();
+    }
+
+    function toggleCartDrawer(open) {
+      document.getElementById('cart-drawer').classList.toggle('open', open);
+      document.getElementById('cart-backdrop').classList.toggle('open', open);
+    }
+
+    function renderCart() {
+      const badge = document.getElementById('cart-badge-count');
+      const list = document.getElementById('cart-items-list');
+      const totalEl = document.getElementById('cart-total-sar');
+
+      badge.textContent = cart.length;
+
+      if (cart.length === 0) {
+        list.innerHTML = `<p style="text-align:center;color:var(--text-muted);margin-top:2.5rem;">الحقيبة فارغة حالياً</p>`;
+        totalEl.textContent = '0 ر.س';
+        return;
+      }
+
+      let sum = 0;
+      list.innerHTML = cart.map((item, idx) => {
+        sum += item.price;
+        return `
+          <div class="cart-row">
+            <img src="${item.image}" alt="${item.title}" />
+            <div style="flex:1;min-width:0;">
+              <strong style="font-size:0.86rem;display:block;color:#FFF;">${item.title}</strong>
+              <span style="font-size:0.74rem;color:var(--text-muted);">${item.karat} • ${item.chosenSize || item.weight}</span>
+              <strong style="font-size:0.88rem;color:var(--gold-light);display:block;margin-top:2px;">${item.price.toLocaleString('en-US')} ر.س</strong>
+            </div>
+            <button type="button" onclick="removeFromCart(${idx})" style="background:none;border:none;color:#F87171;cursor:pointer;padding:4px;" aria-label="حذف">
+              <svg class="icon-svg" viewBox="0 0 24 24" style="width:16px;height:16px;">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+            </button>
+          </div>
+        `;
+      }).join('');
+
+      totalEl.textContent = `${sum.toLocaleString('en-US')} ر.س`;
+    }
+
+    function checkoutOrder() {
+      if (cart.length === 0) {
+        showToast('الحقيبة فارغة، اختر قطعة أولاً');
+        return;
+      }
+      toggleCartDrawer(false);
+      showToast('تم استلام طلبك بنجاح');
+    }
+
+    function showToast(text) {
+      const container = document.getElementById('toast-container');
+      const el = document.createElement('div');
+      el.className = 'toast-msg';
+      el.textContent = text;
+      container.appendChild(el);
+      setTimeout(() => {
+        el.style.opacity = '0';
+        el.style.transition = 'opacity 0.3s';
+        setTimeout(() => el.remove(), 300);
+      }, 2400);
+    }
+  </script>
+</body>
+</html>
