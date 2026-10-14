@@ -1,122 +1,2216 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="rtl" data-theme="champagne-stone">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>usr7n  للحلول الرقمية</title>
-    <!-- استدعاء خطوط جوجل (Cairo) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&display=swap" rel="stylesheet">
-    <!-- استدعاء Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- استدعاء أيقونات FontAwesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Cairo', 'sans-serif'],
-                    },
-                    colors: {
-                        primary: '#3b82f6',
-                        secondary: '#8b5cf6',
-                        dark: '#0f172a'
-                    }
-                }
-            }
-        }
-    </script>
-    <style>
-        /* تأثيرات إضافية */
-        .gradient-text {
-            background: linear-gradient(to left, #3b82f6, #a855f7);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .glass-card {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-        }
-        .blob {
-            position: absolute;
-            filter: blur(80px);
-            z-index: 0;
-            opacity: 0.4;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover" />
+  <title>CHARISMA JEWELRY | مجوهرات كاريزما</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400&family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    /* ==========================================================================
+       1. BRAND COLOR PALETTE (EXACT MATCH WITH LOGO #D8D0C5)
+       ========================================================================== */
+    :root {
+      --bg-exact-logo: #D8D0C5;
+      --surface-glass: rgba(244, 239, 231, 0.88);
+      --surface-floating-nav: rgba(48, 34, 19, 0.94);
+      --surface-card: #E6DFD5;
+      --surface-card-hover: #F1ECE4;
+      --surface-elevated: #F5F1EA;
+      --border-gold-soft: rgba(173, 141, 103, 0.28);
+      --border-gold-strong: rgba(167, 134, 99, 0.62);
+
+      --gold-highlight: #F3DFB9;
+      --gold-champagne: #CDB181;
+      --gold-primary: #AD8D67;
+      --gold-bronze: #8E6E4A;
+      --gold-deep-shadow: #584024;
+
+      --text-primary: #352514;
+      --text-secondary: #655039;
+      --text-muted: #87725A;
+
+      --gradient-logo-bg: linear-gradient(180deg, #DFD7CC 0%, #D8D0C5 50%, #CFC6BA 100%);
+      --gradient-gold-btn: linear-gradient(135deg, #8B6B47 0%, #AD8D67 45%, #CDB181 75%, #9B7A54 100%);
+      --gradient-gold-text: linear-gradient(180deg, #8C6C46 0%, #B7966E 45%, #5E4427 100%);
+      --shadow-emboss: 0 14px 32px -10px rgba(72, 52, 30, 0.14), 0 4px 10px rgba(72, 52, 30, 0.06);
+      --shadow-inset-stone: inset 0 2px 5px rgba(255, 255, 255, 0.65), inset 0 -2px 6px rgba(122, 96, 68, 0.12);
+    }
+
+    [data-theme="royal-velvet"] {
+      --surface-glass: rgba(28, 21, 15, 0.9);
+      --surface-floating-nav: rgba(22, 16, 11, 0.95);
+      --surface-card: #1E1712;
+      --surface-card-hover: #271E17;
+      --surface-elevated: #281F18;
+      --border-gold-soft: rgba(205, 177, 129, 0.22);
+      --border-gold-strong: rgba(205, 177, 129, 0.62);
+      --text-primary: #F5EDE2;
+      --text-secondary: #D0BEA4;
+      --text-muted: #9A866D;
+      --gradient-logo-bg: radial-gradient(circle at 50% 30%, #261D15 0%, #16110C 65%, #0C0906 100%);
+      --gradient-gold-text: linear-gradient(180deg, #F5E2BE 0%, #CDB181 50%, #9E7E56 100%);
+      --shadow-emboss: 0 18px 44px rgba(0, 0, 0, 0.65), 0 4px 14px rgba(205, 177, 129, 0.1);
+      --shadow-inset-stone: inset 0 1px 2px rgba(255, 235, 200, 0.1), inset 0 -2px 6px rgba(0, 0, 0, 0.6);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+      width: 100%;
+    }
+
+    body {
+      font-family: 'Tajawal', sans-serif;
+      background: var(--gradient-logo-bg);
+      background-attachment: fixed;
+      color: var(--text-primary);
+      overflow-x: hidden;
+      width: 100%;
+      min-height: 100dvh;
+      position: relative;
+      transition: background 0.5s ease, color 0.4s ease;
+    }
+
+    body.splash-lock {
+      overflow: hidden;
+    }
+
+    svg.icon-svg {
+      width: 18px;
+      height: 18px;
+      stroke: currentColor;
+      stroke-width: 1.8;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      flex-shrink: 0;
+    }
+
+    /* ==========================================================================
+       2. SEAMLESS SPLASH SCREEN (#D8D0C5)
+       ========================================================================== */
+    #splash-screen {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 1.25rem;
+      background-color: #D8D0C5;
+      transition: opacity 1.05s cubic-bezier(0.77, 0, 0.175, 1),
+                  transform 1.15s cubic-bezier(0.77, 0, 0.175, 1),
+                  visibility 1.05s;
+      overflow: hidden;
+      user-select: none;
+    }
+
+    #splash-screen.splash-hidden {
+      opacity: 0;
+      transform: scale(1.04);
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .splash-logo-box {
+      position: relative;
+      width: min(84vw, 420px);
+      aspect-ratio: 1 / 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: splashFadeUp 1.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    @keyframes splashFadeUp {
+      0% { opacity: 0; transform: scale(0.93) translateY(10px); }
+      100% { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    .splash-logo-mask {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+
+    .splash-logo-mask img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+
+    .splash-diamond-glint {
+      position: absolute;
+      left: 53.47%;
+      top: 40.92%;
+      width: 40px;
+      height: 40px;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      z-index: 5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .splash-diamond-glint svg {
+      width: 100%;
+      height: 100%;
+      animation: crispStarGlint 2.6s ease-in-out infinite;
+    }
+
+    @keyframes crispStarGlint {
+      0%, 100% { transform: scale(0.6) rotate(0deg); opacity: 0.5; }
+      50% { transform: scale(1.18) rotate(45deg); opacity: 1; }
+    }
+
+    .splash-loader-wrap {
+      margin-top: -0.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.7rem;
+      z-index: 10;
+    }
+
+    .splash-tagline {
+      font-family: 'Amiri', serif;
+      font-size: clamp(1.35rem, 4.5vw, 1.65rem);
+      font-weight: 700;
+      color: #4E3820;
+      letter-spacing: 0.03em;
+    }
+
+    .splash-progress-track {
+      width: min(60vw, 200px);
+      height: 2.5px;
+      background: rgba(142, 110, 74, 0.22);
+      border-radius: 99px;
+      overflow: hidden;
+    }
+
+    .splash-progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #8E6E4A, #FFFFFF, #AD8D67);
+      border-radius: 99px;
+      transition: width 5.2s cubic-bezier(0.22, 0.61, 0.36, 1);
+    }
+
+    /* ==========================================================================
+       3. TOP LIVE GOLD MARKET TICKER BAR (ريال سعودي فقط)
+       ========================================================================== */
+    .live-gold-bar {
+      position: relative;
+      z-index: 50;
+      background: linear-gradient(90deg, #3A2816 0%, #563D23 50%, #3A2816 100%);
+      color: #F4ECE0;
+      padding: 0.45rem 0.9rem;
+      font-size: 0.8rem;
+      border-bottom: 1px solid #AD8D67;
+    }
+
+    .live-gold-bar-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .ticker-items-group {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .live-dot {
+      width: 7px;
+      height: 7px;
+      background: #D4AF37;
+      border-radius: 50%;
+      display: inline-block;
+      box-shadow: 0 0 8px #F3DFB9;
+      flex-shrink: 0;
+    }
+
+    .ticker-karat-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      padding: 0.14rem 0.55rem;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(205, 177, 129, 0.25);
+      white-space: nowrap;
+    }
+
+    .ticker-karat-pill .price-val {
+      color: #F3DFB9;
+      font-weight: 700;
+    }
+
+    /* ==========================================================================
+       4. FLOATING CAPSULE HEADER
+       ========================================================================== */
+    .header-outer-wrap {
+      position: sticky;
+      top: 10px;
+      z-index: 100;
+      padding: 0 0.85rem;
+      margin-top: 0.65rem;
+      margin-bottom: 1.25rem;
+      pointer-events: none;
+    }
+
+    .main-header {
+      pointer-events: auto;
+      max-width: 1280px;
+      margin: 0 auto;
+      background: var(--surface-glass);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1.5px solid var(--border-gold-strong);
+      border-radius: 999px;
+      box-shadow: 0 12px 30px rgba(56, 39, 20, 0.12),
+                  inset 0 1px 2px rgba(255, 255, 255, 0.75);
+      transition: all 0.3s ease;
+    }
+
+    .navbar-container {
+      padding: 0.5rem 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+    }
+
+    .brand-identity {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      text-decoration: none;
+      color: var(--text-primary);
+      min-width: 0;
+    }
+
+    .brand-emblem-svg {
+      width: 38px;
+      height: 38px;
+      flex-shrink: 0;
+      filter: drop-shadow(0 2px 5px rgba(92, 67, 38, 0.22));
+    }
+
+    .brand-titles {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+
+    .brand-title-en {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1rem, 3.2vw, 1.35rem);
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      line-height: 1.05;
+      background: var(--gradient-gold-text);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      white-space: nowrap;
+    }
+
+    .brand-subtitle-ar {
+      font-size: 0.74rem;
+      color: var(--text-secondary);
+      font-weight: 700;
+      margin-top: 1px;
+      white-space: nowrap;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      list-style: none;
+      background: var(--surface-elevated);
+      padding: 0.28rem;
+      border-radius: 999px;
+      border: 1px solid var(--border-gold-soft);
+      box-shadow: var(--shadow-inset-stone);
+    }
+
+    .nav-links button {
+      background: transparent;
+      border: none;
+      font-family: 'Tajawal', sans-serif;
+      color: var(--text-primary);
+      font-weight: 700;
+      font-size: 0.84rem;
+      padding: 0.4rem 0.9rem;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      white-space: nowrap;
+    }
+
+    .nav-links button:hover,
+    .nav-links button.active {
+      background: var(--gradient-gold-btn);
+      color: #FFF;
+      box-shadow: 0 4px 12px rgba(142, 110, 74, 0.28);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      flex-shrink: 0;
+    }
+
+    .icon-action-btn {
+      position: relative;
+      background: var(--surface-elevated);
+      border: 1px solid var(--border-gold-soft);
+      color: var(--text-primary);
+      padding: 0.45rem 0.85rem;
+      border-radius: 999px;
+      font-family: 'Tajawal', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      box-shadow: var(--shadow-inset-stone);
+      transition: all 0.25s ease;
+    }
+
+    .icon-action-btn:hover {
+      border-color: var(--gold-primary);
+      background: var(--gradient-gold-btn);
+      color: #FFF;
+    }
+
+    .badge-count {
+      background: #4B3621;
+      color: #F5E2BE;
+      font-size: 0.72rem;
+      font-weight: 800;
+      padding: 0.04rem 0.4rem;
+      border-radius: 999px;
+      border: 1px solid #CDB181;
+    }
+
+    /* ==========================================================================
+       5. GOLD FAMILIES CATALOG (عائلات منتجات الذهب الصافي)
+       ========================================================================== */
+    .catalog-section {
+      position: relative;
+      z-index: 10;
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0.25rem 1.15rem 6.5rem;
+    }
+
+    /* Family Tabs & Search Bar */
+    .catalog-controls-bar {
+      background: var(--surface-card);
+      border: 1px solid var(--border-gold-soft);
+      border-radius: 18px;
+      padding: 0.9rem 1rem;
+      margin-bottom: 1.75rem;
+      box-shadow: var(--shadow-inset-stone);
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+
+    .category-tabs {
+      display: flex;
+      gap: 0.45rem;
+      overflow-x: auto;
+      white-space: nowrap;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: 2px;
+      justify-content: center;
+    }
+    .category-tabs::-webkit-scrollbar {
+      display: none;
+    }
+
+    .cat-tab-btn {
+      background: var(--surface-elevated);
+      border: 1px solid var(--border-gold-soft);
+      color: var(--text-primary);
+      padding: 0.5rem 1.05rem;
+      border-radius: 999px;
+      font-family: 'Tajawal', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      flex-shrink: 0;
+      transition: all 0.25s;
+    }
+
+    .cat-tab-btn:hover,
+    .cat-tab-btn.active {
+      background: var(--gradient-gold-btn);
+      color: #FFF;
+      border-color: #7A5C38;
+      box-shadow: 0 4px 12px rgba(142, 110, 74, 0.26);
+    }
+
+    .secondary-filters-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.65rem;
+      padding-top: 0.7rem;
+      border-top: 1px solid var(--border-gold-soft);
+    }
+
+    .search-input-wrap {
+      position: relative;
+      flex: 1 1 220px;
+      min-width: 0;
+    }
+
+    .search-input-wrap input {
+      width: 100%;
+      background: var(--surface-elevated);
+      border: 1px solid var(--border-gold-soft);
+      color: var(--text-primary);
+      padding: 0.58rem 2.3rem 0.58rem 0.9rem;
+      border-radius: 999px;
+      font-family: 'Tajawal', sans-serif;
+      font-size: 0.86rem;
+      outline: none;
+    }
+
+    .search-input-wrap .search-icon {
+      position: absolute;
+      right: 0.85rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--gold-bronze);
+      pointer-events: none;
+      display: flex;
+    }
+
+    .filter-selects-group {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.5rem;
+      flex: 1 1 auto;
+      justify-content: flex-end;
+    }
+
+    .luxury-select {
+      background: var(--surface-elevated);
+      border: 1px solid var(--border-gold-soft);
+      color: var(--text-primary);
+      padding: 0.54rem 0.8rem;
+      border-radius: 999px;
+      font-family: 'Tajawal', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      outline: none;
+      max-width: 100%;
+    }
+
+    /* Family Section Block */
+    .family-section-block {
+      margin-bottom: 2.75rem;
+    }
+
+    .family-header-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1.15rem;
+      padding-bottom: 0.65rem;
+      border-bottom: 1.5px solid var(--border-gold-soft);
+    }
+
+    .family-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .family-title {
+      font-family: 'Amiri', serif;
+      font-size: clamp(1.38rem, 3.5vw, 1.85rem);
+      color: var(--text-primary);
+      font-weight: 700;
+    }
+
+    .family-count-pill {
+      background: var(--surface-elevated);
+      border: 1px solid var(--border-gold-strong);
+      color: var(--gold-bronze);
+      font-size: 0.76rem;
+      font-weight: 700;
+      padding: 0.2rem 0.7rem;
+      border-radius: 999px;
+    }
+
+    /* Products Grid */
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(275px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .product-card {
+      position: relative;
+      background: var(--surface-card);
+      border: 1px solid var(--border-gold-soft);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: var(--shadow-emboss);
+      transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .product-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--border-gold-strong);
+      box-shadow: 0 18px 38px -12px rgba(72, 52, 30, 0.22);
+    }
+
+    .product-media {
+      position: relative;
+      height: 225px;
+      background: #D8D0C5;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .product-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .product-card:hover .product-media img {
+      transform: scale(1.05);
+    }
+
+    .product-top-badges {
+      position: absolute;
+      top: 10px;
+      inset-inline: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      z-index: 4;
+      pointer-events: none;
+    }
+
+    .karat-badge {
+      background: rgba(56, 39, 20, 0.9);
+      color: #F3DFB9;
+      border: 1px solid #CDB181;
+      padding: 0.22rem 0.65rem;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      backdrop-filter: blur(6px);
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .wishlist-btn {
+      pointer-events: auto;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.88);
+      border: 1px solid rgba(173, 141, 103, 0.4);
+      color: #5C4326;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.25s;
+    }
+    .wishlist-btn:hover,
+    .wishlist-btn.wish-active {
+      background: #8E6E4A;
+      color: #FFF;
+      border-color: #8E6E4A;
+    }
+
+    .product-body {
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      gap: 0.55rem;
+    }
+
+    .product-meta-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.73rem;
+      color: var(--text-muted);
+    }
+
+    .product-title {
+      font-family: 'Amiri', serif;
+      font-size: 1.2rem;
+      color: var(--text-primary);
+      line-height: 1.35;
+    }
+
+    .product-specs-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+    }
+
+    .spec-chip {
+      background: var(--surface-elevated);
+      border: 1px solid var(--border-gold-soft);
+      padding: 0.2rem 0.55rem;
+      border-radius: 7px;
+      font-size: 0.74rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+    }
+
+    .card-karat-switcher {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--surface-elevated);
+      padding: 0.34rem 0.55rem;
+      border-radius: 9px;
+      border: 1px solid var(--border-gold-soft);
+      font-size: 0.74rem;
+    }
+
+    .karat-dots {
+      display: flex;
+      gap: 0.28rem;
+    }
+
+    .karat-choice-btn {
+      border: 1px solid rgba(142, 110, 74, 0.4);
+      background: transparent;
+      color: var(--text-primary);
+      font-family: 'Tajawal', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 0.14rem 0.45rem;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .karat-choice-btn.active {
+      background: var(--gold-primary);
+      color: #FFF;
+      border-color: var(--gold-deep-shadow);
+    }
+
+    .product-price-row {
+      margin-top: auto;
+      padding-top: 0.6rem;
+      border-top: 1px dashed var(--border-gold-soft);
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 0.5rem;
+    }
+
+    .price-block .price-label {
+      display: block;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+    }
+
+    .price-block .price-amount {
+      font-size: 1.24rem;
+      font-weight: 800;
+      color: var(--gold-bronze);
+    }
+
+    .card-actions {
+      display: flex;
+      gap: 0.35rem;
+    }
+
+    .btn-quick-view {
+      background: var(--surface-elevated);
+      border: 1px solid var(--border-gold-strong);
+      color: var(--text-primary);
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-quick-view:hover {
+      background: var(--gold-champagne);
+      color: #2B1D0E;
+    }
+
+    .btn-add-cart {
+      background: linear-gradient(135deg, #5C4326 0%, #AD8D67 100%);
+      color: #FFF;
+      border: 1px solid #CDB181;
+      padding: 0 0.9rem;
+      height: 38px;
+      border-radius: 10px;
+      font-family: 'Tajawal', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.25s;
+    }
+    .btn-add-cart:hover {
+      background: linear-gradient(135deg, #3D2B19 0%, #8E6E4A 100%);
+    }
+
+    .btn-primary-gold {
+      background: linear-gradient(135deg, #5C4326 0%, #9E7E56 48%, #CDB181 85%, #7A5C38 100%);
+      color: #FFFDF9;
+      border: 1px solid #E5CCA0;
+      padding: 0.82rem 1.75rem;
+      border-radius: 999px;
+      font-family: 'Tajawal', sans-serif;
+      font-size: 0.94rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      text-decoration: none;
+    }
+
+    /* ==========================================================================
+       6. FLOATING BOTTOM NAVIGATION DOCK
+       ========================================================================== */
+    .floating-bottom-dock {
+      position: fixed;
+      bottom: calc(14px + env(safe-area-inset-bottom, 0px));
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 950;
+      width: min(94vw, 480px);
+      background: var(--surface-floating-nav);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1.5px solid rgba(205, 177, 129, 0.65);
+      border-radius: 999px;
+      padding: 0.38rem 0.5rem;
+      box-shadow: 0 16px 38px rgba(28, 18, 8, 0.38),
+                  0 4px 12px rgba(173, 141, 103, 0.2),
+                  inset 0 1px 1px rgba(255, 248, 235, 0.22);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.2rem;
+    }
+
+    .dock-nav-item {
+      position: relative;
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.35rem;
+      text-decoration: none;
+      color: #E6DAC8;
+      font-size: 0.78rem;
+      font-weight: 700;
+      background: transparent;
+      border: none;
+      font-family: 'Tajawal', sans-serif;
+      cursor: pointer;
+      padding: 0.54rem 0.45rem;
+      border-radius: 999px;
+      transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+      white-space: nowrap;
+    }
+
+    .dock-nav-item svg.icon-svg {
+      width: 17px;
+      height: 17px;
+      stroke: #CDB181;
+      transition: stroke 0.25s ease;
+    }
+
+    .dock-nav-item:hover,
+    .dock-nav-item.active {
+      background: linear-gradient(135deg, #8B6B47 0%, #AD8D67 50%, #CDB181 100%);
+      color: #FFFDF9;
+      box-shadow: 0 5px 14px rgba(173, 141, 103, 0.35);
+    }
+
+    .dock-nav-item:hover svg.icon-svg,
+    .dock-nav-item.active svg.icon-svg {
+      stroke: #FFFDF9;
+    }
+
+    .dock-cart-badge {
+      background: #F3DFB9;
+      color: #382714;
+      font-size: 0.66rem;
+      font-weight: 800;
+      min-width: 18px;
+      height: 18px;
+      padding: 0 4px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ==========================================================================
+       7. MODALS & SLIDE-OVER SHOPPING CART
+       ========================================================================== */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 2000;
+      background: rgba(32, 21, 10, 0.65);
+      backdrop-filter: blur(8px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .modal-backdrop.open {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .luxury-modal {
+      background: var(--surface-card);
+      border: 1.5px solid var(--border-gold-strong);
+      border-radius: 24px;
+      max-width: 720px;
+      width: 100%;
+      max-height: 88dvh;
+      overflow-y: auto;
+      padding: 1.5rem;
+      position: relative;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.45);
+      transform: translateY(20px) scale(0.96);
+      transition: transform 0.3s ease;
+    }
+
+    .modal-backdrop.open .luxury-modal {
+      transform: translateY(0) scale(1);
+    }
+
+    .modal-close-btn {
+      position: absolute;
+      top: 0.9rem;
+      left: 0.9rem;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: var(--surface-elevated);
+      border: 1px solid var(--border-gold-strong);
+      color: var(--text-primary);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 5;
+    }
+
+    .calc-result-card {
+      background: var(--surface-elevated);
+      border: 1px solid var(--border-gold-strong);
+      border-radius: 15px;
+      padding: 0.95rem 1.05rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+    }
+
+    .calc-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.84rem;
+      color: var(--text-secondary);
+    }
+
+    .calc-row.total-row {
+      padding-top: 0.5rem;
+      border-top: 1px solid var(--border-gold-soft);
+      font-size: 1.04rem;
+      font-weight: 800;
+      color: var(--text-primary);
+    }
+
+    .cart-drawer {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100dvh;
+      width: min(100vw, 400px);
+      z-index: 2100;
+      background: var(--surface-card);
+      border-right: 1.5px solid var(--border-gold-strong);
+      box-shadow: 15px 0 45px rgba(30, 18, 8, 0.35);
+      display: flex;
+      flex-direction: column;
+      transform: translateX(-105%);
+      transition: transform 0.36s cubic-bezier(0.77, 0, 0.175, 1);
+    }
+
+    .cart-drawer.open {
+      transform: translateX(0);
+    }
+
+    .cart-header {
+      padding: 1.1rem 1.15rem;
+      border-bottom: 1px solid var(--border-gold-soft);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .cart-items-list {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1rem 1.15rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .cart-item-row {
+      display: flex;
+      gap: 0.7rem;
+      background: var(--surface-elevated);
+      padding: 0.65rem;
+      border-radius: 14px;
+      border: 1px solid var(--border-gold-soft);
+      align-items: center;
+    }
+
+    .cart-item-row img {
+      width: 56px;
+      height: 56px;
+      border-radius: 10px;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+
+    .cart-footer {
+      padding: 1.1rem 1.15rem calc(1.1rem + env(safe-area-inset-bottom, 0px));
+      border-top: 1px solid var(--border-gold-strong);
+      background: var(--surface-elevated);
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+    }
+
+    #toast-container {
+      position: fixed;
+      bottom: 84px;
+      right: 16px;
+      left: 16px;
+      pointer-events: none;
+      z-index: 3000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .luxury-toast {
+      background: #382714;
+      color: #F7EFE4;
+      border: 1px solid #CDB181;
+      padding: 0.7rem 1.15rem;
+      border-radius: 999px;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.84rem;
+      font-weight: 600;
+      animation: slideInToast 0.3s ease;
+      max-width: 100%;
+      text-align: center;
+    }
+
+    @keyframes slideInToast {
+      from { transform: translateY(16px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    /* ==========================================================================
+       8. MOBILE & PHONE OPTIMIZATION
+       ========================================================================== */
+    @media (max-width: 1024px) {
+      .nav-links {
+        display: none;
+      }
+      .category-tabs {
+        justify-content: flex-start;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .live-gold-bar {
+        padding: 0.38rem 0.5rem;
+        font-size: 0.72rem;
+      }
+      .ticker-label-text {
+        display: none;
+      }
+      .ticker-items-group {
+        gap: 0.35rem;
+        width: 100%;
+        justify-content: center;
+      }
+      .ticker-karat-pill {
+        padding: 0.12rem 0.45rem;
+        font-size: 0.71rem;
+      }
+
+      .header-outer-wrap {
+        top: 6px;
+        padding: 0 0.55rem;
+        margin-top: 0.45rem;
+        margin-bottom: 0.85rem;
+      }
+      .navbar-container {
+        padding: 0.42rem 0.7rem;
+      }
+      .brand-emblem-svg {
+        width: 34px;
+        height: 34px;
+      }
+      .brand-title-en {
+        font-size: 0.98rem;
+        letter-spacing: 0.12em;
+      }
+      .brand-subtitle-ar {
+        font-size: 0.68rem;
+      }
+      #theme-btn-label {
+        display: none;
+      }
+      #theme-toggle-btn {
+        width: 36px;
+        height: 36px;
+        padding: 0;
+      }
+      .icon-action-btn {
+        padding: 0.4rem 0.7rem;
+        font-size: 0.78rem;
+      }
+
+      .catalog-section {
+        padding: 0.1rem 0.75rem 5.8rem;
+      }
+      .catalog-controls-bar {
+        padding: 0.75rem;
+        border-radius: 15px;
+        gap: 0.65rem;
+        margin-bottom: 1.25rem;
+      }
+      .cat-tab-btn {
+        padding: 0.42rem 0.85rem;
+        font-size: 0.8rem;
+      }
+      .secondary-filters-row {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.5rem;
+      }
+      .search-input-wrap {
+        flex: 1 1 auto;
+      }
+      .filter-selects-group {
+        width: 100%;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.45rem;
+      }
+      .luxury-select {
+        width: 100%;
+        font-size: 0.76rem;
+        padding: 0.5rem 0.6rem;
+      }
+
+      .family-section-block {
+        margin-bottom: 2rem;
+      }
+      .family-title {
+        font-size: 1.32rem;
+      }
+
+      .products-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+      .product-media {
+        height: 205px;
+      }
+      .product-body {
+        padding: 0.95rem;
+      }
+      .product-title {
+        font-size: 1.14rem;
+      }
+      .price-block .price-amount {
+        font-size: 1.18rem;
+      }
+
+      .modal-backdrop {
+        padding: 0;
+        align-items: flex-end;
+      }
+      .luxury-modal {
+        border-radius: 22px 22px 0 0;
+        max-height: 90dvh;
+        padding: 1.25rem 1rem calc(1.25rem + env(safe-area-inset-bottom, 0px));
+      }
+
+      .floating-bottom-dock {
+        bottom: calc(10px + env(safe-area-inset-bottom, 0px));
+        width: calc(100vw - 18px);
+        padding: 0.32rem 0.38rem;
+      }
+      .dock-nav-item {
+        flex-direction: column;
+        gap: 0.16rem;
+        font-size: 0.68rem;
+        padding: 0.38rem 0.2rem;
+      }
+      .dock-nav-item svg.icon-svg {
+        width: 16px;
+        height: 16px;
+      }
+      .dock-cart-badge {
+        position: absolute;
+        top: 2px;
+        left: 18%;
+        min-width: 16px;
+        height: 16px;
+        font-size: 0.62rem;
+      }
+    }
+  </style>
 </head>
-<body class="bg-dark text-white font-sans antialiased relative overflow-x-hidden min-h-screen flex flex-col">
+<body class="splash-lock">
 
-    <!-- خلفية تفاعلية بصرية -->
-    <div class="blob bg-primary w-96 h-96 rounded-full top-0 right-0 -translate-y-1/2 translate-x-1/2"></div>
-    <div class="blob bg-secondary w-96 h-96 rounded-full bottom-0 left-0 translate-y-1/2 -translate-x-1/2"></div>
+  <!-- ==========================================================================
+       1. AUTOMATIC LUXURY SPLASH SCREEN
+       ========================================================================== -->
+  <section id="splash-screen" aria-label="شاشة الترحيب بمجوهرات كاريزما">
+    <div class="splash-logo-box">
+      <div class="splash-logo-mask">
+        <img src="logo_seamless.png" alt="CHARISMA JEWELRY" />
+      </div>
 
-    <!-- المحتوى الرئيسي -->
-    <main class="flex-grow flex flex-col items-center justify-center relative z-10 px-4 sm:px-6 lg:px-8 py-20">
-        
-        <!-- الهيدر والوصف -->
-        <div class="text-center max-w-4xl mx-auto mb-16">
-            <h1 class="text-5xl md:text-7xl font-extrabold mb-6 tracking-tight">
-                نحول أفكارك إلى <span class="gradient-text">واقع رقمي</span>
-            </h1>
-            <p class="text-lg md:text-2xl text-gray-400 mb-8 leading-relaxed">
-                سواءً كنت تبحث عن تطبيق جوال متطور، موقع إلكتروني احترافي، أو أي نظام تقني يخطر على بالك.. نحن هنا لنبني لك المستقبل بأعلى معايير الجودة والإبداع.
-            </p>
+      <div class="splash-diamond-glint">
+        <svg viewBox="0 0 100 100" fill="none">
+          <path d="M50 0 C51.5 40 60 48.5 100 50 C60 51.5 51.5 60 50 100 C48.5 60 40 51.5 0 50 C40 48.5 48.5 40 50 0 Z" fill="#FFFFFF" />
+        </svg>
+      </div>
+    </div>
+
+    <div class="splash-loader-wrap">
+      <p class="splash-tagline">مجوهرات كاريزما</p>
+      <div class="splash-progress-track">
+        <div class="splash-progress-fill" id="splash-progress-fill"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       2. TOP LIVE GOLD MARKET TICKER BAR (ريال سعودي فقط)
+       ========================================================================== -->
+  <div class="live-gold-bar">
+    <div class="live-gold-bar-inner">
+      <div class="ticker-items-group">
+        <span style="display:inline-flex; align-items:center; gap:0.35rem; font-weight:700;">
+          <span class="live-dot"></span>
+          <span class="ticker-label-text">أسعار الذهب اليوم:</span>
+        </span>
+        <div class="ticker-karat-pill">
+          <span>عيار 24:</span>
+          <span class="price-val live-24k-display">334.50 ر.س</span>
+        </div>
+        <div class="ticker-karat-pill">
+          <span>عيار 21:</span>
+          <span class="price-val live-21k-display">292.70 ر.س</span>
+        </div>
+        <div class="ticker-karat-pill">
+          <span>عيار 18:</span>
+          <span class="price-val live-18k-display">250.90 ر.س</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       3. FLOATING CAPSULE HEADER
+       ========================================================================== -->
+  <div class="header-outer-wrap">
+    <header class="main-header">
+      <div class="navbar-container">
+        <a href="#" class="brand-identity" onclick="filterByFamily('all'); return false;">
+          <svg class="brand-emblem-svg" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="navGoldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#E6C994" />
+                <stop offset="45%" stop-color="#AD8D67" />
+                <stop offset="80%" stop-color="#7A5C38" />
+                <stop offset="100%" stop-color="#CDB181" />
+              </linearGradient>
+            </defs>
+            <path d="M88 38 C76 22, 42 22, 28 45 C14 68, 28 96, 62 102 C76 103, 86 94, 89 82 C83 92, 70 97, 56 94 C35 89, 28 68, 37 48 C46 29, 72 26, 84 42 Z" fill="url(#navGoldGrad)" />
+            <path d="M62 8 C66 12, 67 24, 65 44 C68 52, 73 56, 82 58 C73 60, 68 64, 65 72 L65 104 C65 109, 69 113, 73 115 C65 113, 61 108, 61 101 L61 72 C58 64, 53 60, 44 58 C53 56, 58 52, 61 44 L61 12 Z" fill="url(#navGoldGrad)" />
+            <circle cx="63" cy="58" r="6" fill="#F3DFB9" stroke="#FFFFFF" stroke-width="1" />
+          </svg>
+          <div class="brand-titles">
+            <span class="brand-title-en">C H Λ R I S M Λ</span>
+            <span class="brand-subtitle-ar">مجوهرات كاريزما</span>
+          </div>
+        </a>
+
+        <ul class="nav-links" id="header-family-links">
+          <li><button type="button" class="active" data-fam="all" onclick="filterByFamily('all')">الكل</button></li>
+          <li><button type="button" data-fam="sets" onclick="filterByFamily('sets')">الأطقم</button></li>
+          <li><button type="button" data-fam="bracelets" onclick="filterByFamily('bracelets')">الأساور والبناجر</button></li>
+          <li><button type="button" data-fam="necklaces" onclick="filterByFamily('necklaces')">العقود والسبحات</button></li>
+          <li><button type="button" data-fam="rings" onclick="filterByFamily('rings')">الخواتم</button></li>
+          <li><button type="button" data-fam="earrings" onclick="filterByFamily('earrings')">الأقراط</button></li>
+          <li><button type="button" data-fam="bullion" onclick="filterByFamily('bullion')">السبائك</button></li>
+        </ul>
+
+        <div class="header-actions">
+          <button type="button" class="icon-action-btn" id="theme-toggle-btn" onclick="toggleRoyalTheme()" aria-label="تبديل النمط">
+            <svg class="icon-svg" viewBox="0 0 24 24">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+            <span id="theme-btn-label">النمط المخملي</span>
+          </button>
+          <button type="button" class="icon-action-btn" onclick="toggleCartDrawer(true)">
+            <svg class="icon-svg" viewBox="0 0 24 24">
+              <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <path d="M16 10a4 4 0 0 1-8 0"></path>
+            </svg>
+            <span>الحقيبة</span>
+            <span class="badge-count" id="cart-count-badge">2</span>
+          </button>
+        </div>
+      </div>
+    </header>
+  </div>
+
+  <!-- ==========================================================================
+       4. GOLD CATEGORIES & PRODUCTS CATALOG
+       ========================================================================== -->
+  <main>
+    <section class="catalog-section" id="products-catalog">
+      <div class="catalog-controls-bar">
+        <div class="category-tabs" id="category-tabs">
+          <button type="button" class="cat-tab-btn active" data-fam="all" onclick="filterByFamily('all')">الكل</button>
+          <button type="button" class="cat-tab-btn" data-fam="sets" onclick="filterByFamily('sets')">الأطقم</button>
+          <button type="button" class="cat-tab-btn" data-fam="bracelets" onclick="filterByFamily('bracelets')">الأساور والبناجر</button>
+          <button type="button" class="cat-tab-btn" data-fam="necklaces" onclick="filterByFamily('necklaces')">العقود والسبحات</button>
+          <button type="button" class="cat-tab-btn" data-fam="rings" onclick="filterByFamily('rings')">الخواتم</button>
+          <button type="button" class="cat-tab-btn" data-fam="earrings" onclick="filterByFamily('earrings')">الأقراط</button>
+          <button type="button" class="cat-tab-btn" data-fam="bullion" onclick="filterByFamily('bullion')">السبائك</button>
         </div>
 
-        <!-- الخدمات (كروت) -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-6xl mb-16">
-            <!-- الكرت الأول -->
-            <div class="glass-card p-8 rounded-2xl text-center transform transition duration-300 hover:-translate-y-2 hover:shadow-2xl hover:shadow-primary/20">
-                <div class="w-16 h-16 mx-auto bg-gradient-to-br from-primary to-blue-400 rounded-full flex items-center justify-center mb-6 shadow-lg shadow-primary/30">
-                    <i class="fa-solid fa-mobile-screen-button text-2xl text-white"></i>
-                </div>
-                <h3 class="text-2xl font-bold mb-4">تطبيقات الجوال</h3>
-                <p class="text-gray-400">تصميم وبرمجة تطبيقات أصلية وهجينة بأداء سريع وتجربة مستخدم لا تُنسى.</p>
-            </div>
-            
-            <!-- الكرت الثاني -->
-            <div class="glass-card p-8 rounded-2xl text-center transform transition duration-300 hover:-translate-y-2 hover:shadow-2xl hover:shadow-secondary/20">
-                <div class="w-16 h-16 mx-auto bg-gradient-to-br from-secondary to-purple-400 rounded-full flex items-center justify-center mb-6 shadow-lg shadow-secondary/30">
-                    <i class="fa-solid fa-globe text-2xl text-white"></i>
-                </div>
-                <h3 class="text-2xl font-bold mb-4">مواقع الويب</h3>
-                <p class="text-gray-400">واجهات جذابة ولوحات تحكم متكاملة تضمن لعملك التواجد الرقمي الأقوى.</p>
-            </div>
+        <div class="secondary-filters-row">
+          <div class="search-input-wrap">
+            <span class="search-icon">
+              <svg class="icon-svg" viewBox="0 0 24 24">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </span>
+            <input type="text" id="product-search-input" placeholder="بحث في منتجات الذهب..." oninput="renderFamiliesCatalog()" />
+          </div>
 
-            <!-- الكرت الثالث -->
-            <div class="glass-card p-8 rounded-2xl text-center transform transition duration-300 hover:-translate-y-2 hover:shadow-2xl hover:shadow-pink-500/20">
-                <div class="w-16 h-16 mx-auto bg-gradient-to-br from-pink-500 to-rose-400 rounded-full flex items-center justify-center mb-6 shadow-lg shadow-pink-500/30">
-                    <i class="fa-solid fa-lightbulb text-2xl text-white"></i>
-                </div>
-                <h3 class="text-2xl font-bold mb-4">أفكار مخصصة</h3>
-                <p class="text-gray-400">أي فكرة تخطر على بالك، نقوم بتحليلها وتحويلها إلى برمجيات وأنظمة متكاملة.</p>
-            </div>
+          <div class="filter-selects-group">
+            <select class="luxury-select" id="karat-filter-select" onchange="renderFamiliesCatalog()" aria-label="فلترة حسب العيار">
+              <option value="all">جميع العيارات (24K / 21K / 18K)</option>
+              <option value="24">ذهب عيار 24K</option>
+              <option value="21">ذهب عيار 21K</option>
+              <option value="18">ذهب عيار 18K</option>
+            </select>
+
+            <select class="luxury-select" id="sort-select" onchange="renderFamiliesCatalog()" aria-label="ترتيب المنتجات">
+              <option value="featured">الترتيب الافتراضي</option>
+              <option value="price-asc">السعر: من الأقل للأعلى</option>
+              <option value="price-desc">السعر: من الأعلى للأقل</option>
+              <option value="weight-desc">الوزن: الأثقل جراماً</option>
+            </select>
+          </div>
         </div>
+      </div>
 
-        <!-- زر التواصل -->
-        <div class="text-center relative z-20">
-            <p class="text-gray-300 mb-4 text-lg">لمشاهدة سابقة أعمالنا ومناقشة مشروعك:</p>
-            <a href="https://wa.me/966509539447" target="_blank" rel="noopener noreferrer" 
-               class="inline-flex items-center gap-3 bg-[#25D366] hover:bg-[#1ebd5a] text-white text-xl font-bold py-4 px-8 rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg shadow-[#25D366]/30">
-                <i class="fa-brands fa-whatsapp text-2xl"></i>
-                <span>تواصل معنا عبر واتساب</span>
-            </a>
-            <p class="mt-4 text-gray-400 font-mono" dir="ltr">+966 50 953 9447</p>
+      <!-- Families Container: Renders each Family with its own dedicated products -->
+      <div id="families-catalog-container"></div>
+    </section>
+  </main>
+
+  <!-- ==========================================================================
+       5. FLOATING CAPSULE NAVIGATION DOCK
+       ========================================================================== -->
+  <nav class="floating-bottom-dock" aria-label="التنقل العائم السريع">
+    <button type="button" class="dock-nav-item active" data-dock-fam="all" onclick="filterByFamily('all')">
+      <svg class="icon-svg" viewBox="0 0 24 24">
+        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+      </svg>
+      <span>الرئيسية</span>
+    </button>
+    <button type="button" class="dock-nav-item" data-dock-fam="sets" onclick="filterByFamily('sets')">
+      <svg class="icon-svg" viewBox="0 0 24 24">
+        <polygon points="12 2 15 9 22 12 15 15 12 22 9 15 2 12 9 9 12 2"></polygon>
+      </svg>
+      <span>الأطقم</span>
+    </button>
+    <button type="button" class="dock-nav-item" data-dock-fam="bracelets" onclick="filterByFamily('bracelets')">
+      <svg class="icon-svg" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="8"></circle>
+      </svg>
+      <span>الأساور</span>
+    </button>
+    <button type="button" class="dock-nav-item" onclick="toggleCartDrawer(true)">
+      <svg class="icon-svg" viewBox="0 0 24 24">
+        <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+        <line x1="3" y1="6" x2="21" y2="6"></line>
+      </svg>
+      <span>الحقيبة</span>
+      <span class="dock-cart-badge" id="dock-cart-count">2</span>
+    </button>
+  </nav>
+
+  <!-- ==========================================================================
+       6. PRODUCT DETAILS MODAL & SLIDE-OVER SHOPPING CART
+       ========================================================================== -->
+  <div class="modal-backdrop" id="quick-view-modal" onclick="if(event.target===this) closeQuickViewModal()">
+    <div class="luxury-modal" id="quick-view-content"></div>
+  </div>
+
+  <div class="modal-backdrop" id="cart-backdrop" onclick="toggleCartDrawer(false)"></div>
+  <aside class="cart-drawer" id="cart-drawer" aria-label="سلة المشتريات">
+    <div class="cart-header">
+      <h3 style="font-family:'Amiri',serif; font-size:1.4rem; display:flex; align-items:center; gap:0.5rem;">
+        <svg class="icon-svg" viewBox="0 0 24 24" style="color:var(--gold-bronze);">
+          <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+        </svg>
+        <span>حقيبة المشتريات</span>
+      </h3>
+      <button type="button" class="modal-close-btn" style="position:static;" onclick="toggleCartDrawer(false)" aria-label="إغلاق">
+        <svg class="icon-svg" viewBox="0 0 24 24">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+
+    <div class="cart-items-list" id="cart-items-container"></div>
+
+    <div class="cart-footer">
+      <div class="calc-row">
+        <span>إجمالي وزن الذهب:</span>
+        <strong id="cart-total-weight">0.00 جم</strong>
+      </div>
+      <div class="calc-row total-row">
+        <span>الإجمالي الشامل:</span>
+        <span id="cart-total-price" style="color:var(--gold-bronze);">0 ر.س</span>
+      </div>
+      <button type="button" class="btn-primary-gold" style="width:100%;" onclick="completeCustomerOrder()">
+        <span>إتمام الطلب</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- Toast Notifications Container -->
+  <div id="toast-container"></div>
+
+  <!-- ==========================================================================
+       7. STOREFRONT JAVASCRIPT (100% PURE GOLD — ORGANIZED BY FAMILIES)
+       ========================================================================== -->
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      const progressFill = document.getElementById('splash-progress-fill');
+      const splashScreen = document.getElementById('splash-screen');
+
+      requestAnimationFrame(() => {
+        if (progressFill) progressFill.style.width = '100%';
+      });
+
+      setTimeout(() => {
+        if (splashScreen) {
+          splashScreen.classList.add('splash-hidden');
+        }
+        document.body.classList.remove('splash-lock');
+      }, 5400);
+
+      updateAllDisplays();
+    });
+
+    const MARKET_RATES_SAR = {
+      24: 334.50,
+      21: 292.70,
+      18: 250.90
+    };
+
+    function formatMoney(amountInSAR) {
+      return Math.round(amountInSAR).toLocaleString('en-US') + ' ر.س';
+    }
+
+    function formatRatePerGram(amountInSAR) {
+      return amountInSAR.toFixed(2) + ' ر.س';
+    }
+
+    /* Gold Product Families Definition */
+    const GOLD_FAMILIES = [
+      { id: 'sets',      title: 'عائلة الأطقم الذهبية' },
+      { id: 'bracelets', title: 'عائلة البناجر والأساور' },
+      { id: 'necklaces', title: 'عائلة العقود والسبحات' },
+      { id: 'rings',     title: 'عائلة الخواتم الذهبية' },
+      { id: 'earrings',  title: 'عائلة الأقراط والحلق' },
+      { id: 'bullion',   title: 'عائلة السبائك والجنيهات' }
+    ];
+
+    /* 24 Dedicated Pure Gold Products (4 per Family — No Diamonds) */
+    const PRODUCTS_DB = [
+      /* 1. عائلة الأطقم الذهبية (sets) */
+      {
+        id: 101,
+        sku: 'SET-01',
+        family: 'sets',
+        familyLabel: 'عائلة الأطقم الذهبية',
+        title: 'طقم ذهب ملكي كامل عيار 21',
+        selectedKarat: 21,
+        weightGrams: 42.50,
+        makingFeePerGram: 48,
+        purityLabel: 'ذهب صافي عيار 21',
+        badge: 'طقم 4 قطع',
+        image: 'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&w=900&q=85'
+      },
+      {
+        id: 102,
+        sku: 'SET-02',
+        family: 'sets',
+        familyLabel: 'عائلة الأطقم الذهبية',
+        title: 'طقم ذهب كرسي جابر تراثي عيار 21',
+        selectedKarat: 21,
+        weightGrams: 56.80,
+        makingFeePerGram: 52,
+        purityLabel: 'ذهب صافي عيار 21',
+        badge: 'طقم ثقيل',
+        image: 'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=900&q=85'
+      },
+      {
+        id: 103,
+        sku: 'SET-03',
+        family: 'sets',
+        familyLabel: 'عائلة الأطقم الذهبية',
+        title: 'طقم ذهب منقوش وردات عيار 21',
+        selectedKarat: 21,
+        weightGrams: 31.40,
+        makingFeePerGram: 45,
+        purityLabel: 'ذهب صافي عيار 21',
+        badge: 'صياغة متقنة',
+        image: 'https://images.unsplash.com/photo-1573408301185-9146fe634ad0?auto=format&fit=crop&w=900&q=85'
+      },
+      {
+        id: 104,
+        sku: 'SET-04',
+        family: 'sets',
+        familyLabel: 'عائلة الأطقم الذهبية',
+        title: 'طقم ذهب ناعم إيطالي عيار 18',
+        selectedKarat: 18,
+        weightGrams: 19.60,
+        makingFeePerGram: 55,
+        purityLabel: 'ذهب صافي عيار 18',
+        badge: 'تصميم ناعم',
+        image: 'https://images.unsplash.com/photo-1611652022419-a9419f74343d?auto=format&fit=crop&w=900&q=85'
+      },
+
+      /* 2. عائلة البناجر والأساور (bracelets) */
+      {
+        id: 201,
+        sku: 'BRC-01',
+        family: 'bracelets',
+        familyLabel: 'عائلة البناجر والأساور',
+        title: 'طقم 3 بناجر ذهب منقوشة عيار 21',
+        selectedKarat: 21,
+        weightGrams: 34.00,
+        makingFeePerGram: 38,
+        purityLabel: 'ذهب صافي عيار 21',
+        badge: '3 بناجر ذهب',
+        image: 'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=900&q=85'
+      },
+      {
+        id: 202,
+        sku: 'BRC-02',
+        family: 'bracelets',
+        familyLabel: 'عائلة البناجر والأساور',
+        title: 'سوار ذهب مجدول ثقيل عيار 21',
+        selectedKarat: 21,
+        weightGrams: 22.30,
+        makingFeePerGram: 42,
+        purityLabel: 'ذهب صافي عيار 21',
+        badge: 'ذهب 21K',
+        image: 'https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&w=900&q=85'
+      },
+      {
+        id: 203,
+        sku: 'BRC-03',
+        family: 'bracelets',
+        familyLabel: 'عائلة البناجر والأساور',
+        title: 'غوايش ذهب خليجية سادة عيار 21',
+        selectedKarat: 21,
+        weightGrams: 28.50,
+        makingFeePerGram: 35,
+        purityLabel: 'ذهب صافي عيار 21',
+        badge: 'غوايش صافي',
+        image: 'https://images.unsplash.com/photo-1573408301185-9146fe634ad0?auto=format&fit=crop&w=900&q=85'
+      },
+      {
+        id: 204,
+        sku: 'BRC-04',
+        family: 'bracelets',
+        familyLabel: 'عائلة البناجر والأساور',
+        title: 'سوار ذهب جنزير عريض عيار 18',
+        selectedKarat: 18,
+        weightGrams: 14.20,
+        makingFeePerGram: 48,
+        purityLabel: 'ذهب صافي عيار 18',
+        badge: 'ذهب إيطالي',
+        image: 'https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&w=900&q=85'
+      },
+
+      /* 3. عائلة العقود والسبحات (necklaces) */
+      {
+        id: 301,
+        sku: 'NCK-01',
+        family: 'necklaces',
+        familyLabel: 'عائلة العقود والسبحات',
+        title: 'سبحة ذهب ملكية طويلة عيار 21',
+        selectedKarat: 21,
+        weightGrams: 36.40,
+        makingFeePerGram: 44,
+        purityLabel: 'ذهب صافي عيار 21',
+        badge: 'سبحة ذهب',
+        image: 'https://images.unsplash.com/photo-1599643477877-530eb83abc8e?auto=format&fit=crop&w=900&q=85'
+      },
+      {
+        id: 302,
+        sku: 'NCK-02',
+        family: 'necklaces',
+        familyLabel: 'عائلة العقود والسبحات',
+        title: 'عقد ذهب هلال كاريزما عيار 21',
+        selectedKarat: 21,
+        weightGrams: 15.80,
+        makingFeePerGram: 46,
+        purityLabel: 'ذهب صافي عيار 21',
+        badge: 'تصميم خاص',
+        image: 'https://images.unsplash.com/photo-1611652022419-a9419f74343d?auto=format&fit=crop&w=900&q=85'
+      },
+      {
+        id: 303,
+        sku: 'NCK-03',
+        family: 'necklaces',
+        familyLabel: 'عائلة العقود والسبحات',
+        title: 'خنقة ذهب دوائر مصقولة عيار 21',
+        selectedKarat: 21,
+        weightGrams: 24.90,
+        makingFeePerGram: 45,
+        purityLabel: 'ذهب صافي عيار 21',
+        badge: 'خنقة ذهب',
+        image: 'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=900&q=85'
+      },
+      {
+        id: 304,
+        sku: 'NCK-04',
+        family: 'necklaces',
+        familyLabel: 'عائلة العقود والسبحات',
+        title: 'قلادة ذهب ناعمة طبقات عيار 18',
+        selectedKarat: 18,
+        weightGrams: 8.70,
+        makingFeePerGram: 50,
+        purityLabel: 'ذهب صافي عيار 18',
+        badge: 'قلادة يومية',
+        image: 'https://images.unsplash.com/photo-1599643477877-530eb83abc8e?auto=format&fit=crop&w=900&q=85'
+      },
+
+      /* 4. عائلة الخواتم الذهبية (rings) */
+      {
+        id: 401,
+        sku: 'RNG-01',
+        family: 'rings',
+        familyLabel: 'عائلة الخواتم الذهبية',
+        title: 'خاتم ذهب ملكي منقوش عيار 21',
+        selectedKarat: 21,
+        weightGrams: 6.80,
+        makingFeePerGram: 50,
+        purityLabel: 'ذهب صافي عيار 21',
+        badge: 'ذهب 21K',
+        image: 'https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=900&q=85'
+      },
+      {
+        id: 402,
+        sku: 'RNG-02',
+        family: 'rings',
+        familyLabel: 'عائلة الخواتم الذهبية',
+        title: 'خاتم ذهب غصن الزيتون عيار 21',
+        selectedKarat: 21,
+        weightGrams: 5.20,
+        makingFeePerGram: 48,
+        purityLabel: 'ذهب صافي عيار 21',
+        badge: 'الأكثر طلباً',
+        image: 'https://images.unsplash.com/photo-1603561591411-07134e71a2a9?auto=format&fit=crop&w=900&q=85'
+      },
+      {
+        id: 403,
+        sku: 'RNG-03',
+        family: 'rings',
+        familyLabel: 'عائلة الخواتم الذهبية',
+        title: 'دبلة ذهب سادة مصقولة عيار 21',
+        selectedKarat: 21,
+        weightGrams: 4.50,
+        makingFeePerGram: 40,
+        purityLabel: 'ذهب صافي عيار 21',
+        badge: 'دبلة ذهب',
+        image: 'https://images.unsplash.com/photo-1589674781759-c21c37956a44?auto=format&fit=crop&w=900&q=85'
+      },
+      {
+        id: 404,
+        sku: 'RNG-04',
+        family: 'rings',
+        familyLabel: 'عائلة الخواتم الذهبية',
+        title: 'خاتم ذهب عريض جدائل عيار 18',
+        selectedKarat: 18,
+        weightGrams: 7.40,
+        makingFeePerGram: 52,
+        purityLabel: 'ذهب صافي عيار 18',
+        badge: 'ذهب 18K',
+        image: 'https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=900&q=85'
+      },
+
+      /* 5. عائلة الأقراط والحلق (earrings) */
+      {
+        id: 501,
+        sku: 'EAR-01',
+        family: 'earrings',
+        familyLabel: 'عائلة الأقراط والحلق',
+        title: 'حلق ذهب دائري منقوش عيار 21',
+        selectedKarat: 21,
+        weightGrams: 5.90,
+        makingFeePerGram: 48,
+        purityLabel: 'ذهب صافي عيار 21',
+        badge: 'ذهب 21K',
+        image: 'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=900&q=85'
+      },
+      {
+        id: 502,
+        sku: 'EAR-02',
+        family: 'earrings',
+        familyLabel: 'عائلة الأقراط والحلق',
+        title: 'أقراط ذهب متدلية طويلة عيار 21',
+        selectedKarat: 21,
+        weightGrams: 8.40,
+        makingFeePerGram: 50,
+        purityLabel: 'ذهب صافي عيار 21',
+        badge: 'أقراط ملكية',
+        image: 'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&w=900&q=85'
+      },
+      {
+        id: 503,
+        sku: 'EAR-03',
+        family: 'earrings',
+        familyLabel: 'عائلة الأقراط والحلق',
+        title: 'حلق ذهب نجمة كاريزما عيار 21',
+        selectedKarat: 21,
+        weightGrams: 4.20,
+        makingFeePerGram: 46,
+        purityLabel: 'ذهب صافي عيار 21',
+        badge: 'تصميم ناعم',
+        image: 'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=900&q=85'
+      },
+      {
+        id: 504,
+        sku: 'EAR-04',
+        family: 'earrings',
+        familyLabel: 'عائلة الأقراط والحلق',
+        title: 'حلق ذهب يومي خفيف عيار 18',
+        selectedKarat: 18,
+        weightGrams: 3.10,
+        makingFeePerGram: 52,
+        purityLabel: 'ذهب صافي عيار 18',
+        badge: 'ذهب 18K',
+        image: 'https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&w=900&q=85'
+      },
+
+      /* 6. عائلة السبائك والجنيهات (bullion) */
+      {
+        id: 601,
+        sku: 'BAR-01',
+        family: 'bullion',
+        familyLabel: 'عائلة السبائك والجنيهات',
+        title: 'سبيكة ذهب صافي 10 جرام عيار 24',
+        selectedKarat: 24,
+        weightGrams: 10.00,
+        makingFeePerGram: 15,
+        purityLabel: 'ذهب نقي 999.9',
+        badge: 'سبيكة 10 جم',
+        image: 'https://images.unsplash.com/photo-1610375461246-83df859d849d?auto=format&fit=crop&w=900&q=85'
+      },
+      {
+        id: 602,
+        sku: 'BAR-02',
+        family: 'bullion',
+        familyLabel: 'عائلة السبائك والجنيهات',
+        title: 'سبيكة ذهب أونصة 31.1 جرام عيار 24',
+        selectedKarat: 24,
+        weightGrams: 31.10,
+        makingFeePerGram: 12,
+        purityLabel: 'ذهب نقي 999.9',
+        badge: 'أونصة 24K',
+        image: 'https://images.unsplash.com/photo-1624365168968-f283d506c6b6?auto=format&fit=crop&w=900&q=85'
+      },
+      {
+        id: 603,
+        sku: 'BAR-03',
+        family: 'bullion',
+        familyLabel: 'عائلة السبائك والجنيهات',
+        title: 'سبيكة ذهب صافي 50 جرام عيار 24',
+        selectedKarat: 24,
+        weightGrams: 50.00,
+        makingFeePerGram: 10,
+        purityLabel: 'ذهب نقي 999.9',
+        badge: 'سبيكة 50 جم',
+        image: 'https://images.unsplash.com/photo-1610375461246-83df859d849d?auto=format&fit=crop&w=900&q=85'
+      },
+      {
+        id: 604,
+        sku: 'BAR-04',
+        family: 'bullion',
+        familyLabel: 'عائلة السبائك والجنيهات',
+        title: 'جنيه ذهب سعودي 8 جرام عيار 21',
+        selectedKarat: 21,
+        weightGrams: 8.00,
+        makingFeePerGram: 25,
+        purityLabel: 'ذهب صافي عيار 21',
+        badge: 'جنيه ذهب',
+        image: 'https://images.unsplash.com/photo-1624365168968-f283d506c6b6?auto=format&fit=crop&w=900&q=85'
+      }
+    ];
+
+    let activeFamily = 'all';
+    let wishlistIds = new Set([101]);
+    let cartItems = [
+      { productId: 101, karat: 21 },
+      { productId: 201, karat: 21 }
+    ];
+
+    /* Pure Gold Price Calculation (No Diamonds) */
+    function calculateProductPriceSAR(product, karatOverride) {
+      const karat = karatOverride || product.selectedKarat;
+      const ratePerGram = MARKET_RATES_SAR[karat] || MARKET_RATES_SAR[21];
+      const pureGoldCost = product.weightGrams * ratePerGram;
+      const makingCost = product.weightGrams * product.makingFeePerGram;
+      const totalSAR = Math.round(pureGoldCost + makingCost);
+      return {
+        karat,
+        ratePerGram,
+        pureGoldCost,
+        makingCost,
+        totalSAR
+      };
+    }
+
+    function filterByFamily(famId) {
+      activeFamily = famId;
+
+      document.querySelectorAll('.cat-tab-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.fam === famId);
+      });
+      document.querySelectorAll('#header-family-links button').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.fam === famId);
+      });
+      document.querySelectorAll('.dock-nav-item[data-dock-fam]').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.dockFam === famId);
+      });
+
+      renderFamiliesCatalog();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function switchCardKarat(productId, newKarat) {
+      const prod = PRODUCTS_DB.find(p => p.id === productId);
+      if (!prod) return;
+      prod.selectedKarat = newKarat;
+      renderFamiliesCatalog();
+    }
+
+    function toggleWishlist(productId) {
+      if (wishlistIds.has(productId)) {
+        wishlistIds.delete(productId);
+        showToast('تمت إزالة القطعة من المفضلة');
+      } else {
+        wishlistIds.add(productId);
+        showToast('تمت إضافة القطعة إلى المفضلة');
+      }
+      renderFamiliesCatalog();
+    }
+
+    function renderProductCardHTML(product) {
+      const calc = calculateProductPriceSAR(product);
+      const isWished = wishlistIds.has(product.id);
+      return `
+        <article class="product-card">
+          <div class="product-media">
+            <div class="product-top-badges">
+              <span class="karat-badge">
+                <span>${product.badge} • عيار ${calc.karat}K</span>
+              </span>
+              <button type="button" class="wishlist-btn ${isWished ? 'wish-active' : ''}" onclick="toggleWishlist(${product.id})" aria-label="المفضلة">
+                <svg class="icon-svg" viewBox="0 0 24 24" style="width:16px; height:16px; fill:${isWished ? 'currentColor' : 'none'};">
+                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                </svg>
+              </button>
+            </div>
+
+            <img src="${product.image}" alt="${product.title}" loading="lazy"
+                 onerror="this.src='logo_seamless.png'" />
+          </div>
+
+          <div class="product-body">
+            <div class="product-meta-row">
+              <span>${product.familyLabel}</span>
+              <span>كود: ${product.sku}</span>
+            </div>
+
+            <h3 class="product-title">${product.title}</h3>
+
+            <div class="product-specs-bar">
+              <span class="spec-chip">الوزن: ${product.weightGrams} جم</span>
+              <span class="spec-chip">ذهب صافي عيار ${calc.karat}</span>
+            </div>
+
+            <div class="card-karat-switcher">
+              <span>العيار:</span>
+              <div class="karat-dots">
+                ${[18, 21, 24].map(k => `
+                  <button type="button" class="karat-choice-btn ${calc.karat === k ? 'active' : ''}"
+                          onclick="switchCardKarat(${product.id}, ${k})">${k}K</button>
+                `).join('')}
+              </div>
+            </div>
+
+            <div class="product-price-row">
+              <div class="price-block">
+                <span class="price-label">السعر:</span>
+                <span class="price-amount">${formatMoney(calc.totalSAR)}</span>
+              </div>
+
+              <div class="card-actions">
+                <button type="button" class="btn-quick-view" onclick="openQuickViewModal(${product.id})" title="تفاصيل القطعة" aria-label="معاينة التفاصيل">
+                  <svg class="icon-svg" viewBox="0 0 24 24">
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                    <circle cx="12" cy="12" r="3"></circle>
+                  </svg>
+                </button>
+                <button type="button" class="btn-add-cart" onclick="addToCart(${product.id}, ${calc.karat})">
+                  <span>إضافة للسلة</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </article>
+      `;
+    }
+
+    function renderFamiliesCatalog() {
+      const container = document.getElementById('families-catalog-container');
+      const searchVal = (document.getElementById('product-search-input')?.value || '').trim().toLowerCase();
+      const karatFilter = document.getElementById('karat-filter-select')?.value || 'all';
+      const sortMode = document.getElementById('sort-select')?.value || 'featured';
+
+      const familiesToShow = activeFamily === 'all'
+        ? GOLD_FAMILIES
+        : GOLD_FAMILIES.filter(f => f.id === activeFamily);
+
+      let htmlBlocks = '';
+
+      familiesToShow.forEach(fam => {
+        let famProducts = PRODUCTS_DB.filter(p => {
+          const matchFam = p.family === fam.id;
+          const matchKarat = karatFilter === 'all' || String(p.selectedKarat) === karatFilter;
+          const matchSearch = !searchVal ||
+            p.title.toLowerCase().includes(searchVal) ||
+            p.sku.toLowerCase().includes(searchVal) ||
+            p.familyLabel.toLowerCase().includes(searchVal);
+          return matchFam && matchKarat && matchSearch;
+        });
+
+        if (sortMode === 'price-asc') {
+          famProducts.sort((a, b) => calculateProductPriceSAR(a).totalSAR - calculateProductPriceSAR(b).totalSAR);
+        } else if (sortMode === 'price-desc') {
+          famProducts.sort((a, b) => calculateProductPriceSAR(b).totalSAR - calculateProductPriceSAR(a).totalSAR);
+        } else if (sortMode === 'weight-desc') {
+          famProducts.sort((a, b) => b.weightGrams - a.weightGrams);
+        }
+
+        if (famProducts.length > 0) {
+          htmlBlocks += `
+            <div class="family-section-block">
+              <div class="family-header-bar">
+                <div class="family-title-wrap">
+                  <svg width="24" height="24" viewBox="0 0 60 60" fill="none">
+                    <path d="M30 2 C32 22 38 28 58 30 C38 32 32 38 30 58 C28 38 22 32 2 30 C22 28 28 22 30 2 Z" fill="url(#navGoldGrad)"/>
+                  </svg>
+                  <h2 class="family-title">${fam.title}</h2>
+                </div>
+                <span class="family-count-pill">${famProducts.length} منتجات</span>
+              </div>
+              <div class="products-grid">
+                ${famProducts.map(p => renderProductCardHTML(p)).join('')}
+              </div>
+            </div>
+          `;
+        }
+      });
+
+      if (!htmlBlocks) {
+        container.innerHTML = `
+          <div style="text-align:center; padding:2.5rem; background:var(--surface-card); border-radius:20px; border:1px solid var(--border-gold-soft);">
+            <p style="font-size:1.1rem; font-weight:700;">لا توجد قطع مطابقة لبحثك حالياً</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = htmlBlocks;
+    }
+
+    function openQuickViewModal(productId) {
+      const product = PRODUCTS_DB.find(p => p.id === productId);
+      if (!product) return;
+      const calc = calculateProductPriceSAR(product);
+      const modal = document.getElementById('quick-view-modal');
+      const content = document.getElementById('quick-view-content');
+
+      content.innerHTML = `
+        <button type="button" class="modal-close-btn" onclick="closeQuickViewModal()" aria-label="إغلاق">
+          <svg class="icon-svg" viewBox="0 0 24 24">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:1.25rem; align-items:center;">
+          <div style="border-radius:16px; overflow:hidden; border:1px solid var(--border-gold-strong); background:#D8D0C5;">
+            <img src="${product.image}" alt="${product.title}" style="width:100%; height:240px; object-fit:cover; display:block;" onerror="this.src='logo_seamless.png'" />
+          </div>
+
+          <div style="display:flex; flex-direction:column; gap:0.65rem;">
+            <span class="family-count-pill" style="align-self:flex-start;">${product.familyLabel} • ${product.sku}</span>
+            <h3 style="font-family:'Amiri',serif; font-size:1.45rem; color:var(--text-primary);">${product.title}</h3>
+
+            <div class="calc-result-card" style="margin-top:0.2rem;">
+              <div class="calc-row">
+                <span>العيار:</span>
+                <strong>ذهب صافي عيار ${calc.karat}K</strong>
+              </div>
+              <div class="calc-row">
+                <span>وزن الذهب:</span>
+                <strong>${product.weightGrams} جم</strong>
+              </div>
+              <div class="calc-row">
+                <span>قيمة الذهب الصافي:</span>
+                <strong>${formatMoney(calc.pureGoldCost)}</strong>
+              </div>
+              <div class="calc-row">
+                <span>المصنعية:</span>
+                <strong>${formatMoney(calc.makingCost)}</strong>
+              </div>
+              <div class="calc-row total-row">
+                <span>السعر الإجمالي:</span>
+                <span style="color:var(--gold-bronze);">${formatMoney(calc.totalSAR)}</span>
+              </div>
+            </div>
+
+            <button type="button" class="btn-primary-gold" style="width:100%; margin-top:0.3rem;" onclick="addToCart(${product.id}, ${calc.karat}); closeQuickViewModal();">
+              <span>إضافة إلى الحقيبة</span>
+            </button>
+          </div>
         </div>
+      `;
+      modal.classList.add('open');
+    }
 
-    </main>
+    function closeQuickViewModal() {
+      document.getElementById('quick-view-modal').classList.remove('open');
+    }
 
-    <!-- الفوتر -->
-    <footer class="relative z-10 border-t border-white/10 mt-auto py-8 text-center">
-        <p class="text-gray-500 font-semibold tracking-wider">
-            جميع الحقوق محفوظة لـ <span class="text-gray-300 font-bold">usr7n</span> &copy; 2026
-        </p>
-    </footer>
+    function addToCart(productId, karat) {
+      cartItems.push({ productId, karat });
+      renderCart();
+      showToast('تمت إضافة القطعة إلى الحقيبة');
+    }
 
+    function removeFromCart(index) {
+      cartItems.splice(index, 1);
+      renderCart();
+    }
+
+    function toggleCartDrawer(open) {
+      document.getElementById('cart-drawer').classList.toggle('open', open);
+      document.getElementById('cart-backdrop').classList.toggle('open', open);
+    }
+
+    function renderCart() {
+      const listEl = document.getElementById('cart-items-container');
+      const badgeEl = document.getElementById('cart-count-badge');
+      const dockBadgeEl = document.getElementById('dock-cart-count');
+      badgeEl.textContent = cartItems.length;
+      if (dockBadgeEl) dockBadgeEl.textContent = cartItems.length;
+
+      if (cartItems.length === 0) {
+        listEl.innerHTML = `<p style="text-align:center; color:var(--text-muted); margin-top:2rem;">الحقيبة فارغة حالياً</p>`;
+        document.getElementById('cart-total-weight').textContent = '0.00 جم';
+        document.getElementById('cart-total-price').textContent = formatMoney(0);
+        return;
+      }
+
+      let totalWeight = 0;
+      let totalPriceSAR = 0;
+
+      listEl.innerHTML = cartItems.map((item, idx) => {
+        const prod = PRODUCTS_DB.find(p => p.id === item.productId) || PRODUCTS_DB[0];
+        const calc = calculateProductPriceSAR(prod, item.karat);
+        totalWeight += prod.weightGrams;
+        totalPriceSAR += calc.totalSAR;
+
+        return `
+          <div class="cart-item-row">
+            <img src="${prod.image}" alt="${prod.title}" onerror="this.src='logo_seamless.png'" />
+            <div style="flex:1; min-width:0;">
+              <strong style="font-size:0.88rem; display:block;">${prod.title}</strong>
+              <span style="font-size:0.75rem; color:var(--text-secondary);">ذهب عيار ${item.karat}K • الوزن: ${prod.weightGrams} جم</span>
+              <strong style="color:var(--gold-bronze); font-size:0.9rem; display:block; margin-top:2px;">${formatMoney(calc.totalSAR)}</strong>
+            </div>
+            <button type="button" onclick="removeFromCart(${idx})" style="background:none; border:none; color:#9B2C2C; cursor:pointer; padding:4px;" aria-label="حذف">
+              <svg class="icon-svg" viewBox="0 0 24 24" style="width:16px; height:16px;">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+            </button>
+          </div>
+        `;
+      }).join('');
+
+      document.getElementById('cart-total-weight').textContent = `${totalWeight.toFixed(2)} جم`;
+      document.getElementById('cart-total-price').textContent = formatMoney(totalPriceSAR);
+    }
+
+    function completeCustomerOrder() {
+      if (cartItems.length === 0) {
+        showToast('الحقيبة فارغة، اختاري قطعة أولاً');
+        return;
+      }
+      toggleCartDrawer(false);
+      showToast('تم استلام طلبك بنجاح');
+    }
+
+    function updateAllDisplays() {
+      document.querySelectorAll('.live-24k-display').forEach(el => {
+        el.textContent = formatRatePerGram(MARKET_RATES_SAR[24]);
+      });
+      document.querySelectorAll('.live-21k-display').forEach(el => {
+        el.textContent = formatRatePerGram(MARKET_RATES_SAR[21]);
+      });
+      document.querySelectorAll('.live-18k-display').forEach(el => {
+        el.textContent = formatRatePerGram(MARKET_RATES_SAR[18]);
+      });
+
+      renderFamiliesCatalog();
+      renderCart();
+    }
+
+    function toggleRoyalTheme() {
+      const html = document.documentElement;
+      const current = html.getAttribute('data-theme');
+      const next = current === 'royal-velvet' ? 'champagne-stone' : 'royal-velvet';
+      html.setAttribute('data-theme', next);
+      const labelEl = document.getElementById('theme-btn-label');
+      if (labelEl) {
+        labelEl.textContent = next === 'royal-velvet' ? 'النمط النهاري' : 'النمط المخملي';
+      }
+    }
+
+    function showToast(msg) {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      toast.className = 'luxury-toast';
+      toast.innerHTML = `<span>${msg}</span>`;
+      container.appendChild(toast);
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateY(10px)';
+        toast.style.transition = 'all 0.3s ease';
+        setTimeout(() => toast.remove(), 300);
+      }, 2500);
+    }
+  </script>
 </body>
 </html>
